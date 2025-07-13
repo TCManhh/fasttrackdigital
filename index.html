@@ -23,7 +23,7 @@
         }
 
         html {
-            scroll-behavior: smooth; /* Hỗ trợ cuộn mượt trên trình duyệt */
+            scroll-behavior: smooth;
         }
 
         body {
@@ -38,26 +38,26 @@
 
         /* === CSS CHO HEADER === */
         .site-header {
-            background-color: #fff; /* Chuyển sang màu trắng */
-            color: #333; /* Chuyển chữ sang màu tối */
+            background-color: #fff;
             padding: 10px 40px;
-            border-bottom: 1px solid #eee; /* Thêm đường viền mỏng */
-        }
-
-        .header-top {
+            border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
+            position: relative;
         }
 
         .header-logo img {
             height: 50px;
             width: auto;
+            display: block;
+            flex-shrink: 0;
         }
 
         .header-search {
             flex-grow: 1;
+            max-width: 600px;
             position: relative;
         }
 
@@ -80,64 +80,21 @@
                 position: absolute;
                 right: 15px;
                 top: 50%;
-                transform: translateY(-50%) rotate(45deg);
+                transform: translateY(-50%);
                 color: #777;
-                font-size: 1.2rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                cursor: pointer;
             }
-                /* Thêm style cho SVG nếu cần */
+
                 .header-search .search-icon svg {
                     width: 20px;
                     height: 20px;
                 }
 
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-            .header-actions .btn {
-                background-color: transparent;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                padding: 10px 20px;
-                color: #555;
-                text-decoration: none;
-                font-size: 0.9rem;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                white-space: nowrap;
-            }
-
-        .header-nav-container {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            margin-top: 15px;
-        }
-
-        .category-btn {
-            background-color: #f0c14b;
-            color: #111;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         .main-nav ul {
             display: flex;
             list-style: none;
             gap: 30px;
+            align-items: center;
         }
 
         .main-nav a {
@@ -145,13 +102,14 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9rem;
+            white-space: nowrap;
         }
 
-        #hero-image {
-            will-change: transform, border-radius;
-            transform-origin: center top;
-            border-radius: 0;
+        .mobile-controls {
+            display: none;
         }
+
+        /* === KẾT THÚC CSS HEADER === */
 
         .full-width-image {
             width: 100%;
@@ -175,7 +133,6 @@
                 transform: translateY(0);
             }
 
-        /* Tạo khoảng trống khi cuộn đến mục */
         #dich-vu, #check-uy-tin {
             scroll-margin-top: 30px;
         }
@@ -276,8 +233,6 @@
             margin-bottom: 50px;
             overflow-x: auto;
             cursor: grab;
-            -webkit-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
 
@@ -336,7 +291,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -475,96 +429,117 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             }
 
-        @media(max-width: 768px) {
-            .modal-content {
-                padding: 30px 25px;
-            }
-
-            .modal-body {
-                flex-direction: column;
-            }
-
-                .modal-body #modal-image {
-                    max-width: 100%;
-                    margin-top: 20px;
-                }
-
-            .modal.image-view .modal-close {
-                top: 10px;
-                right: 10px;
-            }
-
+        /* === CSS RESPONSIVE === */
+        @media(max-width: 992px) {
             .site-header {
-                padding: 15px;
-            }
-
-            .header-top {
-                flex-direction: column;
-                gap: 15px;
-                margin-bottom: 15px;
-            }
-
-            .header-search {
-                margin: 0;
-                width: 100%;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-                .header-actions .btn {
-                    flex-grow: 1;
-                    justify-content: center;
-                }
-
-            .header-nav-container {
-                flex-direction: column;
-                gap: 15px;
-                padding-top: 0;
-                border-top: none;
-                margin-top: 0;
-            }
-
-            .main-nav ul {
-                justify-content: center;
+                padding: 10px 15px;
                 flex-wrap: wrap;
             }
+
+            .header-search, .main-nav {
+                display: none;
+            }
+
+            .mobile-controls {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            .mobile-search-icon, .hamburger-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 8px;
+                font-size: 1.4rem;
+                color: #333;
+            }
+
+            .hamburger-btn {
+                font-size: 1.6rem;
+            }
+
+            .site-header.search-active {
+                padding-bottom: 65px;
+            }
+
+                .site-header.search-active .header-search {
+                    display: block;
+                    position: absolute;
+                    top: 70px;
+                    left: 0;
+                    width: 100%;
+                    padding: 0 15px;
+                }
+
+            .main-nav.is-open {
+                display: block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+
+                .main-nav.is-open ul {
+                    flex-direction: column;
+                    gap: 0;
+                    width: 100%;
+                }
+
+                .main-nav.is-open li {
+                    width: 100%;
+                    text-align: center;
+                    border-bottom: 1px solid #eee;
+                }
+
+                    .main-nav.is-open li:last-child {
+                        border-bottom: none;
+                    }
+
+                .main-nav.is-open a {
+                    padding: 15px;
+                    display: block;
+                    width: 100%;
+                }
         }
     </style>
 </head>
 <body>
 
     <header class="site-header">
-        <div class="header-top">
-            <div class="header-logo">
-                <a href="#"><img src="https://i.ibb.co/JjtdvhYW/2-Sao-ch-p.png" alt="Logo"></a>
-            </div>
-            <div class="header-search">
-                <input type="text" placeholder="Dịch Vụ Premium Cần Tìm...">
-                <span class="search-icon">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </span>
-            </div>
+        <div class="header-logo">
+            <a href="#"><img src="https://i.ibb.co/JjtdvhYW/2-Sao-ch-p.png" alt="Logo"></a>
         </div>
-        <div class="header-nav-container">
-            <button class="category-btn">☰ Danh mục</button>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#">TRANG CHỦ</a></li>
-                    <li><a href="#dich-vu">CỬA HÀNG</a></li>
-                    <li><a href="#check-uy-tin">CHECK UY TÍN</a></li>
-                    <li><a href="#">CHÍNH SÁCH BẢO HÀNH</a></li>
-                    <li><a href="#">BLOG</a></li>
-                </ul>
-            </nav>
+
+        <div class="header-search">
+            <input type="text" placeholder="Dịch Vụ Premium Cần Tìm...">
+            <span class="search-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#">TRANG CHỦ</a></li>
+                <li><a href="#dich-vu">CỬA HÀNG</a></li>
+                <li><a href="#check-uy-tin">CHECK UY TÍN</a></li>
+                <li><a href="#">CHÍNH SÁCH BẢO HÀNH</a></li>
+                <li><a href="#">BLOG</a></li>
+            </ul>
+        </nav>
+
+        <div class="mobile-controls">
+            <button class="mobile-search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </button>
+            <button class="hamburger-btn">☰</button>
         </div>
     </header>
 
-    <img id="hero-image" class="full-width-image" src="https://i.ibb.co/vvdwMm4C/D-ch-v-Premium-Gi-R.png" alt="Dịch vụ Premium Giá Rẻ" loading="eager">
+    <img class="full-width-image" src="https://i.ibb.co/vvdwMm4C/D-ch-v-Premium-Gi-R.png" alt="Dịch vụ Premium Giá Rẻ" loading="eager">
 
     <h2 id="dich-vu" class="section-title">Các Dịch Vụ Shop Cung Cấp</h2>
     <section class="services-section">
@@ -615,37 +590,48 @@
 
     <script>
         // === KHAI BÁO BIẾN ===
+        const siteHeader = document.querySelector('.site-header');
         const modal = document.querySelector('.modal');
         const modalOverlay = document.querySelector('.modal-overlay');
         const modalCloseBtn = document.querySelector('.modal-close');
+
+        // === LOGIC CHO MENU HAMBURGER ===
+        const hamburgerBtn = document.querySelector('.hamburger-btn');
+        const mainNav = document.querySelector('.main-nav');
+        hamburgerBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('is-open');
+        });
+
+        // === LOGIC CHO ICON TÌM KIẾM (MOBILE) ===
+        const mobileSearchIcon = document.querySelector('.mobile-search-icon');
+        mobileSearchIcon.addEventListener('click', () => {
+            siteHeader.classList.toggle('search-active');
+        });
+
+        // === LOGIC CUỘN MƯỢT KHI NHẤN VÀO MENU ===
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    if (mainNav.classList.contains('is-open')) {
+                        mainNav.classList.remove('is-open');
+                    }
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // === LOGIC MODAL POPUP ===
         const modalTitle = document.getElementById('modal-title');
         const modalHeadline = document.getElementById('modal-headline');
         const modalText = document.getElementById('modal-text');
         const modalImage = document.getElementById('modal-image');
-
-        // === HÀM MỞ VÀ ĐÓNG MODAL ===
-        function openModal() {
-            modal.classList.add('active');
-            modalOverlay.classList.add('active');
-            document.body.classList.add('modal-open');
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-            modalOverlay.classList.remove('active');
-            document.body.classList.remove('modal-open');
-            setTimeout(() => {
-                modal.classList.remove('image-view');
-                modalImage.src = "";
-                modal.style.transformOrigin = 'center center';
-            }, 350);
-        }
-
-        // === XỬ LÝ SỰ KIỆN ===
+        function openModal() { modal.classList.add('active'); modalOverlay.classList.add('active'); document.body.classList.add('modal-open'); }
+        function closeModal() { modal.classList.remove('active'); modalOverlay.classList.remove('active'); document.body.classList.remove('modal-open'); setTimeout(() => { modal.classList.remove('image-view'); modalImage.src = ""; modal.style.transformOrigin = 'center center'; }, 350); }
         modalCloseBtn.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => e.stopPropagation());
-
         const modalCards = document.querySelectorAll('.card');
         modalCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -657,25 +643,20 @@
                 openModal();
             });
         });
-
         const billItems = document.querySelectorAll('.bill-item');
         let isDragging = false;
         billItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 if (isDragging) return;
-
                 const rect = e.currentTarget.getBoundingClientRect();
-                const originX = rect.left + rect.width / 2;
-                const originY = rect.top + rect.height / 2;
-                modal.style.transformOrigin = `${originX}px ${originY}px`;
-
+                modal.style.transformOrigin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
                 modal.classList.add('image-view');
                 modalImage.src = item.querySelector('img').src;
                 openModal();
             });
         });
 
-        // === HIỆU ỨNG XUẤT HIỆN KHI CUỘN ===
+        // === LOGIC HIỆU ỨNG ===
         const animatedElements = document.querySelectorAll('.card, .section-title');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -684,11 +665,10 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-        // === LOGIC CAROUSEL BILL VỚI HIỆU ỨNG GIA TỐC ===
+        /* === LOGIC CAROUSEL BILL VỚI TỰ ĐỘNG LƯỚT (ĐÃ CẬP NHẬT) === */
         const slider = document.querySelector('.bill-section');
         let isDown = false, startX, scrollLeft;
         let velocity = 0, animationFrameId, timestamp, lastX;
-
         let autoScrollInterval, idleTimer;
         const isTouchDevice = 'ontouchstart' in window;
 
@@ -700,11 +680,11 @@
             stopAutoScroll();
             autoScrollInterval = setInterval(() => {
                 if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                    stopAutoScroll();
+                    slider.scrollLeft = 0; // Quay về đầu khi hết
                 } else {
                     slider.scrollLeft += 1;
                 }
-            }, 25);
+            }, 25); // Tốc độ cuộn
         };
 
         function momentumScroll() {
@@ -737,15 +717,12 @@
         const handleInteractionMove = (e) => {
             if (!isDown) return;
             e.preventDefault();
-
             const currentX = e.pageX || e.touches[0].pageX;
             const walk = currentX - startX;
             slider.scrollLeft = scrollLeft - walk;
-
             if (Math.abs(walk) > 5) {
                 isDragging = true;
             }
-
             const now = Date.now();
             const deltaTime = now - timestamp;
             if (deltaTime > 20) {
@@ -760,7 +737,6 @@
             if (!isDown) return;
             isDown = false;
             slider.classList.remove('active');
-
             if (isDragging) {
                 cancelAnimationFrame(animationFrameId);
                 animationFrameId = requestAnimationFrame(momentumScroll);
@@ -771,28 +747,11 @@
         slider.addEventListener('mousemove', handleInteractionMove);
         slider.addEventListener('mouseup', handleInteractionEnd);
         slider.addEventListener('mouseleave', handleInteractionEnd);
-
         slider.addEventListener('touchstart', handleInteractionStart, { passive: true });
         slider.addEventListener('touchmove', handleInteractionMove);
         slider.addEventListener('touchend', handleInteractionEnd);
 
-        startAutoScroll();
-
-        // === LOGIC CUỘN MƯỢT KHI NHẤN VÀO MENU ===
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Ngăn hành vi nhảy trang mặc định
-
-                const targetElement = document.querySelector(this.getAttribute('href'));
-
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start' // Căn lề trên của phần tử với lề trên của khung nhìn
-                    });
-                }
-            });
-        });
+        startAutoScroll(); // Bắt đầu tự động lướt
 
     </script>
 </body>
