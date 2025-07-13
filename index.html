@@ -47,6 +47,7 @@
             align-items: center;
             gap: 20px;
             position: relative;
+            z-index: 1060;
         }
 
         .header-logo img {
@@ -522,46 +523,174 @@
                 }
         }
 
-        /* === HIỆU ỨNG NHẤP NHÁY CHO NÚT === */
-        @keyframes pulse-animation {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
-
-            50% {
-                transform: scale(1.08);
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            }
-
-            100% {
-                transform: scale(1);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
-        }
-
-        /* === CSS CHO NÚT LIÊN HỆ CỐ ĐỊNH === */
-        .floating-contact-btn {
+        /* === CSS CHO CỤM NÚT LIÊN HỆ === */
+        .floating-actions-container {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            z-index: 1010;
+            z-index: 1060;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .floating-action-btn {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-image: url('https://i.ibb.co/Pz1Mmrjx/image.png');
             background-size: cover;
             background-position: center;
-            border: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            animation: pulse-animation 2s infinite ease-in-out;
+            display: block;
+            transition: transform 0.2s ease;
         }
 
-            .floating-contact-btn:hover {
-                animation-play-state: paused;
+            .floating-action-btn:hover {
                 transform: scale(1.1);
             }
+
+        /* Đặt ảnh nền cho từng nút */
+        .btn-facebook {
+            background-image: url('https://i.ibb.co/20d3H3x8/image.png');
+        }
+
+        .btn-messenger {
+            background-image: url('https://ibb.co/9mY7q5gj');
+        }
+
+        .btn-telegram {
+            background-image: url('https://i.ibb.co/XZyQS4NN/image.png');
+        }
+
+        .btn-zalo {
+            background-image: url('https://i.ibb.co/Pz1Mmrjx/image.png');
+        }
+
+        /* === CSS CHO MENU DANH MỤC === */
+        .category-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+            .category-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        .category-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: transparent;
+            z-index: 1051;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+            .category-menu.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        .category-columns-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 110px 40px 40px 40px;
+        }
+
+        .category-column {
+            flex: 1 1 220px;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+
+            .category-column h4 {
+                font-size: 0.9rem;
+                color: #333;
+                font-weight: 600;
+                text-transform: uppercase;
+                margin-bottom: 15px;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #ddd;
+            }
+
+        .category-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            text-decoration: none;
+            color: #1d1d1f;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+            .category-menu li a:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+
+        .category-menu li img {
+            height: 32px;
+            width: auto;
+            border-radius: 6px;
+        }
+
+        .category-menu li span {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .category-close-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 28px;
+            color: #1d1d1f;
+            cursor: pointer;
+            z-index: 1061;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .category-menu.active ~ .category-close-btn,
+        .category-overlay.active ~ .category-close-btn {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -586,7 +715,7 @@
                 <li><a href="#dich-vu">CỬA HÀNG</a></li>
                 <li><a href="#check-uy-tin">CHECK UY TÍN</a></li>
                 <li><a href="#">CHÍNH SÁCH BẢO HÀNH</a></li>
-                <li><a href="#">BLOG</a></li>
+                <li><a href="#" id="category-trigger">DANH MỤC</a></li>
             </ul>
         </nav>
 
@@ -649,25 +778,138 @@
         </div>
     </div>
 
+    <div class="floating-actions-container">
+        <a href="https://www.facebook.com/FastTrack68" target="_blank" class="floating-action-btn btn-facebook" aria-label="Facebook"></a>
+        <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
+        <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
+        <a href="https://zalo.me/0978879931" target="_blank" class="floating-action-btn btn-zalo" aria-label="Zalo"></a>
+    </div>
+
+    <div id="category-overlay" class="category-overlay"></div>
+    <div id="category-menu" class="category-menu">
+        <div class="category-columns-container">
+            <div class="category-column">
+                <h4>Tài khoản giải trí</h4>
+                <ul>
+                    <li><a href="#"><img src="https://i.ibb.co/zhRcmWx9/image.png" alt="YouTube"><span>YouTube Premium</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/tYHk9cK/spotify-1.png" alt="Spotify"><span>Spotify</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/L6v9v04/netflix-3.png" alt="Netflix"><span>Netflix</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/yBPNtC5/vieon.png" alt="Vieon"><span>Vieon</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/GvxB4zG/fptplay.png" alt="FPT Play"><span>FPT Play</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/SVSrHr6/galaxyplay.png" alt="Galaxy Play"><span>Galaxy Play</span></a></li>
+                </ul>
+            </div>
+
+            <div class="category-column">
+                <h4>Tài khoản học tập</h4>
+                <ul>
+                    <li><a href="#"><img src="https://i.ibb.co/yqg0GzR/elsa.png" alt="Elsa"><span>Elsa</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/D8yWzBq/canva.png" alt="Canva"><span>Canva</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/3kXNfV7/duolingo.png" alt="Duolingo"><span>Duolingo</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/bF0bJmQ/lingokids.png" alt="Lingokids"><span>Lingokids</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/mS7yG0z/rabitala.png" alt="Rabitala"><span>Rabitala</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/JqjP0Sb/bill-5.png" alt="Monkey Junior"><span>Monkey Junior</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/T4jBfH5/office.png" alt="Hanji"><span>Hanji</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/yY9x0Yn/bill-10.png" alt="Kidsup"><span>Kidsup</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/mH0cBPd/bill-11.png" alt="Flyer"><span>Flyer</span></a></li>
+                </ul>
+            </div>
+
+            <div class="category-column">
+                <h4>Tài khoản làm việc</h4>
+                <ul>
+                    <li><a href="#"><img src="https://i.ibb.co/9s1PgLq/bill-13.png" alt="Adobe full"><span>Adobe full</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/S6J0vBP/bill-14.png" alt="Google one"><span>Google one</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/K07h4YD/bill-12.png" alt="Zoom"><span>Zoom</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/4Y4R7G6/bill-15.png" alt="Chat GPT"><span>Chat GPT</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/b3gQYhY/capcut.png" alt="Capcut Pro"><span>Capcut Pro</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/gDFtqg8/bill-3.png" alt="Window 365"><span>Window 365</span></a></li>
+                </ul>
+            </div>
+
+            <div class="category-column">
+                <h4>Khóa học và tài liệu</h4>
+                <ul>
+                    <li><a href="#"><img src="https://i.ibb.co/b3gQYhY/capcut.png" alt="Khoá học Capcut PC"><span>Khoá học Capcut PC</span></a></li>
+                    <li><a href="#"><img src="https://i.ibb.co/D8yWzBq/canva.png" alt="Khoá học Canva Pro"><span>Khoá học Canva Pro</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button id="category-close-btn" class="category-close-btn">&times;</button>
+
+
     <script>
+        // === LOGIC CHO MENU DANH MỤC ===
+        const categoryTrigger = document.getElementById('category-trigger');
+        const categoryOverlay = document.getElementById('category-overlay');
+        const categoryMenu = document.getElementById('category-menu');
+        const categoryCloseBtn = document.getElementById('category-close-btn');
+
+        function openCategoryMenu() {
+            categoryOverlay.classList.add('active');
+            categoryMenu.classList.add('active');
+            categoryCloseBtn.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeCategoryMenu() {
+            categoryOverlay.classList.remove('active');
+            categoryMenu.classList.remove('active');
+            categoryCloseBtn.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        if (categoryTrigger) {
+            categoryTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (categoryMenu.classList.contains('active')) {
+                    closeCategoryMenu();
+                } else {
+                    openCategoryMenu();
+                }
+            });
+        }
+
+        if (categoryOverlay) {
+            categoryOverlay.addEventListener('click', closeCategoryMenu);
+        }
+
+        if (categoryCloseBtn) {
+            categoryCloseBtn.addEventListener('click', closeCategoryMenu);
+        }
+
+        if (categoryMenu) {
+            categoryMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+
         // === KHAI BÁO BIẾN ===
         const siteHeader = document.querySelector('.site-header');
         const modal = document.querySelector('.modal');
-        const modalOverlay = document.querySelector('.modal-overlay');
+        const modalOverlayEl = document.querySelector('.modal-overlay');
         const modalCloseBtn = document.querySelector('.modal-close');
 
         // === LOGIC CHO MENU HAMBURGER ===
         const hamburgerBtn = document.querySelector('.hamburger-btn');
         const mainNav = document.querySelector('.main-nav');
-        hamburgerBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('is-open');
-        });
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('is-open');
+            });
+        }
+
 
         // === LOGIC CHO ICON TÌM KIẾM (MOBILE) ===
         const mobileSearchIcon = document.querySelector('.mobile-search-icon');
-        mobileSearchIcon.addEventListener('click', () => {
-            siteHeader.classList.toggle('search-active');
-        });
+        if (mobileSearchIcon) {
+            mobileSearchIcon.addEventListener('click', () => {
+                siteHeader.classList.toggle('search-active');
+            });
+        }
+
 
         // === LOGIC CUỘN MƯỢT KHI NHẤN VÀO MENU ===
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -677,6 +919,9 @@
                 if (targetElement) {
                     if (mainNav.classList.contains('is-open')) {
                         mainNav.classList.remove('is-open');
+                    }
+                    if (categoryMenu && categoryMenu.classList.contains('active')) {
+                        closeCategoryMenu();
                     }
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
@@ -688,11 +933,37 @@
         const modalHeadline = document.getElementById('modal-headline');
         const modalText = document.getElementById('modal-text');
         const modalImage = document.getElementById('modal-image');
-        function openModal() { modal.classList.add('active'); modalOverlay.classList.add('active'); document.body.classList.add('modal-open'); }
-        function closeModal() { modal.classList.remove('active'); modalOverlay.classList.remove('active'); document.body.classList.remove('modal-open'); setTimeout(() => { modal.classList.remove('image-view'); modalImage.src = ""; modal.style.transformOrigin = 'center center'; }, 350); }
-        modalCloseBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => e.stopPropagation());
+
+        function openModal() {
+            if (modal && modalOverlayEl) {
+                modal.classList.add('active');
+                modalOverlayEl.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+        }
+        function closeModal() {
+            if (modal && modalOverlayEl) {
+                modal.classList.remove('active');
+                modalOverlayEl.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                setTimeout(() => {
+                    modal.classList.remove('image-view');
+                    modalImage.src = "";
+                    modal.style.transformOrigin = 'center center';
+                }, 350);
+            }
+        }
+
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', closeModal);
+        }
+        if (modalOverlayEl) {
+            modalOverlayEl.addEventListener('click', closeModal);
+        }
+        if (modal) {
+            modal.addEventListener('click', (e) => e.stopPropagation());
+        }
+
         const modalCards = document.querySelectorAll('.card');
         modalCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -704,6 +975,7 @@
                 openModal();
             });
         });
+
         const billItems = document.querySelectorAll('.bill-item');
         let isDragging = false;
         billItems.forEach(item => {
@@ -728,96 +1000,94 @@
 
         /* === LOGIC CAROUSEL BILL VỚI TỰ ĐỘNG LƯỚT (ĐÃ CẬP NHẬT) === */
         const slider = document.querySelector('.bill-section');
-        let isDown = false, startX, scrollLeft;
-        let velocity = 0, animationFrameId, timestamp, lastX;
-        let autoScrollInterval, idleTimer;
-        const isTouchDevice = 'ontouchstart' in window;
+        if (slider) {
+            let isDown = false, startX, scrollLeft;
+            let velocity = 0, animationFrameId, timestamp, lastX;
+            let autoScrollInterval, idleTimer;
+            const isTouchDevice = 'ontouchstart' in window;
 
-        const stopAutoScroll = () => {
-            clearInterval(autoScrollInterval);
-            clearTimeout(idleTimer);
-        };
-        const startAutoScroll = () => {
-            stopAutoScroll();
-            autoScrollInterval = setInterval(() => {
-                if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                    slider.scrollLeft = 0; // Quay về đầu khi hết
-                } else {
-                    slider.scrollLeft += 1;
+            const stopAutoScroll = () => {
+                clearInterval(autoScrollInterval);
+                clearTimeout(idleTimer);
+            };
+            const startAutoScroll = () => {
+                stopAutoScroll();
+                autoScrollInterval = setInterval(() => {
+                    if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
+                        slider.scrollLeft = 0;
+                    } else {
+                        slider.scrollLeft += 1;
+                    }
+                }, 25);
+            };
+
+            function momentumScroll() {
+                if (Math.abs(velocity) < 0.2) {
+                    if (isTouchDevice) {
+                        idleTimer = setTimeout(startAutoScroll, 2000);
+                    } else {
+                        startAutoScroll();
+                    }
+                    return;
                 }
-            }, 25); // Tốc độ cuộn
-        };
-
-        function momentumScroll() {
-            if (Math.abs(velocity) < 0.2) {
-                if (isTouchDevice) {
-                    idleTimer = setTimeout(startAutoScroll, 2000);
-                } else {
-                    startAutoScroll();
-                }
-                return;
-            }
-            slider.scrollLeft -= velocity * 10;
-            velocity *= 0.96;
-            animationFrameId = requestAnimationFrame(momentumScroll);
-        }
-
-        const handleInteractionStart = (e) => {
-            stopAutoScroll();
-            cancelAnimationFrame(animationFrameId);
-            isDown = true;
-            isDragging = false;
-            slider.classList.add('active');
-            startX = e.pageX || e.touches[0].pageX;
-            lastX = startX;
-            scrollLeft = slider.scrollLeft;
-            velocity = 0;
-            timestamp = Date.now();
-        };
-
-        const handleInteractionMove = (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const currentX = e.pageX || e.touches[0].pageX;
-            const walk = currentX - startX;
-            slider.scrollLeft = scrollLeft - walk;
-            if (Math.abs(walk) > 5) {
-                isDragging = true;
-            }
-            const now = Date.now();
-            const deltaTime = now - timestamp;
-            if (deltaTime > 20) {
-                const deltaX = currentX - lastX;
-                velocity = deltaX / deltaTime;
-                timestamp = now;
-                lastX = currentX;
-            }
-        };
-
-        const handleInteractionEnd = () => {
-            if (!isDown) return;
-            isDown = false;
-            slider.classList.remove('active');
-            if (isDragging) {
-                cancelAnimationFrame(animationFrameId);
+                slider.scrollLeft -= velocity * 10;
+                velocity *= 0.96;
                 animationFrameId = requestAnimationFrame(momentumScroll);
             }
-        };
 
-        slider.addEventListener('mousedown', handleInteractionStart);
-        slider.addEventListener('mousemove', handleInteractionMove);
-        slider.addEventListener('mouseup', handleInteractionEnd);
-        slider.addEventListener('mouseleave', handleInteractionEnd);
-        slider.addEventListener('touchstart', handleInteractionStart, { passive: true });
-        slider.addEventListener('touchmove', handleInteractionMove);
-        slider.addEventListener('touchend', handleInteractionEnd);
+            const handleInteractionStart = (e) => {
+                stopAutoScroll();
+                cancelAnimationFrame(animationFrameId);
+                isDown = true;
+                isDragging = false;
+                slider.classList.add('active');
+                startX = e.pageX || e.touches[0].pageX;
+                lastX = startX;
+                scrollLeft = slider.scrollLeft;
+                velocity = 0;
+                timestamp = Date.now();
+            };
 
-        startAutoScroll(); // Bắt đầu tự động lướt
+            const handleInteractionMove = (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const currentX = e.pageX || e.touches[0].pageX;
+                const walk = currentX - startX;
+                slider.scrollLeft = scrollLeft - walk;
+                if (Math.abs(walk) > 5) {
+                    isDragging = true;
+                }
+                const now = Date.now();
+                const deltaTime = now - timestamp;
+                if (deltaTime > 20) {
+                    const deltaX = currentX - lastX;
+                    velocity = deltaX / deltaTime;
+                    timestamp = now;
+                    lastX = currentX;
+                }
+            };
+
+            const handleInteractionEnd = () => {
+                if (!isDown) return;
+                isDown = false;
+                slider.classList.remove('active');
+                if (isDragging) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = requestAnimationFrame(momentumScroll);
+                }
+            };
+
+            slider.addEventListener('mousedown', handleInteractionStart);
+            slider.addEventListener('mousemove', handleInteractionMove);
+            slider.addEventListener('mouseup', handleInteractionEnd);
+            slider.addEventListener('mouseleave', handleInteractionEnd);
+            slider.addEventListener('touchstart', handleInteractionStart, { passive: true });
+            slider.addEventListener('touchmove', handleInteractionMove);
+            slider.addEventListener('touchend', handleInteractionEnd);
+
+            startAutoScroll();
+        }
 
     </script>
-
-    <a href="https://zalo.me/0978879931" target="_blank" class="floating-contact-btn" aria-label="Liên hệ Zalo">
-    </a>
-
 </body>
 </html>
