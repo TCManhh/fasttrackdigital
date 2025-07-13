@@ -497,21 +497,12 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-
-        // === LOGIC CAROUSEL BILL VỚI HIỆU ỨNG GIA TỐC ===
+        // === LOGIC CAROUSEL BILL VỚI HIỆU ỨNG GIA TỐC (ĐÃ CẬP NHẬT) ===
         const slider = document.querySelector('.bill-section');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        let isDragging = false;
+        let isDown = false, startX, scrollLeft, isDragging = false;
+        let velocity = 0, animationFrameId, timestamp, lastX;
 
-        // Biến cho hiệu ứng gia tốc
-        let velocity = 0;
-        let animationFrameId;
-
-        // Biến cho auto-scroll
-        let autoScrollInterval;
-        let idleTimer;
+        let autoScrollInterval, idleTimer;
         const isTouchDevice = 'ontouchstart' in window;
 
         const stopAutoScroll = () => {
@@ -530,8 +521,7 @@
         };
 
         function momentumScroll() {
-            if (Math.abs(velocity) < 0.5) {
-                // Dừng lại và xử lý auto-scroll
+            if (Math.abs(velocity) < 0.2) {
                 if (isTouchDevice) {
                     idleTimer = setTimeout(startAutoScroll, 2000);
                 } else {
@@ -539,32 +529,43 @@
                 }
                 return;
             }
-            slider.scrollLeft += velocity;
-            velocity *= 0.95; // Lực ma sát
+            slider.scrollLeft -= velocity * 10; // Đảo chiều vuốt cho đúng
+
+            // === THAY ĐỔI Ở ĐÂY: GIẢM MA SÁT ĐỂ LƯỚT XA HƠN ===
+            velocity *= 0.96; // Thay vì 0.95, giúp lướt xa hơn một chút
+
             animationFrameId = requestAnimationFrame(momentumScroll);
         }
 
         const handleInteractionStart = (e) => {
             stopAutoScroll();
-            cancelAnimationFrame(animationFrameId); // Dừng gia tốc cũ
+            cancelAnimationFrame(animationFrameId);
             isDown = true;
             isDragging = false;
             slider.classList.add('active');
             startX = e.pageX || e.touches[0].pageX;
+            lastX = startX;
             scrollLeft = slider.scrollLeft;
             velocity = 0;
+            timestamp = Date.now();
         };
 
         const handleInteractionMove = (e) => {
             if (!isDown) return;
-            isDragging = true;
-            const x = e.pageX || e.touches[0].pageX;
-            const walk = x - startX;
+            e.preventDefault();
+
+            const currentX = e.pageX || e.touches[0].pageX;
+            const walk = currentX - startX;
             slider.scrollLeft = scrollLeft - walk;
-            // Tính toán vận tốc cho gia tốc
-            velocity = walk / 2; // Đơn giản hóa việc tính vận tốc
-            startX = x;
-            scrollLeft = slider.scrollLeft;
+
+            const now = Date.now();
+            const deltaTime = now - timestamp;
+            if (deltaTime > 20) { // Cập nhật vận tốc không quá thường xuyên
+                const deltaX = currentX - lastX;
+                velocity = deltaX / deltaTime;
+                timestamp = now;
+                lastX = currentX;
+            }
         };
 
         const handleInteractionEnd = () => {
@@ -572,7 +573,10 @@
             isDown = false;
             slider.classList.remove('active');
 
-            // Bắt đầu hiệu ứng gia tốc nếu có kéo
+            if (Math.abs(slider.scrollLeft - scrollLeft) > 5) {
+                isDragging = true;
+            }
+
             if (isDragging) {
                 cancelAnimationFrame(animationFrameId);
                 animationFrameId = requestAnimationFrame(momentumScroll);
