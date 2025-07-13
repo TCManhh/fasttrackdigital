@@ -769,9 +769,82 @@
             /* Tạm dừng animation khi hover để hiệu ứng scale rõ hơn */
             animation-play-state: paused;
         }
+
+        /* === [THÊM MỚI] CSS CHO HIỆU ỨNG ICON BAY === */
+        #floating-icons-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* Đặt z-index dương để nó nằm trên các nội dung khác */
+            z-index: 1000;
+            /* Quan trọng: không bắt các sự kiện chuột để người dùng có thể click xuyên qua */
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            display: block;
+            /* Bắt đầu từ dưới màn hình */
+            bottom: -80px;
+            /* Áp dụng animation */
+            animation-name: float-up-zigzag;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        /* ĐIỀU CHỈNH: Thêm hiệu ứng nhấp nháy vào animation */
+        @keyframes float-up-zigzag {
+            0% {
+                bottom: -80px;
+                transform: translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8; /* Hiện ra */
+            }
+
+            25% {
+                transform: translateX(var(--h-move, 40px));
+                opacity: 0.2; /* Mờ đi */
+            }
+
+            40% {
+                opacity: 0.8; /* Rõ lại */
+            }
+
+            50% {
+                transform: translateX(calc(var(--h-move, 40px) * -1));
+            }
+
+            60% {
+                opacity: 0.3; /* Mờ đi */
+            }
+
+            75% {
+                transform: translateX(var(--h-move, 40px));
+                opacity: 0.9; /* Gần rõ nhất */
+            }
+
+            90% {
+                opacity: 0.2; /* Mờ dần trước khi biến mất */
+            }
+
+            100% {
+                /* Bay lên trên cùng và biến mất */
+                bottom: 100vh;
+                transform: translateX(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <div id="floating-icons-container"></div>
 
     <header class="site-header">
         <div class="header-logo">
@@ -1165,7 +1238,6 @@
 
             startAutoScroll();
         }
-
     </script>
 </body>
 </html>
