@@ -551,11 +551,11 @@
 
         /* Đặt ảnh nền cho từng nút */
         .btn-facebook {
-            background-image: url('https://i.ibb.co/20d3H3x8/image.png');
+            background-image: url('https://i.ibb.co/hRsQS5rh/image.png');
         }
 
         .btn-messenger {
-            background-image: url('https://ibb.co/9mY7q5gj');
+            background-image: url('https://i.ibb.co/VWD70rLr/image.png');
         }
 
         .btn-telegram {
@@ -670,7 +670,7 @@
 
         .category-close-btn {
             position: fixed;
-            top: 30px;
+            top: 90px;
             right: 30px;
             background: rgba(0, 0, 0, 0.1);
             border: none;
@@ -690,6 +690,84 @@
         .category-overlay.active ~ .category-close-btn {
             opacity: 1;
             visibility: visible;
+        }
+
+        /* [THÊM MỚI] CSS RIÊNG CHO CỤM NÚT LIÊN HỆ TRÊN MOBILE */
+        @media (max-width: 768px) {
+            .floating-actions-container {
+                gap: 12px; /* Giảm khoảng cách giữa các nút */
+                right: 20px; /* Dịch các nút vào trong một chút */
+                bottom: 20px;
+            }
+
+            .floating-action-btn {
+                /* Giảm kích thước nút */
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        /* === [THÊM MỚI] CSS CHO HIỆU ỨNG NÚT LIÊN HỆ === */
+
+        /* 1. Định nghĩa các animation (chuyển động) */
+
+        /* Keyframe cho hiệu ứng "chớp chớp" (pulse) chung */
+        @keyframes subtle-pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Keyframe cho hiệu ứng "hào quang" (halo) lan tỏa màu đỏ */
+        @keyframes pulse-halo {
+            0% {
+                /* Bắt đầu với hào quang 0px, và giữ lại shadow gốc */
+                box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.7), 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            70% {
+                /* Lan tỏa hào quang ra 15px và mờ dần, đồng thời phóng to shadow gốc */
+                box-shadow: 0 0 0 15px rgba(255, 26, 26, 0), 0 6px 18px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                /* Kết thúc, hào quang biến mất hoàn toàn */
+                box-shadow: 0 0 0 0 rgba(255, 26, 26, 0), 0 4px 12px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+
+        /* 2. Áp dụng hiệu ứng */
+
+        /* Áp dụng hiệu ứng "chớp chớp" chung cho TẤT CẢ các nút */
+        .floating-action-btn {
+            animation: subtle-pulse 2.5s infinite ease-in-out;
+        }
+
+        /* Ghi đè hiệu ứng và thêm style riêng cho Zalo và Telegram */
+        .btn-zalo, .btn-telegram {
+            /* Thêm viền đỏ dày 3px */
+            border: 3px solid #ff1a1a;
+            /* Thay thế animation chung bằng animation hào quang */
+            animation: pulse-halo 2s infinite;
+        }
+
+        /* Giữ lại hiệu ứng hover gốc để nó không bị animation ghi đè */
+        .floating-action-btn:hover {
+            transform: scale(1.1);
+            /* Tạm dừng animation khi hover để hiệu ứng scale rõ hơn */
+            animation-play-state: paused;
         }
     </style>
 </head>
