@@ -178,9 +178,7 @@
 
         .bill-item {
             flex-shrink: 0;
-            /* Màn hình lớn (desktop) - hiển thị ~4.5 ảnh */
             width: 22vw;
-            /* Giới hạn kích thước tối đa để không quá to trên màn hình rất rộng */
             max-width: 280px;
             aspect-ratio: 1170 / 2532;
             border-radius: 18px;
@@ -189,29 +187,18 @@
             cursor: pointer;
         }
 
-        /* Tùy chỉnh cho màn hình máy tính bảng */
         @media (max-width: 1024px) {
             .bill-item {
-                /* Hiển thị ~3 ảnh */
                 width: 30vw;
             }
         }
 
-        /* Tùy chỉnh cho màn hình điện thoại */
         @media (max-width: 600px) {
             .bill-item {
-                /* Đã điều chỉnh nhỏ lại, hiển thị ~2.2 ảnh */
                 width: 45vw;
             }
         }
 
-            .bill-item img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                pointer-events: none;
-            }
 
         /* === CSS CHO MODAL === */
         .modal-overlay {
@@ -250,7 +237,6 @@
                 transform: translate(-50%, -50%) scale(1);
             }
 
-        /* Kiểu mặc định cho modal (cho phần Dịch vụ) */
         .modal {
             background: #fff;
             border-radius: 20px;
@@ -314,7 +300,6 @@
                 border-radius: 12px;
             }
 
-        /* === CSS GHI ĐÈ KHI XEM ẢNH BILL === */
         .modal.image-view {
             top: 50%;
             left: 50%;
@@ -324,7 +309,7 @@
             max-height: 95vh;
             padding: 0;
             background: transparent;
-            overflow: visible; /* Cho phép nút X hiển thị bên ngoài */
+            overflow: visible;
         }
 
             .modal.image-view.active {
@@ -340,16 +325,14 @@
                 max-height: 100%;
             }
 
-            /* === ĐÃ SỬA LỖI VỊ TRÍ NÚT X === */
             .modal.image-view .modal-close {
                 display: block;
-                position: absolute; /* Vị trí tuyệt đối so với phần modal.image-view */
-                top: 10px; /* Điều chỉnh vị trí xuống một chút */
-                right: 10px; /* Điều chỉnh vị trí vào trong một chút */
+                position: absolute;
+                top: -15px;
+                right: -15px;
                 background: rgba(0, 0, 0, 0.6);
                 color: white;
                 box-shadow: 0 0 10px rgba(0,0,0,0.5);
-                z-index: 1003; /* Đảm bảo nút X nằm trên ảnh */
             }
 
             .modal.image-view h4, .modal.image-view h3, .modal.image-view p {
@@ -378,9 +361,9 @@
                     max-width: 100%;
                     margin-top: 20px;
                 }
-            /* Đặt lại vị trí nút X trên mobile cho dễ bấm */
+
             .modal.image-view .modal-close {
-                top: 25px;
+                top: 10px;
                 right: 10px;
             }
         }
@@ -466,12 +449,10 @@
         }
 
         // === XỬ LÝ SỰ KIỆN ===
-        // 1. Nhấn vào nút đóng hoặc lớp phủ mờ
         modalCloseBtn.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => e.stopPropagation());
 
-        // 2. Nhấn vào card Dịch vụ
         const modalCards = document.querySelectorAll('.card');
         modalCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -484,7 +465,6 @@
             });
         });
 
-        // 3. Nhấn vào ảnh Bill
         const billItems = document.querySelectorAll('.bill-item');
         billItems.forEach(item => {
             item.addEventListener('click', (e) => {
@@ -510,14 +490,17 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-        // === LOGIC CAROUSEL BILL ===
+        // === LOGIC CAROUSEL BILL - ĐÃ CẬP NHẬT ===
         const slider = document.querySelector('.bill-section');
-        let isDown = false, startX, scrollLeft, isDragging = false, autoScrollInterval;
+        let isDown = false, startX, scrollLeft, isDragging = false, autoScrollInterval, idleTimer;
 
-        // === THAY ĐỔI Ở ĐÂY: KIỂM TRA THIẾT BỊ CẢM ỨNG ===
         const isTouchDevice = 'ontouchstart' in window;
 
-        const stopAutoScroll = () => clearInterval(autoScrollInterval);
+        const stopAutoScroll = () => {
+            clearInterval(autoScrollInterval);
+            clearTimeout(idleTimer);
+        };
+
         const startAutoScroll = () => {
             stopAutoScroll();
             autoScrollInterval = setInterval(() => {
@@ -529,41 +512,52 @@
             }, 25);
         };
 
-        slider.addEventListener('mousedown', (e) => {
+        const handleInteractionStart = (e) => {
             stopAutoScroll();
             isDown = true;
             isDragging = false;
             slider.classList.add('active');
-            startX = e.pageX - slider.offsetLeft;
+            // Phân biệt giữa sự kiện chuột và chạm
+            startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
-        });
+        };
 
-        slider.addEventListener('mousemove', (e) => {
+        const handleInteractionMove = (e) => {
             if (!isDown) return;
             e.preventDefault();
-            if (Math.abs(e.pageX - startX) > 5) isDragging = true;
-            const x = e.pageX - slider.offsetLeft;
+            if (Math.abs((e.pageX || e.touches[0].pageX) - startX) > 5) isDragging = true;
+            const x = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
             const walk = (x - startX) * 2;
             slider.scrollLeft = scrollLeft - walk;
-        });
+        };
 
-        // === THAY ĐỔI Ở ĐÂY: CẬP NHẬT HÀM KẾT THÚC KÉO ===
-        const handleDragEnd = () => {
+        const handleInteractionEnd = () => {
             if (!isDown) return;
             isDown = false;
             slider.classList.remove('active');
 
-            // Nếu là kéo và không phải thiết bị cảm ứng (là laptop) thì mới chạy lại
-            if (isDragging && !isTouchDevice) {
-                startAutoScroll();
+            if (isDragging) {
+                if (isTouchDevice) {
+                    // Trên điện thoại, đợi 2 giây rồi chạy lại
+                    idleTimer = setTimeout(startAutoScroll, 2000);
+                } else {
+                    // Trên laptop, chạy lại ngay
+                    startAutoScroll();
+                }
             }
-            // Trên điện thoại, sau khi kéo xong sẽ không làm gì cả, auto-scroll sẽ tắt hẳn
         };
 
-        slider.addEventListener('mouseup', handleDragEnd);
-        slider.addEventListener('mouseleave', handleDragEnd);
+        // Gán sự kiện cho cả chuột và cảm ứng
+        slider.addEventListener('mousedown', handleInteractionStart);
+        slider.addEventListener('mousemove', handleInteractionMove);
+        slider.addEventListener('mouseup', handleInteractionEnd);
+        slider.addEventListener('mouseleave', handleInteractionEnd);
 
-        // Bắt đầu tự động chạy ban đầu trên cả hai thiết bị
+        slider.addEventListener('touchstart', handleInteractionStart);
+        slider.addEventListener('touchmove', handleInteractionMove);
+        slider.addEventListener('touchend', handleInteractionEnd);
+
+        // Bắt đầu chạy lần đầu
         startAutoScroll();
     </script>
 </body>
