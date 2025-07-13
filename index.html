@@ -11,7 +11,6 @@
 
     <style>
         #hero-image {
-            /* Bỏ transition vì JS sẽ xử lý animation mỗi frame, giúp mượt hơn */
             will-change: transform, border-radius;
             transform-origin: center top;
             border-radius: 0;
@@ -45,8 +44,8 @@
 
         .section-title {
             text-align: center;
-            font-size: 2rem;
-            font-weight: 600;
+            font-size: clamp(1.5rem, 4vw, 2.5rem); /* THAY ĐỔI Ở ĐÂY */
+            font-weight: 700; /* Tăng độ đậm cho đẹp hơn */
             margin: 40px 0 20px 0;
             color: #333;
             opacity: 0;
@@ -293,7 +292,7 @@
 
 
     <script>
-        // --- LOGIC CHO MODAL (giữ nguyên) ---
+        // LOGIC CHO MODAL
         const modalCards = document.querySelectorAll('.card');
         const modal = document.querySelector('.modal');
         const modalOverlay = document.querySelector('.modal-overlay');
@@ -316,7 +315,7 @@
         modalCloseBtn.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);
 
-        // --- HIỆU ỨNG XUẤT HIỆN KHI CUỘN (giữ lại) ---
+        // HIỆU ỨNG XUẤT HIỆN KHI CUỘN
         const animatedElements = document.querySelectorAll('.card, .section-title');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -331,7 +330,7 @@
             observer.observe(element);
         });
 
-        // --- Hiệu ứng co lại và bo tròn viền mô phỏng Apple ---
+        // Hiệu ứng co lại và bo tròn viền mô phỏng Apple
         const heroImage = document.getElementById('hero-image');
         if (heroImage) {
             const animationEndScroll = 600;
