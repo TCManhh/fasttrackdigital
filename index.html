@@ -44,8 +44,8 @@
 
         .section-title {
             text-align: center;
-            font-size: clamp(1.5rem, 4vw, 2.5rem); /* THAY ĐỔI Ở ĐÂY */
-            font-weight: 700; /* Tăng độ đậm cho đẹp hơn */
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
             margin: 40px 0 20px 0;
             color: #333;
             opacity: 0;
@@ -149,7 +149,71 @@
             }
         }
 
-        /* CSS cho modal giữ nguyên */
+        /* === CSS CHO PHẦN BILL === */
+        .bill-section {
+            padding-block: 20px;
+            margin-bottom: 50px;
+            overflow-x: auto;
+            cursor: grab;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            .bill-section::-webkit-scrollbar {
+                display: none;
+            }
+
+        .bill-container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 25px;
+            padding-inline: 25px;
+        }
+
+        .bill-section.active {
+            cursor: grabbing;
+            cursor: -webkit-grabbing;
+        }
+
+        .bill-item {
+            flex-shrink: 0;
+            /* Màn hình lớn (desktop) - hiển thị ~4.5 ảnh */
+            width: 22vw;
+            /* Giới hạn kích thước tối đa để không quá to trên màn hình rất rộng */
+            max-width: 280px;
+            aspect-ratio: 1170 / 2532;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* Tùy chỉnh cho màn hình máy tính bảng */
+        @media (max-width: 1024px) {
+            .bill-item {
+                /* Hiển thị ~3 ảnh */
+                width: 30vw;
+            }
+        }
+
+        /* Tùy chỉnh cho màn hình điện thoại */
+        @media (max-width: 600px) {
+            .bill-item {
+                /* Hiển thị ~1.5 ảnh để khuyến khích vuốt */
+                width: 65vw;
+            }
+        }
+
+            .bill-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                pointer-events: none;
+            }
+
+        /* === CSS CHO MODAL === */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -162,24 +226,19 @@
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .modal {
             position: fixed;
             top: 50%;
             left: 50%;
+            transform-origin: center center;
             transform: translate(-50%, -50%) scale(0.95);
-            background: #fff;
-            border-radius: 20px;
             z-index: 1001;
-            width: 90%;
-            max-width: 960px;
-            max-height: 90vh;
-            overflow-y: auto;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
             .modal-overlay.active, .modal.active {
@@ -190,6 +249,16 @@
             .modal.active {
                 transform: translate(-50%, -50%) scale(1);
             }
+
+        /* Kiểu mặc định cho modal (cho phần Dịch vụ) */
+        .modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 960px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
 
         .modal-close {
             position: absolute;
@@ -207,6 +276,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1002;
         }
 
         .modal-content {
@@ -237,25 +307,81 @@
                 color: #333;
             }
 
-            .modal-body img {
+            .modal-body #modal-image {
                 flex: 1;
                 max-width: 50%;
                 height: auto;
                 border-radius: 12px;
             }
 
+        /* === CSS GHI ĐÈ KHI XEM ẢNH BILL === */
+        .modal.image-view {
+            top: 50%;
+            left: 50%;
+            width: auto;
+            height: auto;
+            max-width: 95vw;
+            max-height: 95vh;
+            padding: 0;
+            background: transparent;
+            overflow: visible; /* Cho phép nút X hiển thị bên ngoài */
+        }
+
+            .modal.image-view.active {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            .modal.image-view .modal-content {
+                padding: 0;
+                background: transparent;
+                box-shadow: none;
+                width: auto;
+                height: auto;
+                max-height: 100%;
+            }
+
+            /* === ĐÃ SỬA LỖI VỊ TRÍ NÚT X === */
+            .modal.image-view .modal-close {
+                display: block;
+                position: absolute; /* Vị trí tuyệt đối so với phần modal.image-view */
+                top: 10px; /* Điều chỉnh vị trí xuống một chút */
+                right: 10px; /* Điều chỉnh vị trí vào trong một chút */
+                background: rgba(0, 0, 0, 0.6);
+                color: white;
+                box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                z-index: 1003; /* Đảm bảo nút X nằm trên ảnh */
+            }
+
+            .modal.image-view h4, .modal.image-view h3, .modal.image-view p {
+                display: none;
+            }
+
+            .modal.image-view #modal-image {
+                max-width: 95vw;
+                max-height: 95vh;
+                object-fit: contain;
+                border-radius: 12px;
+                flex: none;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+
         @media(max-width: 768px) {
+            .modal-content {
+                padding: 30px 25px;
+            }
+
             .modal-body {
                 flex-direction: column;
             }
 
-                .modal-body img {
+                .modal-body #modal-image {
                     max-width: 100%;
                     margin-top: 20px;
                 }
-
-            .modal-content {
-                padding: 30px 25px;
+            /* Đặt lại vị trí nút X trên mobile cho dễ bấm */
+            .modal.image-view .modal-close {
+                top: 25px;
+                right: 10px;
             }
         }
     </style>
@@ -265,15 +391,36 @@
     <img id="hero-image" class="full-width-image" src="https://i.ibb.co/vvdwMm4C/D-ch-v-Premium-Gi-R.png" alt="Dịch vụ Premium Giá Rẻ" loading="eager">
 
     <h2 class="section-title">Các Dịch Vụ Shop Cung Cấp</h2>
-
     <section class="services-section">
         <div class="card-container">
-            <div class="card card-1" data-title="Apple Intelligence" data-headline="AI-opening possibilities." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-2" data-title="Cutting-Edge Cameras" data-headline="Picture your best photos..." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-3" data-title="Chip and Battery" data-headline="Fast that lasts." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-4" data-title="New Service 1" data-headline="Description for service 4." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-5" data-title="New Service 2" data-headline="Description for service 5." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-6" data-title="New Service 3" data-headline="Description for service 6." data-text="..."><div class="plus-icon">+</div></div>
+            <div class="card card-1" data-title="Apple Intelligence" data-img="" data-headline="AI-opening possibilities." data-text="..."><div class="plus-icon">+</div></div>
+            <div class="card card-2" data-title="Cutting-Edge Cameras" data-img="" data-headline="Picture your best photos..." data-text="..."><div class="plus-icon">+</div></div>
+            <div class="card card-3" data-title="Chip and Battery" data-img="" data-headline="Fast that lasts." data-text="..."><div class="plus-icon">+</div></div>
+            <div class="card card-4" data-title="New Service 1" data-img="" data-headline="Description for service 4." data-text="..."><div class="plus-icon">+</div></div>
+            <div class="card card-5" data-title="New Service 2" data-img="" data-headline="Description for service 5." data-text="..."><div class="plus-icon">+</div></div>
+            <div class="card card-6" data-title="New Service 3" data-img="" data-headline="Description for service 6." data-text="..."><div class="plus-icon">+</div></div>
+        </div>
+    </section>
+
+    <h2 class="section-title">Bill Thanh Toán Của Khách Hàng</h2>
+    <section class="bill-section">
+        <div class="bill-container">
+            <div class="bill-item"><img src="https://i.ibb.co/6rTj1s9/bill-gemini.png" alt="Hóa đơn gia hạn Gemini Pro"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/zQfD8P5/bill-2.png" alt="Hóa đơn khách hàng 2"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/gDFtqg8/bill-3.png" alt="Hóa đơn khách hàng 3"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/VvZg3dC/bill-4.png" alt="Hóa đơn khách hàng 4"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/JqjP0Sb/bill-5.png" alt="Hóa đơn khách hàng 5"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/9gJV04k/bill-6.png" alt="Hóa đơn khách hàng 6"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/vmQxkbN/bill-7.png" alt="Hóa đơn khách hàng 7"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/4RsJ4fF/bill-8.png" alt="Hóa đơn khách hàng 8"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/4gXCn0G/bill-9.png" alt="Hóa đơn khách hàng 9"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/yY9x0Yn/bill-10.png" alt="Hóa đơn khách hàng 10"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/mH0cBPd/bill-11.png" alt="Hóa đơn khách hàng 11"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/K07h4YD/bill-12.png" alt="Hóa đơn khách hàng 12"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/9s1PgLq/bill-13.png" alt="Hóa đơn khách hàng 13"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/S6J0vBP/bill-14.png" alt="Hóa đơn khách hàng 14"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/4Y4R7G6/bill-15.png" alt="Hóa đơn khách hàng 15"></div>
+            <div class="bill-item"><img src="https://i.ibb.co/VcM0PfnT/0601-GETBZL.png" alt="Hóa đơn khách hàng mới"></div>
         </div>
     </section>
 
@@ -290,10 +437,8 @@
         </div>
     </div>
 
-
     <script>
-        // LOGIC CHO MODAL
-        const modalCards = document.querySelectorAll('.card');
+        // === KHAI BÁO BIẾN ===
         const modal = document.querySelector('.modal');
         const modalOverlay = document.querySelector('.modal-overlay');
         const modalCloseBtn = document.querySelector('.modal-close');
@@ -301,61 +446,115 @@
         const modalHeadline = document.getElementById('modal-headline');
         const modalText = document.getElementById('modal-text');
         const modalImage = document.getElementById('modal-image');
-        function openModal() { modal.classList.add('active'); modalOverlay.classList.add('active'); document.body.classList.add('modal-open'); }
-        function closeModal() { modal.classList.remove('active'); modalOverlay.classList.remove('active'); document.body.classList.remove('modal-open'); }
+
+        // === HÀM MỞ VÀ ĐÓNG MODAL ===
+        function openModal() {
+            modal.classList.add('active');
+            modalOverlay.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalOverlay.classList.remove('active');
+            document.body.classList.remove('modal-open');
+            setTimeout(() => {
+                modal.classList.remove('image-view');
+                modalImage.src = "";
+                modal.style.transformOrigin = 'center center';
+            }, 350);
+        }
+
+        // === XỬ LÝ SỰ KIỆN ===
+        // 1. Nhấn vào nút đóng hoặc lớp phủ mờ
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.stopPropagation());
+
+        // 2. Nhấn vào card Dịch vụ
+        const modalCards = document.querySelectorAll('.card');
         modalCards.forEach(card => {
             card.addEventListener('click', () => {
+                modal.classList.remove('image-view');
                 modalTitle.textContent = card.dataset.title;
                 modalHeadline.textContent = card.dataset.headline;
                 modalText.textContent = card.dataset.text;
-                modalImage.src = card.dataset.img;
+                modalImage.src = card.dataset.img || '';
                 openModal();
             });
         });
-        modalCloseBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
 
-        // HIỆU ỨNG XUẤT HIỆN KHI CUỘN
+        // 3. Nhấn vào ảnh Bill
+        const billItems = document.querySelectorAll('.bill-item');
+        billItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (isDragging) return;
+
+                const rect = e.currentTarget.getBoundingClientRect();
+                const originX = rect.left + rect.width / 2;
+                const originY = rect.top + rect.height / 2;
+                modal.style.transformOrigin = `${originX}px ${originY}px`;
+
+                modal.classList.add('image-view');
+                modalImage.src = item.querySelector('img').src;
+                openModal();
+            });
+        });
+
+        // === HIỆU ỨNG XUẤT HIỆN KHI CUỘN ===
         const animatedElements = document.querySelectorAll('.card, .section-title');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
+                if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+
+        // === LOGIC CAROUSEL BILL ===
+        const slider = document.querySelector('.bill-section');
+        let isDown = false, startX, scrollLeft, isDragging = false, autoScrollInterval;
+
+        const stopAutoScroll = () => clearInterval(autoScrollInterval);
+        const startAutoScroll = () => {
+            stopAutoScroll();
+            autoScrollInterval = setInterval(() => {
+                if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
+                    stopAutoScroll();
+                } else {
+                    slider.scrollLeft += 1;
                 }
-            });
-        }, {
-            threshold: 0.1
+            }, 25);
+        };
+
+        slider.addEventListener('mousedown', (e) => {
+            stopAutoScroll();
+            isDown = true;
+            isDragging = false;
+            slider.classList.add('active');
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
         });
-        animatedElements.forEach(element => {
-            observer.observe(element);
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            if (Math.abs(e.pageX - startX) > 5) isDragging = true;
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
         });
 
-        // Hiệu ứng co lại và bo tròn viền mô phỏng Apple
-        const heroImage = document.getElementById('hero-image');
-        if (heroImage) {
-            const animationEndScroll = 600;
-            const startScale = 1.0;
-            const endScale = 0.92;
-            const startRadius = 0;
-            const endRadius = 25;
+        const handleDragEnd = () => {
+            if (!isDown) return;
+            isDown = false;
+            slider.classList.remove('active');
+            if (isDragging) startAutoScroll();
+        };
 
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                let progress = scrollY / animationEndScroll;
-                progress = Math.min(1, progress);
+        slider.addEventListener('mouseup', handleDragEnd);
+        slider.addEventListener('mouseleave', handleDragEnd);
 
-                const easedProgress = Math.sin(progress * Math.PI / 2);
-
-                const currentScale = startScale + (endScale - startScale) * easedProgress;
-                const currentRadius = startRadius + (endRadius - startRadius) * easedProgress;
-
-                window.requestAnimationFrame(() => {
-                    heroImage.style.transform = `scale(${currentScale})`;
-                    heroImage.style.borderRadius = `${currentRadius}px`;
-                });
-            });
-        }
+        startAutoScroll();
     </script>
-
 </body>
 </html>
