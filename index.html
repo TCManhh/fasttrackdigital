@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fast Track | Trang chính</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --card-gap: 15px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #1d1d1f;
+        }
+
+            body.modal-open {
+                overflow: hidden;
+            }
+
+        .full-width-image {
+            width: 100vw;
+            height: auto;
+            display: block;
+            transition: opacity 0.2s ease-out;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .services-section {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--card-gap);
+            padding: 10px 20px;
+        }
+
+        .card {
+            position: relative;
+            flex-shrink: 0;
+            width: calc(33.333% - var(--card-gap) * 2 / 3);
+            aspect-ratio: 1 / 1;
+            border-radius: 25px;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+            .card:hover {
+                transform: scale(1.02);
+            }
+
+        .plus-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 38px;
+            height: 38px;
+            background-color: rgba(100, 100, 100, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 28px;
+            font-weight: 300;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-1 {
+            background-image: url('https://i.ibb.co/fzMDNGZ0/1.png');
+        }
+
+        .card-2 {
+            background-image: url('https://i.ibb.co/bjXDXKdp/4.png');
+        }
+
+        .card-3 {
+            background-image: url('https://i.ibb.co/39R5xM0b/3.png');
+        }
+
+        @media (max-width: 900px) {
+            .card {
+                width: calc(50% - var(--card-gap) / 2);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                width: 100%;
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: #fff;
+            border-radius: 20px;
+            z-index: 1001;
+            width: 90%;
+            max-width: 960px;
+            max-height: 90vh;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+            .modal-overlay.active, .modal.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .modal.active {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e0e0e0;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            padding: 40px 50px;
+        }
+
+            .modal-content h4 {
+                color: #6e6e73;
+                font-weight: 600;
+            }
+
+            .modal-content h3 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-top: 5px;
+                margin-bottom: 30px;
+            }
+
+        .modal-body {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+            .modal-body p {
+                flex: 1;
+                line-height: 1.6;
+                color: #333;
+            }
+
+            .modal-body img {
+                flex: 1;
+                max-width: 50%;
+                height: auto;
+                border-radius: 12px;
+            }
+
+        @media(max-width: 768px) {
+            .modal-body {
+                flex-direction: column;
+            }
+
+                .modal-body img {
+                    max-width: 100%;
+                    margin-top: 20px;
+                }
+
+            .modal-content {
+                padding: 30px 25px;
+            }
+        }
+
+        .spacer {
+            height: 1500px;
+        }
+    </style>
+</head>
+<body>
+
+    <img class="full-width-image" src="https://i.ibb.co/vvdwMm4C/D-ch-v-Premium-Gi-R.png" alt="Dịch vụ Premium Giá Rẻ" loading="eager">
+
+    <h2 class="section-title">Các Dịch Vụ Shop Cung Cấp</h2>
+
+    <section class="services-section">
+        <div class="card-container">
+            <div class="card card-1"
+                 data-title="Apple Intelligence"
+                 data-headline="AI-opening possibilities."
+                 data-text="Our latest iPhone models are built for Apple Intelligence, the personal intelligence system that helps you write, express yourself, and get things done effortlessly. With groundbreaking privacy protections, it gives you peace of mind that no one else can access your data — not even Apple."
+                 data-img="https://images.unsplash.com/photo-1695224391698-5923053676c8?q=80&w=1888">
+                <div class="plus-icon">+</div>
+            </div>
+
+            <div class="card card-2"
+                 data-title="Cutting-Edge Cameras"
+                 data-headline="Picture your best photos and videos."
+                 data-text="The advanced camera system on iPhone lets you shoot stunning photos and cinematic videos with ease. Features like Night mode, Portrait mode, and 4K Dolby Vision recording turn your memories into masterpieces."
+                 data-img="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1964">
+                <div class="plus-icon">+</div>
+            </div>
+
+            <div class="card card-3"
+                 data-title="Chip and Battery"
+                 data-headline="Fast that lasts."
+                 data-text="The A-series bionic chip delivers industry-leading performance and efficiency. Coupled with an all-day battery life, your iPhone keeps up with you, from your morning coffee to your late-night playlist."
+                 data-img="https://images.unsplash.com/photo-1598687276431-7cf6a520a3a4?q=80&w=1964">
+                <div class="plus-icon">+</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer"></div>
+
+    <div class="modal-overlay"></div>
+    <div class="modal">
+        <button class="modal-close">&times;</button>
+        <div class="modal-content">
+            <h4 id="modal-title"></h4>
+            <h3 id="modal-headline"></h3>
+            <div class="modal-body">
+                <p id="modal-text"></p>
+                <img id="modal-image" src="" alt="Modal Image">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Logic cho ảnh nền mờ dần ---
+        const heroImage = document.querySelector('.full-width-image');
+        if (heroImage) {
+            const fadeOutDistance = 800;
+            window.addEventListener('scroll', () => {
+                const scrollPosition = window.scrollY;
+                let opacity = 1 - (scrollPosition / fadeOutDistance);
+                if (opacity < 0) opacity = 0;
+                heroImage.style.opacity = opacity;
+            });
+        }
+
+        // --- Logic cho Modal ---
+        const cards = document.querySelectorAll('.card');
+        const modal = document.querySelector('.modal');
+        const modalOverlay = document.querySelector('.modal-overlay');
+        const modalCloseBtn = document.querySelector('.modal-close');
+
+        const modalTitle = document.getElementById('modal-title');
+        const modalHeadline = document.getElementById('modal-headline');
+        const modalText = document.getElementById('modal-text');
+        const modalImage = document.getElementById('modal-image');
+
+        function openModal() {
+            modal.classList.add('active');
+            modalOverlay.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalOverlay.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.dataset.title;
+                const headline = card.dataset.headline;
+                const text = card.dataset.text;
+                const img = card.dataset.img;
+
+                modalTitle.textContent = title;
+                modalHeadline.textContent = headline;
+                modalText.textContent = text;
+                modalImage.src = img;
+
+                openModal();
+            });
+        });
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+
+    </script>
+
+</body>
+</html>
