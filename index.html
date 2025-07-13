@@ -187,6 +187,14 @@
             cursor: pointer;
         }
 
+            .bill-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                pointer-events: none;
+            }
+
         @media (max-width: 1024px) {
             .bill-item {
                 width: 30vw;
@@ -198,7 +206,6 @@
                 width: 45vw;
             }
         }
-
 
         /* === CSS CHO MODAL === */
         .modal-overlay {
@@ -237,6 +244,7 @@
                 transform: translate(-50%, -50%) scale(1);
             }
 
+        /* Kiểu mặc định cho modal (cho phần Dịch vụ) */
         .modal {
             background: #fff;
             border-radius: 20px;
@@ -300,6 +308,7 @@
                 border-radius: 12px;
             }
 
+        /* CSS GHI ĐÈ KHI XEM ẢNH BILL */
         .modal.image-view {
             top: 50%;
             left: 50%;
@@ -490,17 +499,15 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-        // === LOGIC CAROUSEL BILL - ĐÃ CẬP NHẬT ===
+        // === LOGIC CAROUSEL BILL ===
         const slider = document.querySelector('.bill-section');
         let isDown = false, startX, scrollLeft, isDragging = false, autoScrollInterval, idleTimer;
-
         const isTouchDevice = 'ontouchstart' in window;
 
         const stopAutoScroll = () => {
             clearInterval(autoScrollInterval);
             clearTimeout(idleTimer);
         };
-
         const startAutoScroll = () => {
             stopAutoScroll();
             autoScrollInterval = setInterval(() => {
@@ -517,7 +524,6 @@
             isDown = true;
             isDragging = false;
             slider.classList.add('active');
-            // Phân biệt giữa sự kiện chuột và chạm
             startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
         };
@@ -535,29 +541,24 @@
             if (!isDown) return;
             isDown = false;
             slider.classList.remove('active');
-
             if (isDragging) {
                 if (isTouchDevice) {
-                    // Trên điện thoại, đợi 2 giây rồi chạy lại
                     idleTimer = setTimeout(startAutoScroll, 2000);
                 } else {
-                    // Trên laptop, chạy lại ngay
                     startAutoScroll();
                 }
             }
         };
 
-        // Gán sự kiện cho cả chuột và cảm ứng
         slider.addEventListener('mousedown', handleInteractionStart);
         slider.addEventListener('mousemove', handleInteractionMove);
         slider.addEventListener('mouseup', handleInteractionEnd);
         slider.addEventListener('mouseleave', handleInteractionEnd);
 
-        slider.addEventListener('touchstart', handleInteractionStart);
+        slider.addEventListener('touchstart', handleInteractionStart, { passive: true });
         slider.addEventListener('touchmove', handleInteractionMove);
         slider.addEventListener('touchend', handleInteractionEnd);
 
-        // Bắt đầu chạy lần đầu
         startAutoScroll();
     </script>
 </body>
