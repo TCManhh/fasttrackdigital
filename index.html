@@ -8,22 +8,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <style>
-        #hero-image {
-            will-change: transform, border-radius;
-            transform-origin: center top;
-            border-radius: 0;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         :root {
             --card-gap: 15px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        html {
+            scroll-behavior: smooth; /* Hỗ trợ cuộn mượt trên trình duyệt */
         }
 
         body {
@@ -35,6 +35,123 @@
             body.modal-open {
                 overflow: hidden;
             }
+
+        /* === CSS CHO HEADER === */
+        .site-header {
+            background-color: #fff; /* Chuyển sang màu trắng */
+            color: #333; /* Chuyển chữ sang màu tối */
+            padding: 10px 40px;
+            border-bottom: 1px solid #eee; /* Thêm đường viền mỏng */
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .header-search {
+            flex-grow: 1;
+            position: relative;
+        }
+
+            .header-search input {
+                width: 100%;
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 12px 45px 12px 20px;
+                color: #333;
+                font-size: 1rem;
+            }
+
+                .header-search input:focus {
+                    outline: none;
+                    border-color: #ccc;
+                }
+
+            .header-search .search-icon {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%) rotate(45deg);
+                color: #777;
+                font-size: 1.2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+                /* Thêm style cho SVG nếu cần */
+                .header-search .search-icon svg {
+                    width: 20px;
+                    height: 20px;
+                }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+            .header-actions .btn {
+                background-color: transparent;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 10px 20px;
+                color: #555;
+                text-decoration: none;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                white-space: nowrap;
+            }
+
+        .header-nav-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+        }
+
+        .category-btn {
+            background-color: #f0c14b;
+            color: #111;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        #hero-image {
+            will-change: transform, border-radius;
+            transform-origin: center top;
+            border-radius: 0;
+        }
 
         .full-width-image {
             width: 100%;
@@ -57,6 +174,11 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+
+        /* Tạo khoảng trống khi cuộn đến mục */
+        #dich-vu, #check-uy-tin {
+            scroll-margin-top: 30px;
+        }
 
         .services-section {
             width: 100%;
@@ -149,7 +271,6 @@
             }
         }
 
-        /* === CSS CHO PHẦN BILL === */
         .bill-section {
             padding-block: 20px;
             margin-bottom: 50px;
@@ -207,7 +328,6 @@
             }
         }
 
-        /* === CSS CHO MODAL === */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -373,14 +493,80 @@
                 top: 10px;
                 right: 10px;
             }
+
+            .site-header {
+                padding: 15px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+
+            .header-search {
+                margin: 0;
+                width: 100%;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+                .header-actions .btn {
+                    flex-grow: 1;
+                    justify-content: center;
+                }
+
+            .header-nav-container {
+                flex-direction: column;
+                gap: 15px;
+                padding-top: 0;
+                border-top: none;
+                margin-top: 0;
+            }
+
+            .main-nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
 <body>
 
+    <header class="site-header">
+        <div class="header-top">
+            <div class="header-logo">
+                <a href="#"><img src="https://i.ibb.co/JjtdvhYW/2-Sao-ch-p.png" alt="Logo"></a>
+            </div>
+            <div class="header-search">
+                <input type="text" placeholder="Dịch Vụ Premium Cần Tìm...">
+                <span class="search-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+            </div>
+        </div>
+        <div class="header-nav-container">
+            <button class="category-btn">☰ Danh mục</button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#">TRANG CHỦ</a></li>
+                    <li><a href="#dich-vu">CỬA HÀNG</a></li>
+                    <li><a href="#check-uy-tin">CHECK UY TÍN</a></li>
+                    <li><a href="#">CHÍNH SÁCH BẢO HÀNH</a></li>
+                    <li><a href="#">BLOG</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
     <img id="hero-image" class="full-width-image" src="https://i.ibb.co/vvdwMm4C/D-ch-v-Premium-Gi-R.png" alt="Dịch vụ Premium Giá Rẻ" loading="eager">
 
-    <h2 class="section-title">Các Dịch Vụ Shop Cung Cấp</h2>
+    <h2 id="dich-vu" class="section-title">Các Dịch Vụ Shop Cung Cấp</h2>
     <section class="services-section">
         <div class="card-container">
             <div class="card card-1" data-title="Apple Intelligence" data-img="" data-headline="AI-opening possibilities." data-text="..."><div class="plus-icon">+</div></div>
@@ -392,7 +578,7 @@
         </div>
     </section>
 
-    <h2 class="section-title">Bill Thanh Toán Của Khách Hàng</h2>
+    <h2 id="check-uy-tin" class="section-title">Bill Thanh Toán Của Khách Hàng</h2>
     <section class="bill-section">
         <div class="bill-container">
             <div class="bill-item"><img src="https://i.ibb.co/6rTj1s9/bill-gemini.png" alt="Hóa đơn gia hạn Gemini Pro"></div>
@@ -473,6 +659,7 @@
         });
 
         const billItems = document.querySelectorAll('.bill-item');
+        let isDragging = false;
         billItems.forEach(item => {
             item.addEventListener('click', (e) => {
                 if (isDragging) return;
@@ -497,9 +684,9 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-        // === LOGIC CAROUSEL BILL VỚI HIỆU ỨNG GIA TỐC (ĐÃ CẬP NHẬT) ===
+        // === LOGIC CAROUSEL BILL VỚI HIỆU ỨNG GIA TỐC ===
         const slider = document.querySelector('.bill-section');
-        let isDown = false, startX, scrollLeft, isDragging = false;
+        let isDown = false, startX, scrollLeft;
         let velocity = 0, animationFrameId, timestamp, lastX;
 
         let autoScrollInterval, idleTimer;
@@ -529,11 +716,8 @@
                 }
                 return;
             }
-            slider.scrollLeft -= velocity * 10; // Đảo chiều vuốt cho đúng
-
-            // === THAY ĐỔI Ở ĐÂY: GIẢM MA SÁT ĐỂ LƯỚT XA HƠN ===
-            velocity *= 0.96; // Thay vì 0.95, giúp lướt xa hơn một chút
-
+            slider.scrollLeft -= velocity * 10;
+            velocity *= 0.96;
             animationFrameId = requestAnimationFrame(momentumScroll);
         }
 
@@ -558,9 +742,13 @@
             const walk = currentX - startX;
             slider.scrollLeft = scrollLeft - walk;
 
+            if (Math.abs(walk) > 5) {
+                isDragging = true;
+            }
+
             const now = Date.now();
             const deltaTime = now - timestamp;
-            if (deltaTime > 20) { // Cập nhật vận tốc không quá thường xuyên
+            if (deltaTime > 20) {
                 const deltaX = currentX - lastX;
                 velocity = deltaX / deltaTime;
                 timestamp = now;
@@ -572,10 +760,6 @@
             if (!isDown) return;
             isDown = false;
             slider.classList.remove('active');
-
-            if (Math.abs(slider.scrollLeft - scrollLeft) > 5) {
-                isDragging = true;
-            }
 
             if (isDragging) {
                 cancelAnimationFrame(animationFrameId);
@@ -593,6 +777,23 @@
         slider.addEventListener('touchend', handleInteractionEnd);
 
         startAutoScroll();
+
+        // === LOGIC CUỘN MƯỢT KHI NHẤN VÀO MENU ===
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Ngăn hành vi nhảy trang mặc định
+
+                const targetElement = document.querySelector(this.getAttribute('href'));
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start' // Căn lề trên của phần tử với lề trên của khung nhìn
+                    });
+                }
+            });
+        });
+
     </script>
 </body>
 </html>
