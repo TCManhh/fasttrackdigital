@@ -514,6 +514,9 @@
         const slider = document.querySelector('.bill-section');
         let isDown = false, startX, scrollLeft, isDragging = false, autoScrollInterval;
 
+        // === THAY ĐỔI Ở ĐÂY: KIỂM TRA THIẾT BỊ CẢM ỨNG ===
+        const isTouchDevice = 'ontouchstart' in window;
+
         const stopAutoScroll = () => clearInterval(autoScrollInterval);
         const startAutoScroll = () => {
             stopAutoScroll();
@@ -544,16 +547,23 @@
             slider.scrollLeft = scrollLeft - walk;
         });
 
+        // === THAY ĐỔI Ở ĐÂY: CẬP NHẬT HÀM KẾT THÚC KÉO ===
         const handleDragEnd = () => {
             if (!isDown) return;
             isDown = false;
             slider.classList.remove('active');
-            if (isDragging) startAutoScroll();
+
+            // Nếu là kéo và không phải thiết bị cảm ứng (là laptop) thì mới chạy lại
+            if (isDragging && !isTouchDevice) {
+                startAutoScroll();
+            }
+            // Trên điện thoại, sau khi kéo xong sẽ không làm gì cả, auto-scroll sẽ tắt hẳn
         };
 
         slider.addEventListener('mouseup', handleDragEnd);
         slider.addEventListener('mouseleave', handleDragEnd);
 
+        // Bắt đầu tự động chạy ban đầu trên cả hai thiết bị
         startAutoScroll();
     </script>
 </body>
