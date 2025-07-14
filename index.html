@@ -48,7 +48,14 @@
             gap: 20px;
             position: relative;
             z-index: 1060;
+            /* [THAY ĐỔI] Thêm hiệu ứng chuyển động cho header */
+            transition: transform 0.4s ease;
         }
+
+            /* [THAY ĐỔI] Thêm lớp để ẩn header */
+            .site-header.is-hidden {
+                transform: translateY(-100%);
+            }
 
         .header-logo img {
             height: 50px;
@@ -294,7 +301,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -329,6 +337,7 @@
             max-width: 960px;
             max-height: 90vh;
             overflow-y: auto;
+            padding: 0 8px;
         }
 
         .modal-close {
@@ -351,7 +360,7 @@
         }
 
         .modal-content {
-            padding: 40px 50px;
+            padding: 40px 42px;
         }
 
             .modal-content h4 {
@@ -438,7 +447,6 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             }
 
-        /* === [THÊM MỚI] CSS CHO CÁC PHẦN TRONG MODAL === */
         .modal-full-width-wrapper {
             margin: 40px -50px -40px -50px;
         }
@@ -551,10 +559,9 @@
                 }
         }
 
-        /* === [THÊM MỚI] TỐI ƯU CHO DI ĐỘNG === */
         @media (max-width: 768px) {
             .modal-content {
-                padding: 30px 20px;
+                padding: 30px 12px;
             }
 
                 .modal-content h3 {
@@ -744,7 +751,6 @@
             visibility: visible;
         }
 
-        /* [THÊM MỚI] CSS RIÊNG CHO CỤM NÚT LIÊN HỆ TRÊN MOBILE */
         @media (max-width: 768px) {
             .floating-actions-container {
                 gap: 12px;
@@ -1078,12 +1084,14 @@
         const categoryCloseBtn = document.getElementById('category-close-btn');
 
         function openCategoryMenu() {
+            siteHeader.classList.add('is-hidden'); // [THAY ĐỔI]
             categoryOverlay.classList.add('active');
             categoryMenu.classList.add('active');
             document.body.classList.add('modal-open');
         }
 
         function closeCategoryMenu() {
+            siteHeader.classList.remove('is-hidden'); // [THAY ĐỔI]
             categoryOverlay.classList.remove('active');
             categoryMenu.classList.remove('active');
             document.body.classList.remove('modal-open');
@@ -1105,9 +1113,6 @@
         }
 
         if (categoryCloseBtn) {
-            // The close button is now part of the header logic, let's adjust this
-            // Note: The original HTML has the close button outside the menu.
-            // We will tie its visibility to the menu's state.
             const headerForCloseBtn = document.querySelector('.site-header');
             const observerForCloseBtn = new MutationObserver(mutations => {
                 mutations.forEach(mutation => {
@@ -1125,7 +1130,6 @@
 
         if (categoryMenu) {
             categoryMenu.addEventListener('click', (e) => {
-                // If a link inside is clicked, close the menu
                 if (e.target.closest('a')) {
                     closeCategoryMenu();
                 }
@@ -1146,12 +1150,9 @@
                 mainNav.classList.toggle('is-open');
             });
         }
-        // === [THÊM MỚI] TỰ ĐỘNG ĐÓNG MENU KHI NHẤN VÀO LINK ===
         if (mainNav) {
             mainNav.addEventListener('click', (e) => {
-                // Kiểm tra xem phần tử được nhấn có phải là một thẻ <a> không
                 if (e.target.closest('a')) {
-                    // Nếu menu đang mở, hãy đóng nó lại
                     if (mainNav.classList.contains('is-open')) {
                         mainNav.classList.remove('is-open');
                     }
@@ -1195,6 +1196,7 @@
 
         function openModal() {
             if (modal && modalOverlayEl) {
+                siteHeader.classList.add('is-hidden'); // [THAY ĐỔI]
                 modal.classList.add('active');
                 modalOverlayEl.classList.add('active');
                 document.body.classList.add('modal-open');
@@ -1202,6 +1204,7 @@
         }
         function closeModal() {
             if (modal && modalOverlayEl) {
+                siteHeader.classList.remove('is-hidden'); // [THAY ĐỔI]
                 modal.classList.remove('active');
                 modalOverlayEl.classList.remove('active');
                 document.body.classList.remove('modal-open');
@@ -1238,7 +1241,6 @@
         const billItems = document.querySelectorAll('.bill-item');
         billItems.forEach(item => {
             item.addEventListener('click', (e) => {
-                // Check if the item was dragged, if so, don't open modal
                 if (item.classList.contains('was-dragged')) {
                     item.classList.remove('was-dragged');
                     return;
