@@ -197,7 +197,7 @@
         }
 
         .card-1 {
-            background-image: url('https://i.ibb.co/fzMDNGZ0/1.png');
+            background-image: url('./images/card-1.png');
         }
 
         .card-2 {
@@ -1087,6 +1087,19 @@
                 mainNav.classList.toggle('is-open');
             });
         }
+        // === [THÊM MỚI] TỰ ĐỘNG ĐÓNG MENU KHI NHẤN VÀO LINK ===
+        if (mainNav) {
+            mainNav.addEventListener('click', (e) => {
+                // Kiểm tra xem phần tử được nhấn có phải là một thẻ <a> không
+                if (e.target.closest('a')) {
+                    // Nếu menu đang mở, hãy đóng nó lại
+                    if (mainNav.classList.contains('is-open')) {
+                        mainNav.classList.remove('is-open');
+                    }
+                }
+            });
+        }
+
 
 
         // === LOGIC CHO ICON TÌM KIẾM (MOBILE) ===
