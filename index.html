@@ -540,14 +540,10 @@
             border-radius: 50%;
             background-size: cover;
             background-position: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);*/
             display: block;
             transition: transform 0.2s ease;
         }
-
-            .floating-action-btn:hover {
-                transform: scale(1.1);
-            }
 
         /* Đặt ảnh nền cho từng nút */
         .btn-facebook {
@@ -707,11 +703,11 @@
             }
         }
 
-        /* === [THÊM MỚI] CSS CHO HIỆU ỨNG NÚT LIÊN HỆ === */
+        /* === [CẬP NHẬT] CSS CHO HIỆU ỨNG NÚT LIÊN HỆ === */
 
         /* 1. Định nghĩa các animation (chuyển động) */
 
-        /* Keyframe cho hiệu ứng "chớp chớp" (pulse) chung */
+        /* Keyframe cho hiệu ứng "chớp chớp" (pulse) chung cho các nút khác */
         @keyframes subtle-pulse {
             0% {
                 transform: scale(1);
@@ -729,38 +725,70 @@
             }
         }
 
-        /* Keyframe cho hiệu ứng "hào quang" (halo) lan tỏa màu đỏ */
-        @keyframes pulse-halo {
+        /* Keyframe cho hiệu ứng LẮC (shake) */
+        @keyframes ring-shake {
             0% {
-                /* Bắt đầu với hào quang 0px, và giữ lại shadow gốc */
-                box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.7), 0 4px 12px rgba(0, 0, 0, 0.2);
+                transform: rotate(0);
             }
 
-            70% {
-                /* Lan tỏa hào quang ra 15px và mờ dần, đồng thời phóng to shadow gốc */
-                box-shadow: 0 0 0 15px rgba(255, 26, 26, 0), 0 6px 18px rgba(0, 0, 0, 0.3);
+            15% {
+                transform: rotate(10deg);
+            }
+
+            30% {
+                transform: rotate(-8deg);
+            }
+
+            45% {
+                transform: rotate(6deg);
+            }
+
+            60% {
+                transform: rotate(-4deg);
+            }
+
+            75% {
+                transform: rotate(2deg);
+            }
+
+            90% {
+                transform: rotate(-1deg);
             }
 
             100% {
-                /* Kết thúc, hào quang biến mất hoàn toàn */
-                box-shadow: 0 0 0 0 rgba(255, 26, 26, 0), 0 4px 12px rgba(0, 0, 0, 0.2);
+                transform: rotate(0);
+            }
+        }
+
+        /* [THAY ĐỔI] Keyframe cho hiệu ứng HÀO QUANG lan tỏa */
+        @keyframes pulse-halo {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 26, 26, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 26, 26, 0);
             }
         }
 
 
         /* 2. Áp dụng hiệu ứng */
 
-        /* Áp dụng hiệu ứng "chớp chớp" chung cho TẤT CẢ các nút */
+        /* Áp dụng hiệu ứng "chớp chớp" chung. Zalo và Telegram sẽ ghi đè animation này */
         .floating-action-btn {
             animation: subtle-pulse 2.5s infinite ease-in-out;
         }
 
-        /* Ghi đè hiệu ứng và thêm style riêng cho Zalo và Telegram */
+        /* [THAY ĐỔI] Style và hiệu ứng LẮC & HÀO QUANG riêng cho Zalo và Telegram */
         .btn-zalo, .btn-telegram {
-            /* Thêm viền đỏ dày 3px */
-            border: 3px solid #ff1a1a;
-            /* Thay thế animation chung bằng animation hào quang */
-            animation: pulse-halo 2s infinite;
+            /* Xóa viền cũ để dùng box-shadow cho hiệu ứng hào quang */
+            border: none;
+            /* Áp dụng 2 animation: Lắc và Hào quang lan tỏa */
+            animation: ring-shake 1.5s infinite, pulse-halo 2s infinite;
         }
 
         /* Giữ lại hiệu ứng hover gốc để nó không bị animation ghi đè */
@@ -1175,7 +1203,8 @@
             function momentumScroll() {
                 if (Math.abs(velocity) < 0.2) {
                     if (isTouchDevice) {
-                        idleTimer = setTimeout(startAutoScroll, 2000);
+                        // [CẬP NHẬT] Thời gian chờ trước khi lướt lại là 1000ms (1 giây)
+                        idleTimer = setTimeout(startAutoScroll, 1000);
                     } else {
                         startAutoScroll();
                     }
@@ -1225,6 +1254,11 @@
                 if (isDragging) {
                     cancelAnimationFrame(animationFrameId);
                     animationFrameId = requestAnimationFrame(momentumScroll);
+                } else {
+                    // Nếu không kéo (chỉ click/tap) thì cũng bắt đầu lại sau 1s trên mobile
+                    if (isTouchDevice) {
+                        idleTimer = setTimeout(startAutoScroll, 1000);
+                    }
                 }
             };
 
