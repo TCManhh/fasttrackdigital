@@ -385,7 +385,6 @@
                 border-radius: 12px;
             }
 
-                /* Thêm vào để ẩn ảnh khi không có src */
                 .modal-body #modal-image[src=""] {
                     display: none;
                 }
@@ -437,6 +436,29 @@
                 border-radius: 12px;
                 flex: none;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+
+        /* === [THÊM MỚI] CSS CHO CÁC PHẦN TRONG MODAL === */
+        .modal-full-width-wrapper {
+            margin: 40px -50px -40px -50px;
+        }
+
+        .modal-benefits-section {
+            background-color: #f9f9f9;
+            padding: 25px 50px;
+            text-align: left;
+        }
+
+        .modal-faq-section {
+            padding: 25px 50px;
+            text-align: left;
+            border-top: 1px solid #e5e5e5;
+        }
+
+            .modal-benefits-section h3, .modal-faq-section h3 {
+                font-size: 1.5rem;
+                margin-top: 0;
+                margin-bottom: 15px;
             }
 
 
@@ -528,6 +550,35 @@
                     width: 100%;
                 }
         }
+
+        /* === [THÊM MỚI] TỐI ƯU CHO DI ĐỘNG === */
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+                .modal-content h3 {
+                    font-size: 1.75rem;
+                }
+
+            .modal-body {
+                flex-direction: column;
+            }
+
+                .modal-body #modal-image {
+                    max-width: 100%;
+                    margin-top: 20px;
+                }
+
+            .modal-full-width-wrapper {
+                margin: 30px -20px -30px -20px;
+            }
+
+            .modal-benefits-section, .modal-faq-section {
+                padding: 25px 20px;
+            }
+        }
+
 
         /* === CSS CHO CỤM NÚT LIÊN HỆ === */
         .floating-actions-container {
@@ -696,13 +747,12 @@
         /* [THÊM MỚI] CSS RIÊNG CHO CỤM NÚT LIÊN HỆ TRÊN MOBILE */
         @media (max-width: 768px) {
             .floating-actions-container {
-                gap: 12px; /* Giảm khoảng cách giữa các nút */
-                right: 20px; /* Dịch các nút vào trong một chút */
+                gap: 12px;
+                right: 20px;
                 bottom: 20px;
             }
 
             .floating-action-btn {
-                /* Giảm kích thước nút */
                 width: 48px;
                 height: 48px;
             }
@@ -790,16 +840,13 @@
 
         /* Style và hiệu ứng LẮC & HÀO QUANG riêng cho Zalo và Telegram */
         .btn-zalo, .btn-telegram {
-            /* Xóa viền cũ để dùng box-shadow cho hiệu ứng hào quang */
             border: none;
-            /* Áp dụng 2 animation: Lắc và Hào quang lan tỏa */
             animation: ring-shake 1.5s infinite, pulse-halo 2s infinite;
         }
 
         /* Giữ lại hiệu ứng hover gốc để nó không bị animation ghi đè */
         .floating-action-btn:hover {
             transform: scale(1.1);
-            /* Tạm dừng animation khi hover để hiệu ứng scale rõ hơn */
             animation-play-state: paused;
         }
 
@@ -916,7 +963,7 @@
                  data-title="Fast Track - Dịch Vụ Premium Giá Rẻ"
                  data-img=""
                  data-headline="Nâng Cấp YouTube Premium - Tặng Kèm YouTube Music Premium "
-                 data-text="<div> <section style='padding-top: 20px; text-align: center; font-family: sans-serif; width: 100%;'> <div style='display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;'> <div style='background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; flex: 1 1 260px; min-width: 240px;'> <h3 style='color: #333; font-size: 20px; margin-bottom: 10px;'>Gói Nâng Cấp Gmail Chính Chủ</h3> <p style='font-size: 15px; color: #666;'>Dùng tài khoản Google cá nhân của bạn, ổn định và lâu dài - chỉ cần cung cấp địa chỉ gmail (không cần cung cấp mật khẩu) - Bảo Mật 100 - Không giới hạn thiết bị.</p> <p style='font-size: 18px; font-weight: bold; margin-top: 10px;'>40.000đ / tháng</p> </div> <div style='background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; flex: 1 1 260px; min-width: 240px;'> <h3 style='color: #333; font-size: 20px; margin-bottom: 10px;'>Gói Thuê Tài Khoản Premium</h3> <p style='font-size: 15px; color: #666;'>Tài khoản shop cấp – Gia hạn hàng tháng (Không gia hạn shop xin phép thu hồi tài khoản) – Dùng đủ tính năng Premium - Giới hạn 3 thiết bị.</p> <p style='font-size: 18px; font-weight: bold; margin-top: 10px;'>35.000đ / tháng</p> </div> <div style='background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; flex: 1 1 260px; min-width: 240px;'> <h3 style='color: #333; font-size: 20px; margin-bottom: 10px;'>Gói YouTube TV Premium</h3> <p style='font-size: 15px; color: #666;'>Tài khoản shop cấp – Gia hạn hàng tháng (Không gia hạn shop xin phép thu hồi tài khoản) – Dùng đủ tính năng Premium - Giới hạn 5 TV.</p> <p style='font-size: 18px; font-weight: bold; margin-top: 10px;'>20.000đ / tháng</p> </div> </div> <div style='margin-top: 30px;'> <a href='https://zalo.me/0978879931' style='background-color: #e74c3c; color: #fff; padding: 12px 24px; text-decoration: none; font-size: 16px; border-radius: 6px; font-weight: bold; display: inline-block;'> Liên hệ để mua ngay </a> </div> </section> <div style='margin: 40px -50px -40px -50px;'> <div style='background-color: #f9f9f9; padding: 25px 50px; text-align: left;'> <h3 style='color: #c00; font-size: 22px; margin-top: 0; margin-bottom: 15px;'>🔥 Lợi ích khi sử dụng YouTube Premium</h3> <ul style='list-style: none; padding: 0; font-size: 16px; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> <div style='padding: 25px 50px; text-align: left; border-top: 1px solid #e5e5e5;'> <h3 style='font-size: 22px; margin-top: 25px; margin-bottom: 20px;'>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3> <div style='font-size: 16px; line-height: 1.7;'> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</p> <p style='padding-left: 20px; color: #555;'>→ Gói chính chủ: bạn dùng tài khoản Gmail của mình. Shop chỉ gửi link mời vào Family.<br>→ Gói thuê: Shop cấp tài khoản riêng biệt.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>2. Sau khi thanh toán, tôi cần làm gì?</p> <p style='padding-left: 20px; color: #555;'>→ Shop gửi link mời vào Family qua Zalo/Facebook. Bạn chỉ cần bấm vào link và tham gia là dùng được ngay.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>3. Có thể gia hạn gói dịch vụ không?</p> <p style='padding-left: 20px; color: #555;'>→ Có. Shop sẽ nhắc bạn trước khi hết hạn qua email hoặc Zalo. Hoặc bạn có thể chủ động liên hệ để gia hạn.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>4. Nếu tôi vào nhầm tài khoản Google thì sao?</p> <p style='padding-left: 20px; color: #555;'>→ Liên hệ shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa dùng.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>5. Một tài khoản sử dụng được bao nhiêu thiết bị?</p> <p style='padding-left: 20px; color: #555;'>→ Có thể đăng nhập trên tối đa 10 thiết bị, sử dụng đồng thời trên 4 thiết bị.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>6. Thông tin cá nhân có bị lộ khi vào Family không?</p> <p style='padding-left: 20px; color: #555;'>→ Tuyệt đối không. Các thành viên Family không thể nhìn thấy thông tin của nhau.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>7. Tài khoản ở nước ngoài có tham gia được không?</p> <p style='padding-left: 20px; color: #555;'>→ Có thể, nhưng bạn cần liên hệ để shop hỗ trợ chuyển vùng phù hợp.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>8. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</p> <p style='padding-left: 20px; color: #555;'>→ Không. Hãy sử dụng Gmail cá nhân – G-suite thường bị hạn chế không tham gia được Family.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>9. Thời gian tính dịch vụ được bắt đầu khi nào?</p> <p style='padding-left: 20px; color: #555;'>→ Bắt đầu tính từ thời điểm bạn tham gia Family, không phải lúc thanh toán.</p> </div> </div> </div> </div> </div>">
+                 data-text="<div> <section style='padding-top: 20px; text-align: center; font-family: sans-serif; width: 100%;'> <div style='display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%;'> <div style='background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; flex: 1 1 260px; min-width: 240px;'> <h3 style='color: #333; font-size: 20px; margin-bottom: 10px;'>Gói Nâng Cấp Gmail Chính Chủ</h3> <p style='font-size: 15px; color: #666;'>Dùng tài khoản Google cá nhân của bạn, ổn định và lâu dài - chỉ cần cung cấp địa chỉ gmail (không cần cung cấp mật khẩu) - Bảo Mật 100 - Không giới hạn thiết bị.</p> <p style='font-size: 18px; font-weight: bold; margin-top: 10px;'>40.000đ / tháng</p> </div> <div style='background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; flex: 1 1 260px; min-width: 240px;'> <h3 style='color: #333; font-size: 20px; margin-bottom: 10px;'>Gói Thuê Tài Khoản Premium</h3> <p style='font-size: 15px; color: #666;'>Tài khoản shop cấp – Gia hạn hàng tháng (Không gia hạn shop xin phép thu hồi tài khoản) – Dùng đủ tính năng Premium - Giới hạn 3 thiết bị.</p> <p style='font-size: 18px; font-weight: bold; margin-top: 10px;'>35.000đ / tháng</p> </div> <div style='background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; flex: 1 1 260px; min-width: 240px;'> <h3 style='color: #333; font-size: 20px; margin-bottom: 10px;'>Gói YouTube TV Premium</h3> <p style='font-size: 15px; color: #666;'>Tài khoản shop cấp – Gia hạn hàng tháng (Không gia hạn shop xin phép thu hồi tài khoản) – Dùng đủ tính năng Premium - Giới hạn 5 TV.</p> <p style='font-size: 18px; font-weight: bold; margin-top: 10px;'>20.000đ / tháng</p> </div> </div> <div style='margin-top: 30px;'> <a href='https://zalo.me/0978879931' style='background-color: #e74c3c; color: #fff; padding: 12px 24px; text-decoration: none; font-size: 16px; border-radius: 6px; font-weight: bold; display: inline-block;'> Liên hệ để mua ngay </a> </div> </section> <div class='modal-full-width-wrapper'> <div class='modal-benefits-section'> <h3 style='color: #c00;'>🔥 Lợi ích khi sử dụng YouTube Premium</h3> <ul style='list-style: none; padding: 0; font-size: 16px; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> <div class='modal-faq-section'> <h3>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3> <div style='font-size: 16px; line-height: 1.7;'> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</p> <p style='padding-left: 20px; color: #555;'>→ Gói chính chủ: bạn dùng tài khoản Gmail của mình. Shop chỉ gửi link mời vào Family.<br>→ Gói thuê: Shop cấp tài khoản riêng biệt.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>2. Sau khi thanh toán, tôi cần làm gì?</p> <p style='padding-left: 20px; color: #555;'>→ Shop gửi link mời vào Family qua Zalo/Facebook. Bạn chỉ cần bấm vào link và tham gia là dùng được ngay.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>3. Có thể gia hạn gói dịch vụ không?</p> <p style='padding-left: 20px; color: #555;'>→ Có. Shop sẽ nhắc bạn trước khi hết hạn qua email hoặc Zalo. Hoặc bạn có thể chủ động liên hệ để gia hạn.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>4. Nếu tôi vào nhầm tài khoản Google thì sao?</p> <p style='padding-left: 20px; color: #555;'>→ Liên hệ shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa dùng.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>5. Một tài khoản sử dụng được bao nhiêu thiết bị?</p> <p style='padding-left: 20px; color: #555;'>→ Có thể đăng nhập trên tối đa 10 thiết bị, sử dụng đồng thời trên 4 thiết bị.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>6. Thông tin cá nhân có bị lộ khi vào Family không?</p> <p style='padding-left: 20px; color: #555;'>→ Tuyệt đối không. Các thành viên Family không thể nhìn thấy thông tin của nhau.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>7. Tài khoản ở nước ngoài có tham gia được không?</p> <p style='padding-left: 20px; color: #555;'>→ Có thể, nhưng bạn cần liên hệ để shop hỗ trợ chuyển vùng phù hợp.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>8. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</p> <p style='padding-left: 20px; color: #555;'>→ Không. Hãy sử dụng Gmail cá nhân – G-suite thường bị hạn chế không tham gia được Family.</p> </div> <div style='margin-bottom: 15px;'> <p style='font-weight: bold; margin-bottom: 5px;'>9. Thời gian tính dịch vụ được bắt đầu khi nào?</p> <p style='padding-left: 20px; color: #555;'>→ Bắt đầu tính từ thời điểm bạn tham gia Family, không phải lúc thanh toán.</p> </div> </div> </div> </div> </div>">
                 <div class="plus-icon">+</div>
             </div>
             <div class="card card-2" data-title="Cutting-Edge Cameras" data-img="" data-headline="Picture your best photos." data-text="..."><div class="plus-icon">+</div></div>
