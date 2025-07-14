@@ -797,7 +797,7 @@
             animation-play-state: paused;
         }
 
-        /* === [THÊM MỚI] CSS CHO HIỆU ỨNG ICON BAY === */
+        /* === CSS CHO HIỆU ỨNG ICON BAY === */
         #floating-icons-container {
             position: fixed;
             top: 0;
@@ -1170,11 +1170,9 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-        /* === LOGIC CAROUSEL BILL VỚI TỰ ĐỘNG LƯỚT (ĐÃ CẬP NHẬT) === */
+        /* === [CẬP NHẬT] LOGIC CAROUSEL BILL - TỐI ƯU CHO ĐIỆN THOẠI === */
         const slider = document.querySelector('.bill-section');
         if (slider) {
-            let isDown = false, startX, scrollLeft;
-            let velocity = 0, animationFrameId, timestamp, lastX;
             let autoScrollInterval, idleTimer;
             const isTouchDevice = 'ontouchstart' in window;
 
@@ -1182,8 +1180,9 @@
                 clearInterval(autoScrollInterval);
                 clearTimeout(idleTimer);
             };
+
             const startAutoScroll = () => {
-                stopAutoScroll();
+                stopAutoScroll(); // Đảm bảo không có nhiều tiến trình chạy song song
                 autoScrollInterval = setInterval(() => {
                     if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
                         slider.scrollLeft = 0;
@@ -1193,77 +1192,52 @@
                 }, 25);
             };
 
-            function momentumScroll() {
-                if (Math.abs(velocity) < 0.2) {
-                    if (isTouchDevice) {
-                        // Thời gian chờ trước khi lướt lại là 1000ms (1 giây)
-                        idleTimer = setTimeout(startAutoScroll, 1000);
-                    } else {
-                        startAutoScroll();
-                    }
-                    return;
-                }
-                slider.scrollLeft -= velocity * 10;
-                velocity *= 0.96;
-                animationFrameId = requestAnimationFrame(momentumScroll);
+            // --- Logic cho thiết bị cảm ứng (Điện thoại) ---
+            if (isTouchDevice) {
+                // Hàm này sẽ được gọi mỗi khi có sự kiện cuộn
+                const touchReset = () => {
+                    stopAutoScroll(); // Dừng để người dùng kiểm soát
+                    clearTimeout(idleTimer); // Xóa bộ đếm cũ
+                    // Đặt bộ đếm mới: sau 1 giây không cuộn nữa thì sẽ chạy lại
+                    idleTimer = setTimeout(startAutoScroll, 1000);
+                };
+
+                slider.addEventListener('scroll', touchReset, { passive: true });
+                slider.addEventListener('touchstart', stopAutoScroll, { passive: true });
+
+                // --- Logic cho thiết bị dùng chuột (Máy tính) ---
+            } else {
+                let isDown = false, startX, scrollLeft;
+
+                const handleMouseUpOrLeave = () => {
+                    if (!isDown) return;
+                    isDown = false;
+                    slider.classList.remove('active');
+                    clearTimeout(idleTimer);
+                    idleTimer = setTimeout(startAutoScroll, 1000); // Chạy lại sau 1s
+                };
+
+                slider.addEventListener('mousedown', (e) => {
+                    stopAutoScroll();
+                    isDown = true;
+                    slider.classList.add('active');
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+
+                slider.addEventListener('mouseleave', handleMouseUpOrLeave);
+                slider.addEventListener('mouseup', handleMouseUpOrLeave);
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX);
+                    slider.scrollLeft = scrollLeft - walk;
+                });
             }
 
-            const handleInteractionStart = (e) => {
-                stopAutoScroll();
-                cancelAnimationFrame(animationFrameId);
-                isDown = true;
-                isDragging = false;
-                slider.classList.add('active');
-                startX = e.pageX || e.touches[0].pageX;
-                lastX = startX;
-                scrollLeft = slider.scrollLeft;
-                velocity = 0;
-                timestamp = Date.now();
-            };
-
-            const handleInteractionMove = (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const currentX = e.pageX || e.touches[0].pageX;
-                const walk = currentX - startX;
-                slider.scrollLeft = scrollLeft - walk;
-                if (Math.abs(walk) > 5) {
-                    isDragging = true;
-                }
-                const now = Date.now();
-                const deltaTime = now - timestamp;
-                if (deltaTime > 20) {
-                    const deltaX = currentX - lastX;
-                    velocity = deltaX / deltaTime;
-                    timestamp = now;
-                    lastX = currentX;
-                }
-            };
-
-            const handleInteractionEnd = () => {
-                if (!isDown) return;
-                isDown = false;
-                slider.classList.remove('active');
-                if (isDragging) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = requestAnimationFrame(momentumScroll);
-                } else {
-                    // Nếu không kéo (chỉ click/tap) thì cũng bắt đầu lại sau 1s trên mobile
-                    if (isTouchDevice) {
-                        idleTimer = setTimeout(startAutoScroll, 1000);
-                    }
-                }
-            };
-
-            slider.addEventListener('mousedown', handleInteractionStart);
-            slider.addEventListener('mousemove', handleInteractionMove);
-            slider.addEventListener('mouseup', handleInteractionEnd);
-            slider.addEventListener('mouseleave', handleInteractionEnd);
-            slider.addEventListener('touchstart', handleInteractionStart, { passive: true });
-            slider.addEventListener('touchmove', handleInteractionMove);
-            slider.addEventListener('touchend', handleInteractionEnd);
-
-            startAutoScroll();
+            startAutoScroll(); // Bắt đầu tự động lướt khi tải trang
         }
     </script>
 </body>
