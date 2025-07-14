@@ -98,7 +98,6 @@
                     display: block;
                 }
 
-        /* [THÊM MỚI] CSS CHO KHUNG ĐỀ XUẤT TÌM KIẾM */
         #search-results {
             position: absolute;
             top: calc(100% + 5px);
@@ -111,7 +110,7 @@
             z-index: 1100;
             max-height: 400px;
             overflow-y: auto;
-            display: none; /* Mặc định ẩn đi */
+            display: none;
         }
 
         .result-item {
@@ -751,6 +750,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            transition: transform 0.4s ease-in-out; /* [THÊM MỚI] Hiệu ứng trượt */
         }
 
         .floating-action-btn {
@@ -1202,12 +1202,34 @@
                 bottom: 20px;
             }
 
+            /* [CẬP NHẬT] Tối ưu cho mobile */
             .floating-action-btn {
-                width: 48px;
-                height: 48px;
+                width: 52px;
+                height: 52px;
+            }
+
+            .category-menu li a, .footer-column ul li a {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                display: block;
+            }
+
+            .bill-section::-webkit-scrollbar {
+                display: block;
+                height: 4px;
+            }
+
+            .bill-section::-webkit-scrollbar-thumb {
+                background: #ccc;
+                border-radius: 4px;
+            }
+
+            .bill-section::-webkit-scrollbar-track {
+                background: #f1f1f1;
             }
         }
 
+        /* CSS CHO FOOTER */
         .site-footer-main {
             background-color: #1a1a1c;
             color: #a9a9b3;
@@ -1333,8 +1355,8 @@
                  data-title="Fast Track - Dịch Vụ Premium Giá Rẻ"
                  data-img=""
                  data-headline="Nâng Cấp <span style='color: #FF0000;'>YouTube Premium</span> - Tặng Kèm <span style='color: #FF0000;'>YouTube Music Premium</span>"
-                 data-text="<div class='packages-container'> <div class='package-option recommended'> <div class='package-header'> <h3 class='package-title'>Gói Nâng Cấp Chính Chủ</h3> <p class='package-price'>40.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Sử dụng Gmail cá nhân của bạn, ổn định và an toàn. Chỉ cần cung cấp email, không cần mật khẩu.</p> <ul class='package-features'> <li>Bảo mật 100%</li> <li>Không giới hạn thiết bị</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói Thuê Tài Khoản</h3> <p class='package-price'>35.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Shop sẽ cấp tài khoản có sẵn Premium. Tiết kiệm chi phí, sử dụng đầy đủ tính năng.</p> <ul class='package-features'> <li>Giới hạn 3 thiết bị</li> <li>Gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói YouTube TV</h3> <p class='package-price'>20.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Tài khoản do shop cấp, chuyên dùng cho Smart TV và TV Box, tối ưu chi phí.</p> <ul class='package-features'> <li>Giới hạn 5 TV</li> <li>Gia hạn hàng tháng</li> </ul> </div> </div> <div class='purchase-section'> <p class='purchase-note'>💡 <strong>Lưu ý:</strong> Giá trên là đơn giá theo tháng. Mua nhiều tháng chỉ cần nhân đơn giá với số tháng mong muốn.</p> <a href='https://zalo.me/0978879931' class='btn-contact-buy'>Liên hệ để mua ngay</a> </div> <div class='modal-full-width-wrapper'> <div class='modal-benefits-section'> <h3 style='color: #c00;'>🔥 Lợi ích khi sử dụng YouTube Premium</h3> <ul style='list-style: none; padding: 0; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> <div class='modal-faq-section'> <h3>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3> <div class='faq-container'> <div class='faq-item'> <button class='faq-question'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> bạn dùng tài khoản Gmail của mình. Shop chỉ gửi link mời vào Family.<br>→ <strong>Gói thuê:</strong> Shop cấp tài khoản riêng biệt.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>2. Sau khi thanh toán, tôi cần làm gì?</button> <div class='faq-answer'> <p>→ Shop sẽ gửi link mời vào Family qua Zalo/Facebook. Bạn chỉ cần bấm vào link và tham gia là dùng được ngay.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>3. Có thể gia hạn gói dịch vụ không?</button> <div class='faq-answer'> <p>→ Có. Shop sẽ nhắc bạn trước khi hết hạn qua email hoặc Zalo. Hoặc bạn có thể chủ động liên hệ để gia hạn.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>4. Nếu tôi vào nhầm tài khoản Google thì sao?</button> <div class='faq-answer'> <p>→ Liên hệ shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa dùng.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>5. Một tài khoản sử dụng được bao nhiêu thiết bị?</button> <div class='faq-answer'> <p>→ Có thể đăng nhập trên tối đa 10 thiết bị, sử dụng đồng thời trên 4 thiết bị.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>6. Thông tin cá nhân có bị lộ khi vào Family không?</button> <div class='faq-answer'> <p>→ Tuyệt đối không. Các thành viên Family không thể nhìn thấy thông tin của nhau.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>7. Tài khoản ở nước ngoài có tham gia được không?</button> <div class='faq-answer'> <p>→ Có thể, nhưng bạn cần liên hệ để shop hỗ trợ chuyển vùng phù hợp.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>8. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</button> <div class='faq-answer'> <p>→ Không. Hãy sử dụng Gmail cá nhân – G-suite thường bị hạn chế không tham gia được Family.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>9. Thời gian tính dịch vụ được bắt đầu khi nào?</button> <div class='faq-answer'> <p>→ Bắt đầu tính từ thời điểm bạn tham gia Family, không phải lúc thanh toán.</p> </div> </div> </div> </div> </div>">
-                <div class="plus-icon">+</div>
+                 data-text="<div class='packages-container'> <div class='package-option recommended'> <div class='package-header'> <h3 class='package-title'>Gói Nâng Cấp Chính Chủ</h3> <p class='package-price'>40.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Sử dụng Gmail cá nhân của bạn, ổn định và an toàn. Chỉ cần cung cấp email, không cần mật khẩu.</p> <ul class='package-features'> <li>Bảo mật 100%</li> <li>Không giới hạn thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói Thuê Tài Khoản</h3> <p class='package-price'>35.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Shop sẽ cấp tài khoản có sẵn Premium. Tiết kiệm chi phí, sử dụng đầy đủ tính năng.</p> <ul class='package-features'> <li>Giới hạn 3 thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói YouTube TV</h3> <p class='package-price'>20.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Tài khoản do shop cấp, chuyên dùng cho Smart TV và TV Box, tối ưu chi phí.</p> <ul class='package-features'> <li>Giới hạn đăng nhập trên 5 TV</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> </div> <div class='purchase-section'> <p class='purchase-note'>💡 <strong>Lưu ý:</strong> Giá trên là đơn giá theo tháng. Mua nhiều tháng chỉ cần nhân đơn giá với số tháng mong muốn.</p> <a href='https://zalo.me/0978879931' class='btn-contact-buy'>Liên hệ để mua ngay</a> </div> <div class='modal-full-width-wrapper'> <div class='modal-benefits-section'> <h3 style='color: #c00;'>🔥 Lợi ích khi sử dụng YouTube Premium</h3> <ul style='list-style: none; padding: 0; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> <div class='modal-faq-section'> <h3>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3> <div class='faq-container'> <div class='faq-item'> <button class='faq-question'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> bạn dùng tài khoản Gmail của mình. Shop chỉ gửi link mời vào Family.<br>→ <strong>Gói thuê:</strong> Shop cấp tài khoản riêng biệt.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>2. Sau khi thanh toán, tôi cần làm gì?</button> <div class='faq-answer'> <p>→ Shop sẽ gửi link mời vào Family qua Gmail. Bạn chỉ cần bấm vào link và đồng ý tham gia là dùng được ngay.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>3. Có thể gia hạn gói dịch vụ không?</button> <div class='faq-answer'> <p>→ Có. Shop sẽ nhắc bạn trước khi hết hạn qua email hoặc Zalo. Hoặc bạn có thể chủ động liên hệ để gia hạn.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>4. Nếu tôi vào nhầm tài khoản Google thì sao?</button> <div class='faq-answer'> <p>→ Liên hệ shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa dùng.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>5. Một tài khoản sử dụng được bao nhiêu thiết bị?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> Có thể đăng nhập và sử dụng trên mọi thiết bị. Không giới hạn số lượng thiết bị đăng nhập cũng như không giới hạn số lượng thiết bị sử dụng cùng lúc.<br>→ <strong>Gói thuê tài khoản:</strong> Có thể đăng nhập trên mọi thiết bị. Giới hạn tối đa 3 thiết bị được đăng nhập và 3 thiết bị sử dụng đồng thời.<br>→ <strong>Gói YouTube TV:</strong> Chỉ sử dụng được trên TV (Smart TV). Giới hạn đăng nhập trên 5 thiết bị TV và 3 thiết bị sử dụng đồng thời.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>6. Thông tin cá nhân có bị lộ khi vào Family không?</button> <div class='faq-answer'> <p>→ Tuyệt đối không. Các thành viên Family không thể nhìn thấy thông tin của nhau. Theo chuẩn điều khoản của Google.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>7. Tài khoản ở nước ngoài có tham gia được không?</button> <div class='faq-answer'> <p>→ Có thể, nhưng bạn cần liên hệ để shop hỗ trợ chuyển vùng phù hợp.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>8. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</button> <div class='faq-answer'> <p>→ Không. Hãy sử dụng Gmail cá nhân – G-suite thường bị hạn chế không tham gia được Family.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>9. Thời gian tính dịch vụ được bắt đầu khi nào?</button> <div class='faq-answer'> <p>→ Bắt đầu tính từ thời điểm bạn tham gia Family, không phải lúc thanh toán.</p> </div> </div> </div> </div> </div>">
+                 <div class="plus-icon">+</div>
             </div>
             <div class="card card-2" data-title="Cutting-Edge Cameras" data-img="" data-headline="Picture your best photos." data-text="..."><div class="plus-icon">+</div></div>
             <div class="card card-3" data-title="Chip and Battery" data-img="" data-headline="Fast that lasts." data-text="..."><div class="plus-icon">+</div></div>
@@ -1348,22 +1370,22 @@
         <h2 id="check-uy-tin" class="section-title" style="margin-top: 0;">Bill Thanh Toán Của Khách Hàng</h2>
         <section class="bill-section">
             <div class="bill-container">
-                <div class="bill-item"><img src="https://i.ibb.co/6rTj1s9/bill-gemini.png" alt="Hóa đơn gia hạn Gemini Pro"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/zQfD8P5/bill-2.png" alt="Hóa đơn khách hàng 2"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/gDFtqg8/bill-3.png" alt="Hóa đơn khách hàng 3"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/VvZg3dC/bill-4.png" alt="Hóa đơn khách hàng 4"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/JqjP0Sb/bill-5.png" alt="Hóa đơn khách hàng 5"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/9gJV04k/bill-6.png" alt="Hóa đơn khách hàng 6"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/vmQxkbN/bill-7.png" alt="Hóa đơn khách hàng 7"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/4RsJ4fF/bill-8.png" alt="Hóa đơn khách hàng 8"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/4gXCn0G/bill-9.png" alt="Hóa đơn khách hàng 9"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/yY9x0Yn/bill-10.png" alt="Hóa đơn khách hàng 10"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/mH0cBPd/bill-11.png" alt="Hóa đơn khách hàng 11"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/K07h4YD/bill-12.png" alt="Hóa đơn khách hàng 12"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/9s1PgLq/bill-13.png" alt="Hóa đơn khách hàng 13"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/S6J0vBP/bill-14.png" alt="Hóa đơn khách hàng 14"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/4Y4R7G6/bill-15.png" alt="Hóa đơn khách hàng 15"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/VcM0PfnT/0601-GETBZL.png" alt="Hóa đơn khách hàng mới"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/6rTj1s9/bill-gemini.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/zQfD8P5/bill-2.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/gDFtqg8/bill-3.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/VvZg3dC/bill-4.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/JqjP0Sb/bill-5.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/9gJV04k/bill-6.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/vmQxkbN/bill-7.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/4RsJ4fF/bill-8.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/4gXCn0G/bill-9.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/yY9x0Yn/bill-10.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/mH0cBPd/bill-11.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/K07h4YD/bill-12.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/9s1PgLq/bill-13.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/S6J0vBP/bill-14.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/4Y4R7G6/bill-15.png" alt="Hóa đơn" loading="lazy"></div>
+                <div class="bill-item"><img src="https://i.ibb.co/VcM0PfnT/0601-GETBZL.png" alt="Hóa đơn" loading="lazy"></div>
             </div>
         </section>
     </div>
@@ -1381,7 +1403,7 @@
         </div>
     </div>
 
-    <div class="floating-actions-container">
+    <div id="floating-actions" class="floating-actions-container">
         <a href="https://www.facebook.com/FastTrack68" target="_blank" class="floating-action-btn btn-facebook" aria-label="Facebook"></a>
         <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
         <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
@@ -1687,39 +1709,18 @@
         const slider = document.querySelector('.bill-section');
         if (slider) {
             let isDown = false;
-            let startX;
-            let scrollLeft;
-            let velocity = 0;
-            let lastPos = 0;
-            let lastTime = 0;
-            let animationFrameId;
-            let autoScrollInterval;
-            let idleTimer;
+            let startX, scrollLeft, velocity = 0, lastPos = 0, lastTime = 0;
+            let animationFrameId, autoScrollInterval, idleTimer;
+            const FRICTION = 0.95, MIN_VELOCITY = 0.5;
 
-            const FRICTION = 0.95;
-            const MIN_VELOCITY = 0.5;
-
-            const stopAutoScroll = () => {
-                clearInterval(autoScrollInterval);
-                clearTimeout(idleTimer);
-            };
-
+            const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
             const startAutoScroll = () => {
                 stopAutoScroll();
                 autoScrollInterval = setInterval(() => {
-                    if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                        slider.scrollLeft = 0;
-                    } else {
-                        slider.scrollLeft += 1;
-                    }
+                    slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1 ? slider.scrollLeft = 0 : slider.scrollLeft += 1;
                 }, 25);
             };
-
-            const resetInteraction = () => {
-                clearTimeout(idleTimer);
-                idleTimer = setTimeout(startAutoScroll, 2000);
-            };
-
+            const resetInteraction = () => { clearTimeout(idleTimer); idleTimer = setTimeout(startAutoScroll, 2000); };
             const dragStart = (e) => {
                 isDown = true;
                 slider.classList.add('active');
@@ -1731,7 +1732,6 @@
                 cancelAnimationFrame(animationFrameId);
                 stopAutoScroll();
             };
-
             const dragEnd = () => {
                 if (!isDown) return;
                 isDown = false;
@@ -1739,7 +1739,6 @@
                 animationFrameId = requestAnimationFrame(inertiaLoop);
                 resetInteraction();
             };
-
             const dragMove = (e) => {
                 if (!isDown) return;
                 e.preventDefault();
@@ -1747,20 +1746,17 @@
                 const walk = (x - startX);
                 slider.scrollLeft = scrollLeft - walk;
                 if (Math.abs(walk) > 10) {
-                    document.querySelectorAll('.bill-item.was-dragged').forEach(i => i.classList.remove('was-dragged'));
                     const draggedItem = e.target.closest('.bill-item');
                     if (draggedItem) draggedItem.classList.add('was-dragged');
                 }
                 const currentTime = Date.now();
                 const deltaTime = currentTime - lastTime;
                 if (deltaTime > 0) {
-                    const deltaPos = x - lastPos;
-                    velocity = (deltaPos / deltaTime) * 12;
+                    velocity = ((x - lastPos) / deltaTime) * 12;
                     lastPos = x;
                     lastTime = currentTime;
                 }
             };
-
             const inertiaLoop = () => {
                 slider.scrollLeft -= velocity;
                 velocity *= FRICTION;
@@ -1781,7 +1777,6 @@
             startAutoScroll();
         }
 
-        // LOGIC TÌM KIẾM SẢN PHẨM
         const searchInput = document.getElementById('search-input');
         const searchResultsContainer = document.getElementById('search-results');
 
@@ -1830,6 +1825,20 @@
                     searchResultsContainer.style.display = 'none';
                 }
             });
+        }
+
+        const floatingActions = document.getElementById('floating-actions');
+        if (floatingActions) {
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', function () {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop && scrollTop > 200) {
+                    floatingActions.style.transform = 'translateY(150%)';
+                } else {
+                    floatingActions.style.transform = 'translateY(0)';
+                }
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }, false);
         }
     </script>
 </body>
