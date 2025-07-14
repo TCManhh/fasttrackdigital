@@ -540,7 +540,6 @@
             border-radius: 50%;
             background-size: cover;
             background-position: center;
-            /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);*/
             display: block;
             transition: transform 0.2s ease;
         }
@@ -760,7 +759,7 @@
             }
         }
 
-        /* [THAY ĐỔI] Keyframe cho hiệu ứng HÀO QUANG lan tỏa */
+        /* Keyframe cho hiệu ứng HÀO QUANG lan tỏa */
         @keyframes pulse-halo {
             0% {
                 box-shadow: 0 0 0 0 rgba(255, 26, 26, 0.7);
@@ -783,7 +782,7 @@
             animation: subtle-pulse 2.5s infinite ease-in-out;
         }
 
-        /* [THAY ĐỔI] Style và hiệu ứng LẮC & HÀO QUANG riêng cho Zalo và Telegram */
+        /* Style và hiệu ứng LẮC & HÀO QUANG riêng cho Zalo và Telegram */
         .btn-zalo, .btn-telegram {
             /* Xóa viền cũ để dùng box-shadow cho hiệu ứng hào quang */
             border: none;
@@ -806,24 +805,19 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            /* Đặt z-index dương để nó nằm trên các nội dung khác */
             z-index: 1000;
-            /* Quan trọng: không bắt các sự kiện chuột để người dùng có thể click xuyên qua */
             pointer-events: none;
         }
 
         .floating-icon {
             position: absolute;
             display: block;
-            /* Bắt đầu từ dưới màn hình */
             bottom: -80px;
-            /* Áp dụng animation */
             animation-name: float-up-zigzag;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
         }
 
-        /* ĐIỀU CHỈNH: Thêm hiệu ứng nhấp nháy vào animation */
         @keyframes float-up-zigzag {
             0% {
                 bottom: -80px;
@@ -832,16 +826,16 @@
             }
 
             10% {
-                opacity: 0.8; /* Hiện ra */
+                opacity: 0.8;
             }
 
             25% {
                 transform: translateX(var(--h-move, 40px));
-                opacity: 0.2; /* Mờ đi */
+                opacity: 0.2;
             }
 
             40% {
-                opacity: 0.8; /* Rõ lại */
+                opacity: 0.8;
             }
 
             50% {
@@ -849,20 +843,19 @@
             }
 
             60% {
-                opacity: 0.3; /* Mờ đi */
+                opacity: 0.3;
             }
 
             75% {
                 transform: translateX(var(--h-move, 40px));
-                opacity: 0.9; /* Gần rõ nhất */
+                opacity: 0.9;
             }
 
             90% {
-                opacity: 0.2; /* Mờ dần trước khi biến mất */
+                opacity: 0.2;
             }
 
             100% {
-                /* Bay lên trên cùng và biến mất */
                 bottom: 100vh;
                 transform: translateX(0);
                 opacity: 0;
@@ -1203,7 +1196,7 @@
             function momentumScroll() {
                 if (Math.abs(velocity) < 0.2) {
                     if (isTouchDevice) {
-                        // [CẬP NHẬT] Thời gian chờ trước khi lướt lại là 1000ms (1 giây)
+                        // Thời gian chờ trước khi lướt lại là 1000ms (1 giây)
                         idleTimer = setTimeout(startAutoScroll, 1000);
                     } else {
                         startAutoScroll();
