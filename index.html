@@ -47,7 +47,7 @@
             align-items: center;
             gap: 20px;
             position: relative;
-            z-index: 1060;
+            z-index: 999;
             transition: transform 0.4s ease;
         }
 
@@ -685,6 +685,10 @@
             box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
             color: #fff !important;
             text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+            /* ----- THÊM 2 DÒNG NÀY VÀO ----- */
+            font-weight: bold; /* Chữ in đậm */
+            text-decoration: none; /* Bỏ gạch chân */
+            /* ---------------------------------- */
         }
 
         .faq-container {
@@ -746,7 +750,7 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            z-index: 1060;
+            z-index: 999;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -1211,7 +1215,7 @@
             .category-menu li a, .footer-column ul li a {
                 padding-top: 12px;
                 padding-bottom: 12px;
-                display: block;
+/*                display: block;*/
             }
 
             .bill-section::-webkit-scrollbar {
@@ -1416,7 +1420,7 @@
             <div class="category-column">
                 <h4>Tài khoản giải trí</h4>
                 <ul>
-                    <li><a href="#"><img src="https://i.ibb.co/zhRcmWx9/image.png" alt="YouTube"><span>YouTube Premium</span></a></li>
+                    <li><a href="#" id="youtube-category-link"><img src="https://i.ibb.co/zhRcmWx9/image.png" alt="YouTube"><span>YouTube Premium</span></a></li>
                     <li><a href="#"><img src="https://i.ibb.co/tYHk9cK/spotify-1.png" alt="Spotify"><span>Spotify</span></a></li>
                     <li><a href="#"><img src="https://i.ibb.co/L6v9v04/netflix-3.png" alt="Netflix"><span>Netflix</span></a></li>
                     <li><a href="#"><img src="https://i.ibb.co/yBPNtC5/vieon.png" alt="Vieon"><span>Vieon</span></a></li>
@@ -1466,7 +1470,7 @@
     <footer class="site-footer-main">
         <div class="footer-container">
             <div class="footer-column about">
-                <img src="./images/logo.png" alt="Logo Fast Track" class="footer-logo">
+                <img src="./images/logo11.png" alt="Logo Fast Track" class="footer-logo">
                 <p>Dịch vụ nâng cấp tài khoản Premium uy tín, nhanh chóng và an toàn. Luôn đặt trải nghiệm của khách hàng lên hàng đầu.</p>
             </div>
             <div class="footer-column links">
@@ -1495,7 +1499,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 - 2025 Fast Track. All Rights Reserved.</p>
+            <p>&copy; 2024 - 2025 Fast Track Digital. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -1840,6 +1844,27 @@
                 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
             }, false);
         }
+        // --- BẮT ĐẦU ĐOẠN MÃ MỚI ---
+        // Lấy liên kết YouTube trong danh mục và thẻ dịch vụ YouTube
+        const youtubeCategoryLink = document.getElementById('youtube-category-link');
+        const youtubeCard = document.querySelector('.card-1'); // Đây là thẻ dịch vụ YouTube
+
+        // Kiểm tra xem cả hai phần tử có tồn tại không
+        if (youtubeCategoryLink && youtubeCard) {
+            // Thêm sự kiện click cho liên kết trong danh mục
+            youtubeCategoryLink.addEventListener('click', function (event) {
+                // Ngăn hành động mặc định của liên kết (chuyển trang)
+                event.preventDefault();
+
+                // Đóng menu danh mục lại
+                closeCategoryMenu();
+
+                // Giả lập một cú nhấp chuột lên thẻ dịch vụ YouTube
+                // Thao tác này sẽ kích hoạt pop-up đã có sẵn
+                youtubeCard.click();
+            });
+        }
+        // --- KẾT THÚC ĐOẠN MÃ MỚI ---
     </script>
 </body>
 </html>
