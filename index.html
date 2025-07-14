@@ -1021,14 +1021,12 @@
         function openCategoryMenu() {
             categoryOverlay.classList.add('active');
             categoryMenu.classList.add('active');
-            categoryCloseBtn.classList.add('active');
             document.body.classList.add('modal-open');
         }
 
         function closeCategoryMenu() {
             categoryOverlay.classList.remove('active');
             categoryMenu.classList.remove('active');
-            categoryCloseBtn.classList.remove('active');
             document.body.classList.remove('modal-open');
         }
 
@@ -1048,15 +1046,32 @@
         }
 
         if (categoryCloseBtn) {
+            // The close button is now part of the header logic, let's adjust this
+            // Note: The original HTML has the close button outside the menu.
+            // We will tie its visibility to the menu's state.
+            const headerForCloseBtn = document.querySelector('.site-header');
+            const observerForCloseBtn = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    if (mutation.attributeName === 'class' && !categoryMenu.classList.contains('active')) {
+                        categoryCloseBtn.classList.remove('active');
+                    } else if (categoryMenu.classList.contains('active')) {
+                        categoryCloseBtn.classList.add('active');
+                    }
+                });
+            });
+            observerForCloseBtn.observe(categoryMenu, { attributes: true });
+
             categoryCloseBtn.addEventListener('click', closeCategoryMenu);
         }
 
         if (categoryMenu) {
             categoryMenu.addEventListener('click', (e) => {
-                e.stopPropagation();
+                // If a link inside is clicked, close the menu
+                if (e.target.closest('a')) {
+                    closeCategoryMenu();
+                }
             });
         }
-
 
         // === KHAI BÁO BIẾN ===
         const siteHeader = document.querySelector('.site-header');
@@ -1149,10 +1164,13 @@
         });
 
         const billItems = document.querySelectorAll('.bill-item');
-        let isDragging = false;
         billItems.forEach(item => {
             item.addEventListener('click', (e) => {
-                if (isDragging) return;
+                // Check if the item was dragged, if so, don't open modal
+                if (item.classList.contains('was-dragged')) {
+                    item.classList.remove('was-dragged');
+                    return;
+                }
                 const rect = e.currentTarget.getBoundingClientRect();
                 modal.style.transformOrigin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
                 modal.classList.add('image-view');
@@ -1170,11 +1188,21 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
-        /* === [CẬP NHẬT] LOGIC CAROUSEL BILL - TỐI ƯU CHO ĐIỆN THOẠI === */
+        /* === [CẬP NHẬT] LOGIC CAROUSEL BILL VỚI HIỆU ỨNG INERTIA === */
         const slider = document.querySelector('.bill-section');
         if (slider) {
-            let autoScrollInterval, idleTimer;
-            const isTouchDevice = 'ontouchstart' in window;
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            let velocity = 0;
+            let lastPos = 0;
+            let lastTime = 0;
+            let animationFrameId;
+            let autoScrollInterval;
+            let idleTimer;
+
+            const FRICTION = 0.95; // How fast the coasting slows down
+            const MIN_VELOCITY = 0.5; // Speed at which coasting stops
 
             const stopAutoScroll = () => {
                 clearInterval(autoScrollInterval);
@@ -1182,7 +1210,7 @@
             };
 
             const startAutoScroll = () => {
-                stopAutoScroll(); // Đảm bảo không có nhiều tiến trình chạy song song
+                stopAutoScroll();
                 autoScrollInterval = setInterval(() => {
                     if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
                         slider.scrollLeft = 0;
@@ -1192,52 +1220,84 @@
                 }, 25);
             };
 
-            // --- Logic cho thiết bị cảm ứng (Điện thoại) ---
-            if (isTouchDevice) {
-                // Hàm này sẽ được gọi mỗi khi có sự kiện cuộn
-                const touchReset = () => {
-                    stopAutoScroll(); // Dừng để người dùng kiểm soát
-                    clearTimeout(idleTimer); // Xóa bộ đếm cũ
-                    // Đặt bộ đếm mới: sau 1 giây không cuộn nữa thì sẽ chạy lại
-                    idleTimer = setTimeout(startAutoScroll, 1000);
-                };
+            const resetInteraction = () => {
+                clearTimeout(idleTimer);
+                idleTimer = setTimeout(startAutoScroll, 2000); // Restart auto-scroll after 2s of inactivity
+            };
 
-                slider.addEventListener('scroll', touchReset, { passive: true });
-                slider.addEventListener('touchstart', stopAutoScroll, { passive: true });
+            const dragStart = (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
 
-                // --- Logic cho thiết bị dùng chuột (Máy tính) ---
-            } else {
-                let isDown = false, startX, scrollLeft;
+                // Reset velocity tracking
+                velocity = 0;
+                lastPos = startX;
+                lastTime = Date.now();
 
-                const handleMouseUpOrLeave = () => {
-                    if (!isDown) return;
-                    isDown = false;
-                    slider.classList.remove('active');
-                    clearTimeout(idleTimer);
-                    idleTimer = setTimeout(startAutoScroll, 1000); // Chạy lại sau 1s
-                };
+                cancelAnimationFrame(animationFrameId);
+                stopAutoScroll();
+            };
 
-                slider.addEventListener('mousedown', (e) => {
-                    stopAutoScroll();
-                    isDown = true;
-                    slider.classList.add('active');
-                    startX = e.pageX - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
-                });
+            const dragEnd = () => {
+                if (!isDown) return;
+                isDown = false;
+                slider.classList.remove('active');
 
-                slider.addEventListener('mouseleave', handleMouseUpOrLeave);
-                slider.addEventListener('mouseup', handleMouseUpOrLeave);
+                // Start inertia animation
+                animationFrameId = requestAnimationFrame(inertiaLoop);
+                resetInteraction();
+            };
 
-                slider.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX);
-                    slider.scrollLeft = scrollLeft - walk;
-                });
-            }
+            const dragMove = (e) => {
+                if (!isDown) return;
+                e.preventDefault();
 
-            startAutoScroll(); // Bắt đầu tự động lướt khi tải trang
+                const x = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
+                const walk = (x - startX);
+                slider.scrollLeft = scrollLeft - walk;
+
+                // Mark items as dragged to prevent click
+                if (Math.abs(walk) > 10) {
+                    document.querySelectorAll('.bill-item.was-dragged').forEach(i => i.classList.remove('was-dragged'));
+                    const draggedItem = e.target.closest('.bill-item');
+                    if (draggedItem) draggedItem.classList.add('was-dragged');
+                }
+
+                // Calculate velocity
+                const currentTime = Date.now();
+                const deltaTime = currentTime - lastTime;
+                if (deltaTime > 0) {
+                    const deltaPos = x - lastPos;
+                    velocity = (deltaPos / deltaTime) * 12; // Multiplier for feel
+                    lastPos = x;
+                    lastTime = currentTime;
+                }
+            };
+
+            const inertiaLoop = () => {
+                slider.scrollLeft -= velocity;
+                velocity *= FRICTION;
+
+                if (Math.abs(velocity) > MIN_VELOCITY) {
+                    animationFrameId = requestAnimationFrame(inertiaLoop);
+                } else {
+                    cancelAnimationFrame(animationFrameId);
+                }
+            };
+
+            // Event Listeners
+            slider.addEventListener('mousedown', dragStart);
+            slider.addEventListener('mouseleave', dragEnd);
+            slider.addEventListener('mouseup', dragEnd);
+            slider.addEventListener('mousemove', dragMove);
+
+            slider.addEventListener('touchstart', dragStart, { passive: false });
+            slider.addEventListener('touchend', dragEnd, { passive: false });
+            slider.addEventListener('touchmove', dragMove, { passive: false });
+
+            startAutoScroll(); // Initial start
         }
     </script>
 </body>
