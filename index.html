@@ -1151,6 +1151,33 @@
         }
 
         @media (max-width: 768px) {
+            /* * Tùy chỉnh kích thước cho các nút hành động (vòng tròn bao quanh icon).
+   * Giả sử các nút của bạn có class là 'floating-action-item'. 
+   * Hãy thay thế bằng class thực tế của bạn nếu khác.
+   */
+            #floating-actions .floating-action-item {
+                width: 40px; /* Chiều rộng mới, ví dụ 40px */
+                height: 40px; /* Chiều cao mới, ví dụ 40px */
+                line-height: 40px; /* Giúp căn giữa icon (nếu là font icon) */
+            }
+
+                /* * Tùy chỉnh kích thước cho chính icon bên trong (có thể là thẻ <i> hoặc <img>).
+   */
+                #floating-actions .floating-action-item i {
+                    font-size: 18px; /* Kích thước mới cho font icon (ví dụ: Font Awesome) */
+                }
+
+                #floating-actions .floating-action-item img {
+                    width: 20px; /* Kích thước mới cho icon dạng ảnh */
+                    height: 20px; /* Kích thước mới cho icon dạng ảnh */
+                }
+
+            /* * Điều chỉnh cả nút toggle chính nếu cần.
+   */
+            #floating-toggle-btn {
+                width: 45px;
+                height: 45px;
+            }
             .modal-content {
                 padding: 30px 12px;
             }
