@@ -1091,14 +1091,27 @@ body {
 	font-size: 0.9rem;
 }
 
+/* === RESPONSIVE STYLES (Optimized) === */
 
-/* === RESPONSIVE STYLES === */
-@media(max-width: 992px) {
+/* --- Tablet & Small Laptops (Up to 1024px) --- */
+@media (max-width: 1024px) {
+	.bill-item {
+		width: 30vw; /* Adjust bill item width */
+	}
+
+	.footer-container {
+		gap: 30px; /* Reduce gap in footer */
+	}
+}
+
+/* --- Large Tablets & Small Desktops (Up to 992px) --- */
+@media (max-width: 992px) {
 	.site-header {
 		padding: 10px 15px;
 		flex-wrap: nowrap;
 	}
 
+	/* Hide desktop navigation and search, show mobile controls */
 	.header-search, .main-nav {
 		display: none;
 	}
@@ -1107,10 +1120,6 @@ body {
 		display: flex;
 		align-items: center;
 		gap: 15px;
-	}
-
-	.mobile-search-icon {
-		transform: translateY(3px);
 	}
 
 	.mobile-search-icon, .hamburger-btn {
@@ -1125,18 +1134,26 @@ body {
 	}
 
 		.mobile-search-icon svg {
-			width: 18px;
-			height: 18px;
+			width: 20px;
+			height: 20px;
 		}
 
 	.hamburger-btn {
-		font-size: 1.6rem;
+		font-size: 1.8rem; /* Made hamburger icon slightly larger */
 	}
 
+	/* Styles for when mobile search is active */
 	.site-header.search-active {
-		padding-bottom: 65px;
 		flex-wrap: wrap;
+		padding-bottom: 15px; /* Add padding for the search bar below */
 	}
+
+		.site-header.search-active .header-logo,
+		.site-header.search-active .mobile-controls {
+			flex-basis: 100%;
+			display: flex;
+			justify-content: space-between;
+		}
 
 		.site-header.search-active .header-search {
 			display: block;
@@ -1147,15 +1164,21 @@ body {
 			padding: 0 15px;
 		}
 
+	#search-results {
+		top: 130px; /* Adjust dropdown position when search is active */
+	}
+
+	/* Styles for the slide-out mobile navigation menu */
 	.main-nav.is-open {
 		display: block;
 		position: absolute;
-		top: 100%;
+		top: 100%; /* Position it right below the header */
 		left: 0;
 		width: 100%;
 		background-color: #fff;
 		box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 		z-index: 100;
+		border-top: 1px solid #eee;
 	}
 
 		.main-nav.is-open ul {
@@ -1175,19 +1198,48 @@ body {
 			}
 
 		.main-nav.is-open a {
-			padding: 15px;
+			padding: 18px 15px; /* Increased padding for easier tapping */
 			display: block;
 			width: 100%;
+			font-size: 1rem; /* Slightly larger font for readability */
 		}
+
+	/* Adjust service cards for tablets */
+	.card {
+		width: calc(50% - var(--card-gap) / 2);
+	}
 }
 
+
+/* --- General Mobile Devices (Up to 768px) --- */
 @media (max-width: 768px) {
+	.section-title {
+		font-size: clamp(1.4rem, 6vw, 2rem);
+		margin: 30px 0 15px 0;
+	}
+
+	.section-subtitle {
+		font-size: 1rem;
+		margin: 0 auto 30px auto;
+		padding: 0 15px;
+	}
+
+	.card-container {
+		padding: 10px 15px; /* Consistent padding */
+	}
+
+	/* Modal adjustments for smaller screens */
+	.modal {
+		width: calc(100% - 24px); /* Add some margin on the sides */
+		max-height: 85vh;
+	}
+
 	.modal-content {
-		padding: 30px 12px;
+		padding: 30px 20px;
 	}
 
 		.modal-content h3 {
-			font-size: 1.4rem;
+			font-size: 1.5rem; /* Adjust modal title size */
 		}
 
 	.modal-body {
@@ -1200,7 +1252,7 @@ body {
 		}
 
 	.modal-full-width-wrapper {
-		margin: 30px -20px -30px -20px;
+		margin: 30px -20px -30px -20px; /* Adjust negative margins to match new padding */
 	}
 
 	.modal-benefits-section, .modal-faq-section {
@@ -1211,22 +1263,28 @@ body {
 			font-size: 1.3rem;
 		}
 
+	.packages-container {
+		grid-template-columns: 1fr; /* Stack package options vertically */
+	}
+
+	.btn-contact-buy {
+		padding: 14px 30px !important;
+		font-size: 1rem !important;
+	}
+
+	/* Floating action buttons adjustments */
 	.floating-actions-container {
 		gap: 12px;
-		right: 20px;
-		bottom: 20px;
+		right: 15px;
+		bottom: 15px;
 	}
 
 	.floating-action-btn {
-		width: 52px;
-		height: 52px;
+		width: 55px;
+		height: 55px;
 	}
 
-	.category-menu li a, .footer-column ul li a {
-		padding-top: 12px;
-		padding-bottom: 12px;
-	}
-
+	/* FAQ Page specific adjustments */
 	.faq-layout-container {
 		flex-direction: column;
 	}
@@ -1235,26 +1293,35 @@ body {
 		flex: 0 0 auto;
 		margin-bottom: 20px;
 	}
-}
 
-@media (max-width: 900px) {
-	.card {
-		width: calc(50% - var(--card-gap) / 2);
+	/* Footer adjustments */
+	.footer-column {
+		min-width: 100%; /* Make footer columns full-width */
+		text-align: center;
+	}
+
+	.footer-social-icons {
+		justify-content: center;
+	}
+
+	.footer-column ul li a {
+		padding-top: 12px;
+		padding-bottom: 12px;
 	}
 }
 
+/* --- Small Mobile Devices (Up to 600px) --- */
 @media (max-width: 600px) {
 	.card {
-		width: 100%;
+		width: 100%; /* Cards take full width */
 	}
 
 	.bill-item {
-		width: 45vw;
+		width: 55vw; /* Make bill items larger on small screens */
+		max-width: 220px;
 	}
-}
 
-@media (max-width: 1024px) {
-	.bill-item {
-		width: 30vw;
+	.bill-container {
+		gap: 15px;
 	}
 }
