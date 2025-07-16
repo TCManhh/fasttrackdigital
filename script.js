@@ -279,7 +279,10 @@
         slider.addEventListener('mouseleave', dragEnd);
         slider.addEventListener('mouseup', dragEnd);
         slider.addEventListener('mousemove', dragMove);
-        slider.addEventListener('touchstart', dragStart, { passive: true });
+
+        // === PHẦN SỬA LỖI CHO ĐIỆN THOẠI ===
+        // Đảm bảo trình duyệt không ưu tiên hành động cuộn mặc định khi người dùng chạm vào slider
+        slider.addEventListener('touchstart', dragStart, { passive: false });
         slider.addEventListener('touchend', dragEnd);
         slider.addEventListener('touchmove', dragMove, { passive: false });
 
