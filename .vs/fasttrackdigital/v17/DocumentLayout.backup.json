@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "D:\\Code\\fasttrack-project\\fasttrackdigital\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\products.js||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:products.js||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\style.css||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:style.css||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -19,8 +11,16 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\products.js||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:products.js||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\faq.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:faq.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Code\\fasttrack-project\\fasttrackdigital\\faq-script.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -48,72 +48,72 @@
               "RelativeDocumentMoniker": "faq-script.js",
               "ToolTip": "D:\\Code\\fasttrack-project\\fasttrackdigital\\faq-script.js",
               "RelativeToolTip": "faq-script.js",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAswHkAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAswHkAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-07-16T13:47:16.626Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "script.js",
               "DocumentMoniker": "D:\\Code\\fasttrack-project\\fasttrackdigital\\script.js",
               "RelativeDocumentMoniker": "script.js",
               "ToolTip": "D:\\Code\\fasttrack-project\\fasttrackdigital\\script.js",
               "RelativeToolTip": "script.js",
-              "ViewState": "AgIAADsBAAAAAAAAAAAswF4BAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAD4BAAAAAAAAAAAswF4BAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-07-16T13:46:58.485Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "style.css",
               "DocumentMoniker": "D:\\Code\\fasttrack-project\\fasttrackdigital\\style.css",
               "RelativeDocumentMoniker": "style.css",
               "ToolTip": "D:\\Code\\fasttrack-project\\fasttrackdigital\\style.css",
               "RelativeToolTip": "style.css",
-              "ViewState": "AgIAAMgEAAAAAAAAAAAiwOwEAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsFAAAAAAAAAAAiwC8FAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-07-16T13:46:23.991Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "faq.html",
               "DocumentMoniker": "D:\\Code\\fasttrack-project\\fasttrackdigital\\faq.html",
               "RelativeDocumentMoniker": "faq.html",
               "ToolTip": "D:\\Code\\fasttrack-project\\fasttrackdigital\\faq.html",
               "RelativeToolTip": "faq.html",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAiwMYAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAiwMYAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-07-15T05:12:24.49Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "products.js",
               "DocumentMoniker": "D:\\Code\\fasttrack-project\\fasttrackdigital\\products.js",
               "RelativeDocumentMoniker": "products.js",
               "ToolTip": "D:\\Code\\fasttrack-project\\fasttrackdigital\\products.js",
               "RelativeToolTip": "products.js",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAuwI4AAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAswI4AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-07-14T13:05:39.288Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "index.html",
               "DocumentMoniker": "D:\\Code\\fasttrack-project\\fasttrackdigital\\index.html",
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "D:\\Code\\fasttrack-project\\fasttrackdigital\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAAKIAAAAAAAAAAAAiwLcAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAiwLcAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-07-14T12:27:57.878Z",
               "EditorCaption": ""

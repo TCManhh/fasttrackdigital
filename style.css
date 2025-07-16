@@ -254,16 +254,20 @@ body {
 
 .bill-section {
 	padding-block: 20px;
-	margin-bottom: 20px; /* Giảm margin để thanh cuộn gần hơn */
+	margin-bottom: 20px;
 	overflow-x: auto;
 	cursor: grab;
 	user-select: none;
+	/* Cải thiện trải nghiệm cuộn trên iOS */
+	-webkit-overflow-scrolling: touch;
 }
 
 	/* === SCROLLBAR CHO BILL SECTION === */
+	/* Luôn hiển thị thanh trượt trên trình duyệt WebKit (Chrome, Safari) */
 	.bill-section::-webkit-scrollbar {
 		height: 8px;
 		background-color: #f1f1f1;
+		-webkit-appearance: none;
 	}
 
 	.bill-section::-webkit-scrollbar-thumb {
