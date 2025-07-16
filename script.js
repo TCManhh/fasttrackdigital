@@ -213,19 +213,16 @@
 
         const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
 
-        // ===== THAY ĐỔI LOGIC TỰ ĐỘNG CUỘN Ở ĐÂY =====
         const startAutoScroll = () => {
             stopAutoScroll();
             autoScrollInterval = setInterval(() => {
-                // Kiểm tra nếu đã cuộn đến cuối (với 1px sai số)
                 if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                    stopAutoScroll(); // Dừng lại khi đến ảnh cuối
+                    stopAutoScroll();
                 } else {
-                    slider.scrollLeft += 0.5; // Nếu chưa, tiếp tục cuộn
+                    slider.scrollLeft += 0.5;
                 }
             }, 30);
         };
-        // ===== KẾT THÚC THAY ĐỔI =====
 
         const resetIdleTimer = () => {
             clearTimeout(idleTimer);
@@ -250,7 +247,7 @@
             isDown = false;
             slider.classList.remove('active');
             animationFrameId = requestAnimationFrame(inertiaLoop);
-            resetIdleTimer(); // Khi người dùng ngưng tương tác, hẹn giờ để tự động cuộn lại
+            resetIdleTimer();
         };
 
         const dragMove = (e) => {
@@ -294,7 +291,9 @@
             });
         });
 
-        startAutoScroll();
+        // ===== THAY ĐỔI CUỐI CÙNG Ở ĐÂY =====
+        // Thêm độ trễ 250ms trước khi bắt đầu chạy để chờ trình duyệt render xong
+        setTimeout(startAutoScroll, 250);
     }
 
     // Animated elements on scroll
