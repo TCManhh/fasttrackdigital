@@ -207,25 +207,26 @@
         let startX, scrollLeft, velocity = 0, lastPos = 0, lastTime = 0;
         let animationFrameId, autoScrollInterval, idleTimer;
         let wasDragged = false;
-        const FRICTION = 0.95; // Lực ma sát, số càng nhỏ thì dừng càng nhanh
-        const MIN_VELOCITY = 0.5; // Dừng vòng lặp khi vận tốc dưới ngưỡng này
-
-        // ===== THAY ĐỔI Ở ĐÂY =====
-        // const IDLE_TIMEOUT = 4000; // Dòng code cũ: Bật lại auto-scroll sau 4 giây không tương tác
-        const IDLE_TIMEOUT = 1500; // Dòng code mới: Bật lại auto-scroll sau 1.5 giây
-        // ===== KẾT THÚC THAY ĐỔI =====
+        const FRICTION = 0.95;
+        const MIN_VELOCITY = 0.5;
+        const IDLE_TIMEOUT = 1500;
 
         const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
+
+        // ===== THAY ĐỔI LOGIC TỰ ĐỘNG CUỘN Ở ĐÂY =====
         const startAutoScroll = () => {
             stopAutoScroll();
             autoScrollInterval = setInterval(() => {
+                // Kiểm tra nếu đã cuộn đến cuối (với 1px sai số)
                 if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                    stopAutoScroll(); // Dừng lại khi đến ảnh cuối
                 } else {
-                    slider.scrollLeft += 0.5;
+                    slider.scrollLeft += 0.5; // Nếu chưa, tiếp tục cuộn
                 }
             }, 30);
         };
+        // ===== KẾT THÚC THAY ĐỔI =====
+
         const resetIdleTimer = () => {
             clearTimeout(idleTimer);
             idleTimer = setTimeout(startAutoScroll, IDLE_TIMEOUT);
@@ -237,7 +238,7 @@
             slider.classList.add('active');
             startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
-            velocity = 0; // Reset vận tốc khi bắt đầu kéo
+            velocity = 0;
             lastTime = Date.now();
             lastPos = startX;
             cancelAnimationFrame(animationFrameId);
@@ -248,9 +249,8 @@
             if (!isDown) return;
             isDown = false;
             slider.classList.remove('active');
-            // Bắt đầu vòng lặp quán tính
             animationFrameId = requestAnimationFrame(inertiaLoop);
-            resetIdleTimer();
+            resetIdleTimer(); // Khi người dùng ngưng tương tác, hẹn giờ để tự động cuộn lại
         };
 
         const dragMove = (e) => {
@@ -261,11 +261,10 @@
             if (Math.abs(walk) > 10) wasDragged = true;
             slider.scrollLeft = scrollLeft - walk;
 
-            // Tính toán vận tốc chính xác
             const currentTime = Date.now();
             const deltaTime = currentTime - lastTime;
             if (deltaTime > 0) {
-                velocity = (lastPos - x) / deltaTime * 16.67; // Tính vận tốc dựa trên khoảng cách và thời gian
+                velocity = (lastPos - x) / deltaTime * 16.67;
                 lastPos = x;
                 lastTime = currentTime;
             }
@@ -273,7 +272,7 @@
 
         const inertiaLoop = () => {
             slider.scrollLeft += velocity;
-            velocity *= FRICTION; // Giảm dần vận tốc (ma sát)
+            velocity *= FRICTION;
             if (Math.abs(velocity) > MIN_VELOCITY) {
                 animationFrameId = requestAnimationFrame(inertiaLoop);
             }
@@ -284,15 +283,13 @@
         slider.addEventListener('mouseup', dragEnd);
         slider.addEventListener('mousemove', dragMove);
 
-        // === PHẦN SỬA LỖI CHO ĐIỆN THOẠI ===
-        // Đảm bảo trình duyệt không ưu tiên hành động cuộn mặc định khi người dùng chạm vào slider
         slider.addEventListener('touchstart', dragStart, { passive: false });
         slider.addEventListener('touchend', dragEnd);
         slider.addEventListener('touchmove', dragMove, { passive: false });
 
         document.querySelectorAll('.bill-item').forEach(item => {
             item.addEventListener('click', (e) => {
-                if (wasDragged) return; // Không mở pop-up nếu người dùng đang vuốt
+                if (wasDragged) return;
                 window.openImageModal(item.querySelector('img').src, item);
             });
         });
