@@ -209,7 +209,11 @@
         let wasDragged = false;
         const FRICTION = 0.95; // Lực ma sát, số càng nhỏ thì dừng càng nhanh
         const MIN_VELOCITY = 0.5; // Dừng vòng lặp khi vận tốc dưới ngưỡng này
-        const IDLE_TIMEOUT = 4000; // Bật lại auto-scroll sau 4 giây không tương tác
+
+        // ===== THAY ĐỔI Ở ĐÂY =====
+        // const IDLE_TIMEOUT = 4000; // Dòng code cũ: Bật lại auto-scroll sau 4 giây không tương tác
+        const IDLE_TIMEOUT = 1500; // Dòng code mới: Bật lại auto-scroll sau 1.5 giây
+        // ===== KẾT THÚC THAY ĐỔI =====
 
         const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
         const startAutoScroll = () => {
