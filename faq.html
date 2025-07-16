@@ -49,7 +49,6 @@
             transition: transform 0.4s ease; /* Thêm hiệu ứng cho header */
         }
 
-            /* [THÊM MỚI] Ẩn header khi menu danh mục mở */
             .site-header.is-hidden {
                 transform: translateY(-100%);
             }
@@ -266,7 +265,7 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             }
 
-        /* === [THÊM MỚI] CSS CHO MENU DANH MỤC === */
+        /* === CSS CHO MENU DANH MỤC === */
         .category-overlay {
             position: fixed;
             top: 0;
@@ -554,6 +553,7 @@
 
         <nav class="main-nav">
             <ul>
+                <li><a href="index.html">TRANG CHỦ</a></li>
                 <li><a href="index.html#dich-vu">CỬA HÀNG</a></li>
                 <li><a href="index.html#check-uy-tin">CHECK UY TÍN</a></li>
                 <li><a href="#">CHÍNH SÁCH BẢO HÀNH</a></li>
@@ -747,7 +747,7 @@
                     <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger">
                         <img src="https://i.ibb.co/VWD70rLr/image.png" alt="Messenger">
                     </a>
-                    <a href="https://t.me/TCManhh" target="_blank" aria-label="Telegram">
+                    <a href="https.t.me/TCManhh" target="_blank" aria-label="Telegram">
                         <img src="https://i.ibb.co/XZyQS4NN/image.png" alt="Telegram">
                     </a>
                 </div>
@@ -769,7 +769,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const siteHeader = document.querySelector('.site-header');
 
-            // --- [THÊM MỚI] LOGIC CHO MENU DANH MỤC ---
+            // --- LOGIC CHO MENU DANH MỤC ---
             const categoryTrigger = document.getElementById('category-trigger');
             const categoryOverlay = document.getElementById('category-overlay');
             const categoryMenu = document.getElementById('category-menu');
@@ -815,9 +815,8 @@
                     }
                 });
             }
-            // --- KẾT THÚC LOGIC MENU DANH MỤC ---
 
-            // --- LOGIC CŨ CHO FAQ TABS ---
+            // --- LOGIC CHO FAQ TABS ---
             const navContainer = document.querySelector('.faq-nav');
             const navLinks = document.querySelectorAll('.faq-nav-link');
             const articles = document.querySelectorAll('.faq-article');
@@ -842,7 +841,7 @@
                 });
             }
 
-            // --- LOGIC CŨ CHO MENU MOBILE ---
+            // --- LOGIC CHO MENU MOBILE ---
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mainNav = document.querySelector('.main-nav');
             if (hamburgerBtn && mainNav) {
@@ -851,7 +850,7 @@
                 });
             }
 
-            // --- [THÊM MỚI] LOGIC CHO POP-UP ẢNH ---
+            // --- LOGIC CHO POP-UP ẢNH ---
             const modal = document.querySelector('.modal');
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalCloseBtn = document.querySelector('.modal-close');
@@ -880,7 +879,6 @@
 
             if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
             if (modalOverlay) modalOverlay.addEventListener('click', (e) => {
-                // Chỉ đóng modal ảnh, không đóng menu danh mục
                 if (modal.classList.contains('active')) {
                     closeModal();
                 }
@@ -896,7 +894,6 @@
                     }
                 });
             });
-            // --- KẾT THÚC LOGIC POP-UP ---
         });
     </script>
 </body>
