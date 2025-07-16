@@ -243,7 +243,7 @@ body {
 		transition: transform 0.1s ease-in;
 	}
 
-/* === BILL SHOWCASE === */
+/* === BILL SHOWCASE (CSS ANIMATION) === */
 .bill-showcase {
 	background-color: #f9fafb;
 	padding: 50px 0;
@@ -253,45 +253,34 @@ body {
 }
 
 .bill-section {
+	/* Quan trọng: overflow hidden để giấu phần bị transform ra ngoài */
+	overflow: hidden;
 	padding-block: 20px;
 	margin-bottom: 20px;
-	overflow-x: auto;
 	cursor: grab;
-	user-select: none;
-	/* Cải thiện trải nghiệm cuộn trên iOS */
-	-webkit-overflow-scrolling: touch;
 }
 
-	/* === SCROLLBAR CHO BILL SECTION === */
-	/* Luôn hiển thị thanh trượt trên trình duyệt WebKit (Chrome, Safari) */
-	.bill-section::-webkit-scrollbar {
-		height: 8px;
-		background-color: #f1f1f1;
-		-webkit-appearance: none;
+	.bill-section:active {
+		cursor: grabbing;
 	}
-
-	.bill-section::-webkit-scrollbar-thumb {
-		background-color: #ccc;
-		border-radius: 4px;
-	}
-
-		.bill-section::-webkit-scrollbar-thumb:hover {
-			background-color: #b3b3b3;
-		}
 
 
 .bill-container {
-	display: flex;
-	flex-wrap: nowrap;
+	display: inline-flex; /* Dùng inline-flex để container co lại vừa bằng content */
 	gap: 25px;
 	padding-inline: 25px;
-	padding-bottom: 15px; /* Thêm padding để không bị che bởi scrollbar */
+	will-change: transform; /* Báo cho trình duyệt biết thuộc tính này sẽ thay đổi */
 }
+	/* Lớp này sẽ được JS thêm vào để áp dụng animation */
+	.bill-container.is-animating {
+		animation: scrollAnimation linear infinite; /* lặp vô tận */
+		animation-play-state: running; /* Trạng thái ban đầu là chạy */
+	}
 
-.bill-section.active {
-	cursor: grabbing;
-	cursor: -webkit-grabbing;
-}
+	/* Khi người dùng tương tác, JS sẽ thêm lớp này */
+	.bill-container.is-paused {
+		animation-play-state: paused !important; /* Dừng animation */
+	}
 
 .bill-item {
 	flex-shrink: 0;

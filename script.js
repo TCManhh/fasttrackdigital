@@ -95,7 +95,7 @@
             modal.classList.add('active');
             modalOverlay.classList.add('active');
             document.body.classList.add('modal-open');
-            initFaqAccordion(); // Re-initialize accordion for new content
+            initFaqAccordion();
         };
 
         const openImageModal = (imgSrc, originalElement) => {
@@ -135,7 +135,6 @@
 
     // --- PAGE-SPECIFIC LOGIC ---
 
-    // Render cards from product data
     function renderProductCards() {
         const container = document.querySelector('.card-container');
         if (!container || typeof ALL_PRODUCTS === 'undefined') return;
@@ -153,7 +152,6 @@
         });
     }
 
-    // Handle search
     function setupSearch() {
         const searchInput = document.getElementById('search-input');
         const searchResultsContainer = document.getElementById('search-results');
@@ -198,105 +196,118 @@
         });
     }
 
-    // Bill showcase slider with inertia and auto-scroll
+    // ===== LOGIC MỚI CHO BILL SLIDER SỬ DỤNG CSS ANIMATION =====
     function setupBillSlider() {
         const slider = document.querySelector('.bill-section');
-        if (!slider) return;
+        const container = document.querySelector('.bill-container');
+        if (!slider || !container) return;
 
         let isDown = false;
-        let startX, scrollLeft, velocity = 0, lastPos = 0, lastTime = 0;
-        let animationFrameId, autoScrollInterval, idleTimer;
+        let startX;
+        let scrollLeft;
         let wasDragged = false;
-        const FRICTION = 0.95;
-        const MIN_VELOCITY = 0.5;
-        const IDLE_TIMEOUT = 1500;
+        let idleTimer;
 
-        const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
+        // Hàm khởi tạo hoặc reset animation
+        const initAnimation = () => {
+            // Tính toán khoảng cách cần di chuyển
+            const scrollWidth = container.scrollWidth;
+            const clientWidth = container.clientWidth;
+            const travelDistance = scrollWidth - clientWidth;
 
-        const startAutoScroll = () => {
-            stopAutoScroll();
-            autoScrollInterval = setInterval(() => {
-                if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                    stopAutoScroll();
-                } else {
-                    slider.scrollLeft += 0.5;
-                }
-            }, 30);
+            // Nếu không có gì để cuộn, thì dừng lại
+            if (travelDistance <= 0) return;
+
+            // Tốc độ (pixels per second)
+            const speed = 100; // Thay đổi số này để nhanh hơn hoặc chậm hơn
+            const duration = travelDistance / speed;
+
+            // Tạo và chèn Keyframes vào trang
+            const styleSheet = document.createElement("style");
+            const keyframes = `
+                @keyframes scrollAnimation {
+                    from { transform: translateX(0); }
+                    to { transform: translateX(-${travelDistance}px); }
+                }`;
+            styleSheet.innerText = keyframes;
+            document.head.appendChild(styleSheet);
+
+            // Áp dụng animation
+            container.style.animationDuration = `${duration}s`;
+            container.classList.add('is-animating');
         };
 
-        const resetIdleTimer = () => {
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(startAutoScroll, IDLE_TIMEOUT);
-        };
-
-        const dragStart = (e) => {
+        const handleInteractionStart = (e) => {
             isDown = true;
             wasDragged = false;
-            slider.classList.add('active');
+            container.classList.add('is-paused'); // Tạm dừng animation
             startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-            velocity = 0;
-            lastTime = Date.now();
-            lastPos = startX;
-            cancelAnimationFrame(animationFrameId);
-            stopAutoScroll();
+            // Lấy vị trí transform hiện tại để kéo từ đó
+            const transformMatrix = window.getComputedStyle(container).getPropertyValue('transform');
+            if (transformMatrix !== 'none') {
+                scrollLeft = parseInt(transformMatrix.split(',')[4], 10);
+            } else {
+                scrollLeft = 0;
+            }
         };
 
-        const dragEnd = () => {
-            if (!isDown) return;
+        const handleInteractionEnd = () => {
             isDown = false;
-            slider.classList.remove('active');
-            animationFrameId = requestAnimationFrame(inertiaLoop);
-            resetIdleTimer();
+            // Bật lại animation sau 2 giây không tương tác
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                container.classList.remove('is-paused');
+            }, 2000);
         };
 
-        const dragMove = (e) => {
+        const handleInteractionMove = (e) => {
             if (!isDown) return;
             e.preventDefault();
+            wasDragged = true;
             const x = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
-            const walk = x - startX;
-            if (Math.abs(walk) > 10) wasDragged = true;
-            slider.scrollLeft = scrollLeft - walk;
+            const walk = (x - startX);
+            const newPos = scrollLeft + walk;
 
-            const currentTime = Date.now();
-            const deltaTime = currentTime - lastTime;
-            if (deltaTime > 0) {
-                velocity = (lastPos - x) / deltaTime * 16.67;
-                lastPos = x;
-                lastTime = currentTime;
-            }
+            // Giới hạn không cho kéo quá
+            const scrollWidth = container.scrollWidth;
+            const clientWidth = container.clientWidth;
+            const maxScroll = -(scrollWidth - clientWidth);
+
+            container.style.transform = `translateX(${Math.max(maxScroll, Math.min(0, newPos))}px)`;
         };
 
-        const inertiaLoop = () => {
-            slider.scrollLeft += velocity;
-            velocity *= FRICTION;
-            if (Math.abs(velocity) > MIN_VELOCITY) {
-                animationFrameId = requestAnimationFrame(inertiaLoop);
-            }
-        };
+        // Chờ tất cả mọi thứ load xong mới chạy để đảm bảo tính toán đúng
+        window.addEventListener('load', () => {
+            // Nhân đôi nội dung để tạo hiệu ứng lướt vô tận
+            const originalItems = container.innerHTML;
+            container.innerHTML += originalItems;
 
-        slider.addEventListener('mousedown', dragStart);
-        slider.addEventListener('mouseleave', dragEnd);
-        slider.addEventListener('mouseup', dragEnd);
-        slider.addEventListener('mousemove', dragMove);
+            initAnimation();
+        });
 
-        slider.addEventListener('touchstart', dragStart, { passive: false });
-        slider.addEventListener('touchend', dragEnd);
-        slider.addEventListener('touchmove', dragMove, { passive: false });
+        slider.addEventListener('mousedown', handleInteractionStart);
+        slider.addEventListener('mouseup', handleInteractionEnd);
+        slider.addEventListener('mouseleave', handleInteractionEnd);
+        slider.addEventListener('mousemove', handleInteractionMove);
+
+        slider.addEventListener('touchstart', handleInteractionStart, { passive: false });
+        slider.addEventListener('touchend', handleInteractionEnd);
+        slider.addEventListener('touchmove', handleInteractionMove, { passive: false });
 
         document.querySelectorAll('.bill-item').forEach(item => {
             item.addEventListener('click', (e) => {
-                if (wasDragged) return;
-                window.openImageModal(item.querySelector('img').src, item);
+                // Chỉ mở popup nếu người dùng không kéo
+                if (wasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                } else {
+                    window.openImageModal(item.querySelector('img').src, item);
+                }
             });
         });
-
-        // ===== THAY ĐỔI CUỐI CÙNG Ở ĐÂY =====
-        // Thêm độ trễ 250ms trước khi bắt đầu chạy để chờ trình duyệt render xong
-        setTimeout(startAutoScroll, 250);
     }
 
-    // Animated elements on scroll
+
     function setupScrollAnimations() {
         const animatedElements = document.querySelectorAll('.card, .section-title');
         const observer = new IntersectionObserver((entries) => {
@@ -307,7 +318,6 @@
         animatedElements.forEach(el => observer.observe(el));
     }
 
-    // Accordion for FAQ inside modal
     function initFaqAccordion() {
         const faqContainer = modal.querySelector('.faq-container');
         if (!faqContainer) return;
@@ -329,14 +339,13 @@
         });
     }
 
-    // Check for hash in URL to open modal on page load
     function checkUrlForModal() {
         const hash = window.location.hash;
         if (hash.startsWith('#show-')) {
             const productId = hash.replace('#show-', '');
             const product = ALL_PRODUCTS.find(p => p.id === productId);
             if (product) {
-                setTimeout(() => { // Timeout to ensure page is fully rendered
+                setTimeout(() => {
                     window.openModal(product);
                 }, 100);
             }
