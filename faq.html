@@ -35,10 +35,33 @@
                 overflow: hidden;
             }
 
+        /* === BẮT ĐẦU: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
+
+        /* 1. Đặt cỡ chữ mặc định cho điện thoại (dưới 768px) */
+        html {
+            font-size: 15px; /* Cỡ chữ phù hợp cho điện thoại */
+        }
+
+        /* 2. Tăng cỡ chữ cho máy tính bảng (từ 768px trở lên) */
+        @media (min-width: 768px) {
+            html {
+                font-size: 17px; /* Cỡ chữ lớn hơn, dễ đọc trên tablet */
+            }
+        }
+
+        /* 3. Tăng cỡ chữ cho laptop và màn hình lớn (từ 1200px trở lên) */
+        @media (min-width: 1200px) {
+            html {
+                font-size: 18px; /* Cỡ chữ lý tưởng cho laptop và desktop */
+            }
+        }
+
+        /* === KẾT THÚC: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
+
         /* === CSS CHO HEADER (GIỮ NGUYÊN) === */
         .site-header {
             background-color: #fff;
-            padding: 10px 40px;
+            padding: 15px 40px; /* Tăng khoảng đệm trên/dưới từ 10px lên 15px */
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
@@ -46,7 +69,8 @@
             gap: 20px;
             position: relative;
             z-index: 999;
-            transition: transform 0.4s ease; /* Thêm hiệu ứng cho header */
+            transition: transform 0.4s ease;
+            height: 85px; /* Tăng chiều cao từ 71px lên 85px */
         }
 
             .site-header.is-hidden {
@@ -60,6 +84,12 @@
             flex-shrink: 0;
         }
 
+        .header-search {
+            flex-grow: 1;
+            max-width: 600px;
+            visibility: hidden;
+        }
+
         .main-nav ul {
             display: flex;
             list-style: none;
@@ -67,13 +97,15 @@
             align-items: center;
         }
 
+        /* === BẮT ĐẦU SỬA LỖI FONT === */
         .main-nav a {
             color: #555;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 20px !important; /* Đặt font-size cố định và ưu tiên cao nhất */
             white-space: nowrap;
         }
+            /* === KẾT THÚC SỬA LỖI FONT === */
 
             .main-nav a.active-page {
                 color: #c00;
@@ -190,6 +222,14 @@
             border-radius: 4px;
         }
 
+        /* === BẮT ĐẦU: TĂNG CỠ CHỮ FAQ TRÊN MÁY TÍNH === */
+        @media (min-width: 768px) {
+            .faq-article p, .faq-article ol, .faq-article ul {
+                font-size: 1.1rem; /* Tăng cỡ chữ nội dung câu trả lời */
+            }
+        }
+        /* === KẾT THÚC === */
+
         /* === CSS CHO POP-UP (MODAL) HÌNH ẢNH === */
         .modal-overlay {
             position: fixed;
@@ -245,25 +285,27 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
+        /* === ✅ BẮT ĐẦU SỬA LỖI ẢNH KHÔNG PHÓNG TO HẾT CỠ === */
         .modal.image-view {
-            width: auto;
-            height: auto;
-            max-width: 95vw;
+            /* Ghi đè các thuộc tính cũ của modal để nó có thể phóng to */
+            width: 95vw; /* Chiếm 95% chiều rộng màn hình */
+            height: 95vh; /* Chiếm 95% chiều cao màn hình */
+            max-width: 95vw; /* Đảm bảo không vượt quá giới hạn */
             max-height: 95vh;
             background: transparent;
-            overflow: visible;
+            overflow: hidden; /* Ẩn bất kỳ phần nào thừa */
+            padding: 0; /* Xóa padding của modal gốc */
         }
 
             .modal.image-view #modal-image {
                 display: block;
-                width: 100%;
-                height: 100%;
-                max-width: 95vw;
-                max-height: 95vh;
-                object-fit: contain;
+                width: 100%; /* Lấp đầy 100% chiều rộng của modal MỚI */
+                height: 100%; /* Lấp đầy 100% chiều cao của modal MỚI */
+                object-fit: contain; /* Giữ tỷ lệ ảnh, không cắt xén */
                 border-radius: 12px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             }
+        /* === ✅ KẾT THÚC SỬA LỖI === */
 
         /* === CSS CHO MENU DANH MỤC === */
         .category-overlay {
@@ -471,6 +513,10 @@
 
         /* CSS RESPONSIVE */
         @media(max-width: 992px) {
+            .main-nav.is-open a {
+                font-size: 15px !important; /* Cỡ chữ cho menu trên điện thoại */
+            }
+
             .site-header {
                 padding: 10px 15px;
             }
@@ -542,6 +588,12 @@
                 padding-top: 12px;
                 padding-bottom: 12px;
             }
+
+            /* === BẮT ĐẦU: CSS MỚI ĐỂ TRÁNH HEADER CHE NỘI DUNG === */
+            .faq-content {
+                scroll-margin-top: 100px; /* Khoảng đệm cho header khi cuộn */
+            }
+            /* === KẾT THÚC: CSS MỚI === */
         }
     </style>
 </head>
@@ -551,12 +603,14 @@
             <a href="index.html"><img src="./images/logo.png" alt="Logo"></a>
         </div>
 
+        <div class="header-search">
+        </div>
+
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">TRANG CHỦ</a></li>
                 <li><a href="index.html#dich-vu">CỬA HÀNG</a></li>
                 <li><a href="index.html#check-uy-tin">CHECK UY TÍN</a></li>
-                <li><a href="#">CHÍNH SÁCH BẢO HÀNH</a></li>
                 <li><a href="#" id="category-trigger">DANH MỤC</a></li>
                 <li><a href="faq.html" class="active-page">CÁC CÂU HỎI THƯỜNG GẶP</a></li>
             </ul>
@@ -733,7 +787,6 @@
                 <ul>
                     <li><a href="index.html#dich-vu">Cửa hàng</a></li>
                     <li><a href="index.html#check-uy-tin">Check Uy tín</a></li>
-                    <li><a href="#">Chính sách Bảo hành</a></li>
                     <li><a href="faq.html">Câu hỏi thường gặp</a></li>
                 </ul>
             </div>
@@ -747,8 +800,11 @@
                     <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger">
                         <img src="https://i.ibb.co/VWD70rLr/image.png" alt="Messenger">
                     </a>
-                    <a href="https.t.me/TCManhh" target="_blank" aria-label="Telegram">
+                    <a href="httpsis.t.me/TCManhh" target="_blank" aria-label="Telegram">
                         <img src="https://i.ibb.co/XZyQS4NN/image.png" alt="Telegram">
+                    </a>
+                    <a href="https://www.facebook.com/FastTrack68" target="_blank" aria-label="Facebook">
+                        <img src="https://i.ibb.co/hRsQS5rh/image.png" alt="Facebook">
                     </a>
                 </div>
             </div>
@@ -792,51 +848,37 @@
             if (categoryTrigger) {
                 categoryTrigger.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (categoryMenu && categoryMenu.classList.contains('active')) {
-                        closeCategoryMenu();
-                    } else {
-                        openCategoryMenu();
-                    }
+                    openCategoryMenu();
                 });
             }
-
-            if (categoryOverlay) {
-                categoryOverlay.addEventListener('click', closeCategoryMenu);
-            }
-
-            if (categoryCloseBtn) {
-                categoryCloseBtn.addEventListener('click', closeCategoryMenu);
-            }
-
+            if (categoryOverlay) categoryOverlay.addEventListener('click', closeCategoryMenu);
+            if (categoryCloseBtn) categoryCloseBtn.addEventListener('click', closeCategoryMenu);
             if (categoryMenu) {
                 categoryMenu.addEventListener('click', (e) => {
-                    if (e.target.closest('a')) {
-                        closeCategoryMenu();
-                    }
+                    if (e.target.closest('a')) closeCategoryMenu();
                 });
             }
 
             // --- LOGIC CHO FAQ TABS ---
             const navContainer = document.querySelector('.faq-nav');
-            const navLinks = document.querySelectorAll('.faq-nav-link');
-            const articles = document.querySelectorAll('.faq-article');
-
             if (navContainer) {
                 navContainer.addEventListener('click', function (e) {
                     const clickedLink = e.target.closest('.faq-nav-link');
                     if (!clickedLink) return;
-
                     e.preventDefault();
 
                     const targetId = clickedLink.getAttribute('href');
                     const targetArticle = document.querySelector(targetId);
 
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    articles.forEach(article => article.classList.remove('active'));
+                    document.querySelectorAll('.faq-nav-link').forEach(link => link.classList.remove('active'));
+                    document.querySelectorAll('.faq-article').forEach(article => article.classList.remove('active'));
 
                     clickedLink.classList.add('active');
                     if (targetArticle) {
                         targetArticle.classList.add('active');
+                        if (window.innerWidth <= 768) {
+                            document.querySelector('.faq-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
                     }
                 });
             }
@@ -845,53 +887,49 @@
             const hamburgerBtn = document.querySelector('.hamburger-btn');
             const mainNav = document.querySelector('.main-nav');
             if (hamburgerBtn && mainNav) {
-                hamburgerBtn.addEventListener('click', () => {
-                    mainNav.classList.toggle('is-open');
-                });
+                hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open'));
             }
 
-            // --- LOGIC CHO POP-UP ẢNH ---
+            // --- LOGIC CHO POP-UP ẢNH (ĐÃ SỬA LỖI) ---
             const modal = document.querySelector('.modal');
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalCloseBtn = document.querySelector('.modal-close');
             const modalImage = document.getElementById('modal-image');
 
-            function openModal() {
-                if (modal && modalOverlay) {
-                    if (siteHeader) siteHeader.style.transform = 'translateY(-100%)';
-                    modal.classList.add('active', 'image-view');
-                    modalOverlay.classList.add('active');
-                    document.body.classList.add('modal-open');
-                }
+            function openImageModal(imgSrc) {
+                if (!modal || !modalOverlay || !modalImage) return;
+                modalImage.src = imgSrc;
+                if (siteHeader) siteHeader.classList.add('is-hidden');
+                modal.classList.add('active', 'image-view');
+                modalOverlay.classList.add('active');
+                document.body.classList.add('modal-open');
             }
 
-            function closeModal() {
-                if (modal && modalOverlay) {
-                    if (siteHeader) siteHeader.style.transform = 'translateY(0)';
-                    modal.classList.remove('active', 'image-view');
-                    modalOverlay.classList.remove('active');
-                    document.body.classList.remove('modal-open');
-                    setTimeout(() => {
-                        modalImage.src = "";
-                    }, 350);
-                }
+            function closeImageModal() {
+                if (!modal || !modalOverlay) return;
+                if (siteHeader) siteHeader.classList.remove('is-hidden');
+                modal.classList.remove('active', 'image-view');
+                modalOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
             }
 
-            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-            if (modalOverlay) modalOverlay.addEventListener('click', (e) => {
-                if (modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
+            // Gán sự kiện đóng modal cho nút 'x' và vùng mờ
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeImageModal);
+            if (modalOverlay) modalOverlay.addEventListener('click', closeImageModal);
 
+            // Ngăn sự kiện click trên chính tấm ảnh (modalImage) làm đóng modal
+            if (modalImage) {
+                modalImage.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // Gán sự kiện mở modal cho tất cả ảnh trong mục FAQ
             const faqImages = document.querySelectorAll('.faq-article ol img');
             faqImages.forEach(img => {
                 img.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (modalImage) {
-                        modalImage.src = img.src;
-                        openModal();
-                    }
+                    e.stopPropagation(); // Ngăn các sự kiện click khác
+                    openImageModal(img.src);
                 });
             });
         });

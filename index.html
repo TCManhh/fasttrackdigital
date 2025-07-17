@@ -39,12 +39,34 @@
                 overflow: hidden;
             }
 
+        /* === BẮT ĐẦU: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
+
+        /* 1. Đặt cỡ chữ mặc định cho điện thoại (dưới 768px) */
+        html {
+            font-size: 15px; /* Cỡ chữ phù hợp cho điện thoại */
+        }
+
+        /* 2. Tăng cỡ chữ cho máy tính bảng (từ 768px trở lên) */
+        @media (min-width: 768px) {
+            html {
+                font-size: 17px; /* Cỡ chữ lớn hơn, dễ đọc trên tablet */
+            }
+        }
+
+        /* 3. Tăng cỡ chữ cho laptop và màn hình lớn (từ 1200px trở lên) */
+        @media (min-width: 1200px) {
+            html {
+                font-size: 18px; /* Cỡ chữ lý tưởng cho laptop và desktop */
+            }
+        }
+
+        /* === KẾT THÚC: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
 
 
         /* === CSS CHO HEADER === */
         .site-header {
             background-color: #fff;
-            padding: 10px 40px;
+            padding: 15px 40px; /* Tăng khoảng đệm trên/dưới từ 10px lên 15px */
             border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
@@ -53,6 +75,7 @@
             position: relative;
             z-index: 999;
             transition: transform 0.4s ease;
+            height: 85px; /* Tăng chiều cao từ 71px lên 85px */
         }
 
             .site-header.is-hidden {
@@ -154,12 +177,6 @@
             margin: 0;
         }
 
-        .no-results {
-            padding: 20px;
-            text-align: center;
-            color: #888;
-        }
-
         .main-nav ul {
             display: flex;
             list-style: none;
@@ -167,13 +184,15 @@
             align-items: center;
         }
 
+        /* === BẮT ĐẦU SỬA LỖI FONT === */
         .main-nav a {
             color: #555;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 20px !important; /* Kích thước là 16px */
             white-space: nowrap;
         }
+            /* === KẾT THÚC SỬA LỖI FONT === */
 
             .main-nav a.active-page {
                 color: #c00;
@@ -215,10 +234,24 @@
             font-size: 1.1rem;
             color: #666;
             max-width: 600px;
-            margin: -15px auto 40px auto;
+            margin: -15px auto 4px auto;
             line-height: 1.6;
         }
+        /* === BẮT ĐẦU: TĂNG CỠ CHỮ TIÊU ĐỀ TRÊN MÁY TÍNH === */
+        @media (min-width: 992px) {
+            .section-title {
+                font-size: 3rem; /* Tăng cỡ chữ cho tiêu đề chính */
+            }
 
+            .section-subtitle {
+                font-size: 1.5rem; /* Tăng cỡ chữ cho tiêu đề phụ */
+            }
+
+            .bill-showcase-description {
+                font-size: 1.5rem; /* Tăng cỡ chữ cho mô tả bill */
+            }
+        }
+        /* === KẾT THÚC === */
         #dich-vu, #check-uy-tin {
             scroll-margin-top: 30px;
         }
@@ -296,12 +329,24 @@
                 color: #c00;
             }
 
+        /* === BẮT ĐẦU: TĂNG CỠ CHỮ CARD DỊCH VỤ TRÊN MÁY TÍNH === */
+        @media (min-width: 992px) {
+            .card-content h4 {
+                font-size: 1.5rem; /* Tăng cỡ chữ cho tiêu đề dịch vụ */
+            }
+
+            .card-content p {
+                font-size: 1.4rem; /* Tăng cỡ chữ cho giá tiền */
+            }
+        }
+        /* === KẾT THÚC === */
+
         .card-1 {
             background-image: url('./images/card-1.png');
         }
 
         .card-2 {
-            background-image: url('https://i.ibb.co/bjXDXKdp/4.png');
+            background-image: url('./images/card-2.png');
         }
 
         .card-3 {
@@ -340,119 +385,146 @@
             }
         }
 
-
+        /* === BẮT ĐẦU CSS MỚI CHO PHẦN CHECK UY TÍN === */
         .bill-showcase {
             background-color: #f9fafb;
-            padding: 50px 0 30px 0;
+            padding: 50px 0;
             margin-top: 40px;
             border-top: 1px solid #e5e7eb;
             border-bottom: 1px solid #e5e7eb;
         }
 
-        .bill-section {
-            padding-block: 20px;
-            margin-bottom: 0;
-            overflow-x: auto;
-            cursor: grab;
-            user-select: none;
-        }
-
-            .bill-section::-webkit-scrollbar {
-                display: none;
-            }
-
-        .bill-container {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 25px;
-            padding-inline: 25px;
-        }
-
-        .bill-section.active {
-            cursor: grabbing;
-            cursor: -webkit-grabbing;
-        }
-
-        .bill-item {
-            flex-shrink: 0;
-            width: 22vw;
-            max-width: 280px;
-            aspect-ratio: 1170 / 2532;
-            border-radius: 18px;
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
-        }
-
-            .bill-item:hover {
-                transform: translateY(-8px) scale(1.03);
-                box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-            }
-
-            .bill-item.is-fully-visible {
-                transform: scale(1.08);
-                z-index: 10;
-                box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            }
-
-            .bill-item img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-                pointer-events: none;
-            }
-
-        .bill-scrollbar-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 25px;
+        .bill-showcase-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            color: #555;
             padding: 0 20px;
         }
 
-        .bill-scrollbar-track {
+        /* Container chính của carousel */
+        .bill-carousel-container {
             width: 100%;
-            max-width: 400px;
-            height: 4px;
-            background-color: #e5e7eb;
-            border-radius: 2px;
             position: relative;
         }
 
-        .bill-scrollbar-thumb {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 0;
-            width: 50px;
-            height: 10px;
-            background-color: #c00;
+        /* Track chứa ảnh, cho phép cuộn/kéo ngang */
+        .bill-carousel-track {
+            display: flex;
+            overflow-x: auto; /* Cho phép cuộn ngang */
+            scroll-snap-type: x mandatory; /* Bắt dính item vào viewport khi cuộn */
+            scroll-behavior: smooth; /* Tạo hiệu ứng cuộn mượt khi dùng JS */
+            padding-bottom: 15px; /* Tạo khoảng trống để không che mất slider */
+            cursor: grab;
+        }
+
+            .bill-carousel-track:active {
+                cursor: grabbing;
+            }
+
+            /* Ẩn thanh cuộn trên các trình duyệt */
+            .bill-carousel-track::-webkit-scrollbar {
+                display: none;
+            }
+
+        .bill-carousel-track {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        /* Từng ảnh trong carousel */
+        .bill-carousel-item {
+            flex: 0 0 260px;
+            width: 260px;
+            padding: 0 10px;
+            box-sizing: border-box;
+            scroll-snap-align: center; /* Quan trọng: căn giữa item khi snap */
+        }
+
+            .bill-carousel-item img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 9 / 16;
+                object-fit: cover;
+                border-radius: 16px;
+                display: block;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                transform: scale(0.85);
+                opacity: 0.6;
+                transition: transform 0.5s ease, opacity 0.5s ease;
+                cursor: pointer; /* Thêm con trỏ khi di chuột vào ảnh bill */
+            }
+
+            /* Hiệu ứng cho ảnh ở giữa (active) */
+            .bill-carousel-item.active img {
+                transform: scale(1);
+                opacity: 1;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            }
+
+        /* Thanh trượt điều khiển */
+        .slider-container {
+            padding: 15px 30px 10px 30px; /* Giảm padding top */
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        input[type="range"].bill-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px; /* Tăng độ dày */
             border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            /* ✅ THAY ĐỔI: Dùng gradient để tô màu tiến trình */
+            --progress: 0%;
+            background: linear-gradient(to right, #c00 var(--progress), #e0e0e0 var(--progress));
         }
 
-        .bill-scroll-counter {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #666;
-            flex-shrink: 0;
-            min-width: 50px;
+            /* Nút tròn trên thanh trượt */
+            input[type="range"].bill-slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 22px; /* Tăng kích thước */
+                height: 22px;
+                background: #fff;
+                border-radius: 50%;
+                border: 5px solid #c00; /* Thêm viền đỏ đậm */
+                box-shadow: 0 0 10px rgba(192, 0, 0, 0.5); /* Thêm hiệu ứng tỏa sáng */
+                margin-top: 0px;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            input[type="range"].bill-slider:active::-webkit-slider-thumb {
+                transform: scale(1.2); /* Phóng to khi nhấn giữ */
+                box-shadow: 0 0 15px rgba(192, 0, 0, 0.8);
+            }
+
+            input[type="range"].bill-slider::-moz-range-thumb {
+                width: 22px;
+                height: 22px;
+                background: #fff;
+                border-radius: 50%;
+                border: 5px solid #c00;
+                box-shadow: 0 0 10px rgba(192, 0, 0, 0.5);
+                cursor: pointer;
+            }
+
+            input[type="range"].bill-slider:active::-moz-range-thumb {
+                transform: scale(1.2);
+            }
+
+        /* ✅ THÊM MỚI: CSS cho bộ đếm */
+        .bill-counter {
             text-align: center;
+            margin-top: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #555;
         }
 
-        @media (max-width: 1024px) {
-            .bill-item {
-                width: 30vw;
-            }
-        }
+        /* === KẾT THÚC CSS MỚI CHO PHẦN CHECK UY TÍN === */
 
-        @media (max-width: 600px) {
-            .bill-item {
-                width: 45vw;
-            }
-        }
 
         .modal-overlay {
             position: fixed;
@@ -466,35 +538,38 @@
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease, visibility 0s linear 0.4s;
         }
+
+            .modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+                transition-delay: 0s;
+            }
 
         .modal {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform-origin: center center;
-            transform: translate(-50%, -50%) scale(0.95);
+            transform: translate(-50%, -50%) scale(0.9);
             z-index: 1001;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out, visibility 0s linear 0.4s;
         }
-
-            .modal-overlay.active, .modal.active {
-                opacity: 1;
-                visibility: visible;
-            }
 
             .modal.active {
                 transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                visibility: visible;
+                transition-delay: 0s;
             }
 
         .modal {
             background: #fff;
             border-radius: 20px;
             width: 90%;
-            max-width: 960px;
+            max-width: 1100px;
             max-height: 90vh;
             overflow-y: auto;
             padding: 0 8px;
@@ -571,10 +646,6 @@
             overflow: visible;
         }
 
-            .modal.image-view.active {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
             .modal.image-view .modal-content {
                 padding: 0;
                 background: transparent;
@@ -605,7 +676,14 @@
                 border-radius: 12px;
                 flex: none;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease-in-out;
             }
+
+                .modal.image-view #modal-image:hover {
+                    transform: scale(1.01);
+                    filter: brightness(1.02);
+                }
+
 
         .modal-full-width-wrapper {
             margin: 40px -50px -40px -50px;
@@ -638,11 +716,11 @@
         }
 
         .modal-benefits-section, .modal-faq-section, .faq-answer {
-            font-size: 16px;
+            font-size: 1rem;
         }
 
         .faq-question {
-            font-size: 16px;
+            font-size: 1rem;
         }
 
         .packages-container {
@@ -716,7 +794,7 @@
             }
 
         .package-description {
-            font-size: 0.95rem !important;
+            font-size: 1rem !important;
             color: #555;
             flex-grow: 1;
             margin-bottom: 15px;
@@ -727,7 +805,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
             .package-features li {
@@ -824,6 +902,19 @@
                 line-height: 1.6;
                 color: #333;
             }
+
+        /* === BẮT ĐẦU: TĂNG CỠ CHỮ FAQ TRONG MODAL TRÊN MÁY TÍNH === */
+        @media (min-width: 768px) {
+            .modal-faq-section .faq-question {
+                font-size: 1.3rem !important; /* Tăng cỡ chữ câu hỏi */
+            }
+
+            .modal-faq-section .faq-answer p {
+                font-size: 1.25rem; /* Tăng cỡ chữ câu trả lời */
+            }
+        }
+        /* === KẾT THÚC === */
+
 
         .floating-actions-container {
             position: fixed;
@@ -1143,6 +1234,11 @@
 
         /* === CSS RESPONSIVE === */
         @media(max-width: 992px) {
+            .main-nav.is-open a {
+                font-size: 15px !important; /* Cỡ chữ cho menu trên điện thoại */
+            }
+
+
             .site-header {
                 padding: 10px 15px;
                 flex-wrap: nowrap;
@@ -1282,11 +1378,11 @@
                 }
 
             .modal-benefits-section, .modal-faq-section, .faq-answer {
-                font-size: 15px;
+                font-size: 0.95rem; /* Cỡ chữ mobile cho Lợi ích/FAQ */
             }
 
             .faq-question {
-                font-size: 15px !important;
+                font-size: 0.95rem !important;
             }
 
             .floating-actions-container {
@@ -1303,20 +1399,6 @@
             .category-menu li a, .footer-column ul li a {
                 padding-top: 12px;
                 padding-bottom: 12px;
-            }
-
-            .bill-section::-webkit-scrollbar {
-                display: block;
-                height: 4px;
-            }
-
-            .bill-section::-webkit-scrollbar-thumb {
-                background: #ccc;
-                border-radius: 4px;
-            }
-
-            .bill-section::-webkit-scrollbar-track {
-                background: #f1f1f1;
             }
 
             /* === Tối ưu hiển thị các gói dịch vụ trong modal === */
@@ -1343,16 +1425,22 @@
             }
 
             .package-description {
-                font-size: 0.85rem !important;
-                margin-bottom: 10px;
+                font-size: 0.9rem !important;
             }
 
             .package-features li {
-                font-size: 0.8rem;
-                padding-left: 20px;
-                margin-bottom: 6px;
+                font-size: 0.85rem;
             }
         }
+
+        /* === BẮT ĐẦU: TĂNG CỠ CHỮ LỢI ÍCH DỊCH VỤ TRÊN MÁY TÍNH === */
+        @media (min-width: 1024px) {
+            .modal-benefits-section ul li {
+                font-size: 1.25rem; /* Tăng cỡ chữ cho các dòng lợi ích */
+                line-height: 1.8; /* Tăng khoảng cách dòng cho dễ đọc hơn */
+            }
+        }
+        /* === KẾT THÚC === */
 
 
         /* CSS CHO FOOTER */
@@ -1484,14 +1572,14 @@
                 <div class="card-image-container card-1"></div>
                 <div class="card-content">
                     <h4>Nâng Cấp YouTube Premium</h4>
-                    <p>Từ 40.000đ/tháng</p>
+                    <p>Từ 20.000đ/tháng</p>
                 </div>
             </div>
 
-            <div class="card" data-title="Tăng Tương Tác MXH" data-img="" data-headline="Picture your best photos." data-text="Dịch vụ tăng tương tác mạng xã hội uy tín, an toàn. Vui lòng liên hệ để biết thêm chi tiết.">
+            <div class="card" data-title="Fast Track - Dịch Vụ Premium Giá Rẻ" data-img="" data-headline="Picture your best photos." data-text="Dịch vụ tăng tương tác mạng xã hội uy tín, an toàn. Vui lòng liên hệ để biết thêm chi tiết.">
                 <div class="card-image-container card-2"></div>
                 <div class="card-content">
-                    <h4>Tăng Tương Tác MXH</h4>
+                    <h4>Tài Khoản Netflix 4k</h4>
                     <p>Giá liên hệ</p>
                 </div>
             </div>
@@ -1532,34 +1620,20 @@
 
     <div class="bill-showcase">
         <h2 id="check-uy-tin" class="section-title" style="margin-top: 0;">Bill Thanh Toán Của Khách Hàng</h2>
-        <section class="bill-section">
-            <div class="bill-container">
-                <div class="bill-item"><img src="https://i.ibb.co/6rTj1s9/bill-gemini.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/zQfD8P5/bill-2.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/gDFtqg8/bill-3.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/VvZg3dC/bill-4.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/JqjP0Sb/bill-5.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/9gJV04k/bill-6.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/vmQxkbN/bill-7.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/4RsJ4fF/bill-8.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/4gXCn0G/bill-9.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/yY9x0Yn/bill-10.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/mH0cBPd/bill-11.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/K07h4YD/bill-12.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/9s1PgLq/bill-13.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/S6J0vBP/bill-14.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/4Y4R7G6/bill-15.png" alt="Hóa đơn" loading="lazy"></div>
-                <div class="bill-item"><img src="https://i.ibb.co/VcM0PfnT/0601-GETBZL.png" alt="Hóa đơn" loading="lazy"></div>
+        <p class="bill-showcase-description">
+            Đây là những hóa đơn chuyển khoản từ khách hàng thật – đã sử dụng dịch vụ tại Fast Track. Chúng tôi luôn minh bạch và đặt uy tín lên hàng đầu.
+        </p>
+
+        <div class="bill-carousel-container">
+            <div class="bill-carousel-track">
             </div>
-        </section>
-        <div class="bill-scrollbar-container">
-            <div class="bill-scrollbar-track">
-                <div class="bill-scrollbar-thumb"></div>
-            </div>
-            <div class="bill-scroll-counter"></div>
+        </div>
+
+        <div class="slider-container">
+            <input type="range" class="bill-slider" min="0" value="0">
+            <div class="bill-counter"></div>
         </div>
     </div>
-
     <div class="modal-overlay"></div>
     <div class="modal">
         <button class="modal-close">&times;</button>
@@ -1574,9 +1648,8 @@
     </div>
 
     <div id="floating-actions" class="floating-actions-container">
-        <a href="https://www.facebook.com/FastTrack68" target="_blank" class="floating-action-btn btn-facebook" aria-label="Facebook"></a>
         <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
-        <a href="https.t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
+        <a href="httpsis.t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
         <a href="https://zalo.me/0978879931" target="_blank" class="floating-action-btn btn-zalo" aria-label="Zalo"></a>
     </div>
 
@@ -1658,8 +1731,11 @@
                     <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger">
                         <img src="https://i.ibb.co/VWD70rLr/image.png" alt="Messenger">
                     </a>
-                    <a href="https.t.me/TCManhh" target="_blank" aria-label="Telegram">
+                    <a href="httpsis.t.me/TCManhh" target="_blank" aria-label="Telegram">
                         <img src="https://i.ibb.co/XZyQS4NN/image.png" alt="Telegram">
+                    </a>
+                    <a href="https://www.facebook.com/FastTrack68" target="_blank" aria-label="Facebook">
+                        <img src="https://i.ibb.co/hRsQS5rh/image.png" alt="Facebook">
                     </a>
                 </div>
             </div>
@@ -1673,459 +1749,265 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            function initFaqAccordion() {
-                const faqContainer = document.querySelector('.faq-container');
-                if (!faqContainer) return;
 
-                faqContainer.addEventListener('click', function (e) {
-                    const questionBtn = e.target.closest('.faq-question');
-                    if (!questionBtn) return;
-
-                    const answer = questionBtn.nextElementSibling;
-                    const wasActive = questionBtn.classList.contains('active');
-
-                    this.querySelectorAll('.faq-question').forEach(btn => {
-                        if (btn !== questionBtn) {
-                            btn.classList.remove('active');
-                            btn.nextElementSibling.style.maxHeight = null;
-                        }
-                    });
-
-                    if (!wasActive) {
-                        questionBtn.classList.add('active');
-                        answer.style.maxHeight = answer.scrollHeight + "px";
-                    } else {
-                        questionBtn.classList.remove('active');
-                        answer.style.maxHeight = null;
-                    }
-                });
-            }
-
-            const categoryTrigger = document.getElementById('category-trigger');
-            const categoryOverlay = document.getElementById('category-overlay');
-            const categoryMenu = document.getElementById('category-menu');
-            const categoryCloseBtn = document.getElementById('category-close-btn');
-
-            function openCategoryMenu() {
-                siteHeader.classList.add('is-hidden');
-                categoryOverlay.classList.add('active');
-                categoryMenu.classList.add('active');
-                document.body.classList.add('modal-open');
-            }
-
-            function closeCategoryMenu() {
-                siteHeader.classList.remove('is-hidden');
-                categoryOverlay.classList.remove('active');
-                categoryMenu.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            }
-
-            if (categoryTrigger) {
-                categoryTrigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (categoryMenu.classList.contains('active')) {
-                        closeCategoryMenu();
-                    } else {
-                        openCategoryMenu();
-                    }
-                });
-            }
-
-            if (categoryOverlay) {
-                categoryOverlay.addEventListener('click', closeCategoryMenu);
-            }
-
-            if (categoryCloseBtn) {
-                const headerForCloseBtn = document.querySelector('.site-header');
-                const observerForCloseBtn = new MutationObserver(mutations => {
-                    mutations.forEach(mutation => {
-                        if (mutation.attributeName === 'class' && !categoryMenu.classList.contains('active')) {
-                            categoryCloseBtn.classList.remove('active');
-                        } else if (categoryMenu.classList.contains('active')) {
-                            categoryCloseBtn.classList.add('active');
-                        }
-                    });
-                });
-                if (categoryMenu) {
-                    observerForCloseBtn.observe(categoryMenu, { attributes: true });
-                }
-                categoryCloseBtn.addEventListener('click', closeCategoryMenu);
-            }
-
-            if (categoryMenu) {
-                categoryMenu.addEventListener('click', (e) => {
-                    if (e.target.closest('a')) {
-                        closeCategoryMenu();
-                    }
-                });
-            }
-
+            // --- Các biến và hàm global cho các thành phần khác ---
             const siteHeader = document.querySelector('.site-header');
             const modal = document.querySelector('.modal');
             const modalOverlayEl = document.querySelector('.modal-overlay');
             const modalCloseBtn = document.querySelector('.modal-close');
-
-            const hamburgerBtn = document.querySelector('.hamburger-btn');
-            const mainNav = document.querySelector('.main-nav');
-            if (hamburgerBtn) {
-                hamburgerBtn.addEventListener('click', () => {
-                    mainNav.classList.toggle('is-open');
-                });
-            }
-            if (mainNav) {
-                mainNav.addEventListener('click', (e) => {
-                    if (e.target.closest('a')) {
-                        if (mainNav.classList.contains('is-open')) {
-                            mainNav.classList.remove('is-open');
-                        }
-                    }
-                });
-            }
-
-            const mobileSearchIcon = document.querySelector('.mobile-search-icon');
-            if (mobileSearchIcon) {
-                mobileSearchIcon.addEventListener('click', () => {
-                    siteHeader.classList.toggle('search-active');
-                });
-            }
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetElement = document.querySelector(this.getAttribute('href'));
-                    if (targetElement) {
-                        if (mainNav && mainNav.classList.contains('is-open')) {
-                            mainNav.classList.remove('is-open');
-                        }
-                        if (categoryMenu && categoryMenu.classList.contains('active')) {
-                            closeCategoryMenu();
-                        }
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            });
-
-            const modalTitle = document.getElementById('modal-title');
-            const modalHeadline = document.getElementById('modal-headline');
-            const modalText = document.getElementById('modal-text');
             const modalImage = document.getElementById('modal-image');
 
-            function openModal() {
-                if (modal && modalOverlayEl) {
-                    siteHeader.classList.add('is-hidden');
-                    modal.classList.add('active');
-                    modalOverlayEl.classList.add('active');
-                    document.body.classList.add('modal-open');
+            // --- Logic chung (menu, modal, v.v.) ---
+            function setupGlobalListeners() {
+                // FAQ Accordion
+                function initFaqAccordion() {
+                    const faqContainer = document.querySelector('.faq-container');
+                    if (!faqContainer) return;
+                    faqContainer.addEventListener('click', function (e) {
+                        const questionBtn = e.target.closest('.faq-question');
+                        if (!questionBtn) return;
+                        const answer = questionBtn.nextElementSibling;
+                        const wasActive = questionBtn.classList.contains('active');
+                        this.querySelectorAll('.faq-question').forEach(btn => {
+                            if (btn !== questionBtn) {
+                                btn.classList.remove('active');
+                                btn.nextElementSibling.style.maxHeight = null;
+                            }
+                        });
+                        if (!wasActive) {
+                            questionBtn.classList.add('active');
+                            answer.style.maxHeight = answer.scrollHeight + "px";
+                        } else {
+                            questionBtn.classList.remove('active');
+                            answer.style.maxHeight = null;
+                        }
+                    });
                 }
-            }
-            function closeModal() {
-                if (modal && modalOverlayEl) {
+
+                // Category Menu
+                const categoryTrigger = document.getElementById('category-trigger');
+                const categoryOverlay = document.getElementById('category-overlay');
+                const categoryMenu = document.getElementById('category-menu');
+                const categoryCloseBtn = document.getElementById('category-close-btn');
+                if (categoryTrigger) {
+                    categoryTrigger.addEventListener('click', (e) => { e.preventDefault(); siteHeader.classList.add('is-hidden'); categoryOverlay.classList.add('active'); categoryMenu.classList.add('active'); document.body.classList.add('modal-open'); });
+                    const closeCategoryMenu = () => { siteHeader.classList.remove('is-hidden'); categoryOverlay.classList.remove('active'); categoryMenu.classList.remove('active'); document.body.classList.remove('modal-open'); };
+                    categoryOverlay.addEventListener('click', closeCategoryMenu);
+                    categoryCloseBtn.addEventListener('click', closeCategoryMenu);
+                    categoryMenu.addEventListener('click', (e) => { if (e.target.closest('a')) closeCategoryMenu(); });
+                }
+
+                // Mobile Menu
+                const hamburgerBtn = document.querySelector('.hamburger-btn');
+                const mainNav = document.querySelector('.main-nav');
+                if (hamburgerBtn) { hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open')); }
+                if (mainNav) { mainNav.addEventListener('click', (e) => { if (e.target.closest('a') && mainNav.classList.contains('is-open')) mainNav.classList.remove('is-open'); }); }
+
+                // Smooth Scroll
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(this.getAttribute('href'));
+                        if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                    });
+                });
+
+                // Modal Logic
+                const openModal = () => { siteHeader.classList.add('is-hidden'); modal.classList.add('active'); modalOverlayEl.classList.add('active'); document.body.classList.add('modal-open'); };
+                const closeModal = () => {
                     siteHeader.classList.remove('is-hidden');
                     modal.classList.remove('active');
                     modalOverlayEl.classList.remove('active');
                     document.body.classList.remove('modal-open');
                     setTimeout(() => {
                         modal.classList.remove('image-view');
-                        if (modalImage) modalImage.src = "";
                         modal.style.transformOrigin = 'center center';
-                    }, 350);
+                    }, 400);
+                    // Bắn sự kiện để carousel biết và tiếp tục chạy
+                    document.dispatchEvent(new CustomEvent('modalHasClosed'));
+                };
+
+                if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+                if (modalOverlayEl) modalOverlayEl.addEventListener('click', closeModal);
+                if (modal) modal.addEventListener('click', (e) => e.stopPropagation());
+
+                // Card Click Logic
+                document.querySelectorAll('.card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        modal.classList.remove('image-view');
+                        document.getElementById('modal-title').textContent = card.dataset.title;
+                        document.getElementById('modal-headline').innerHTML = card.dataset.headline;
+                        document.getElementById('modal-text').innerHTML = card.dataset.text;
+                        modalImage.src = card.dataset.img || '';
+                        openModal();
+                        initFaqAccordion();
+                    });
+                });
+
+                // Intersection Observer for animations
+                const animatedElements = document.querySelectorAll('.card, .section-title');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+                }, { threshold: 0.1 });
+                animatedElements.forEach(el => observer.observe(el));
+            }
+
+            // --- Chạy hàm khởi tạo các chức năng chung ---
+            setupGlobalListeners();
+
+            // =======================================================
+            // ======== BẮT ĐẦU SCRIPT CHO CAROUSEL NÂNG CAO =========
+            // =======================================================
+            const billTrack = document.querySelector('.bill-carousel-track');
+            if (billTrack) { // Chỉ chạy script nếu có carousel
+                const billSlider = document.querySelector('.bill-slider');
+                const billCounter = document.querySelector('.bill-counter');
+
+                const billImages = [
+                    { src: "https://i.ibb.co/6rTj1s9/bill-gemini.png", alt: "Bill 1" }, { src: "https://i.ibb.co/zQfD8P5/bill-2.png", alt: "Bill 2" }, { src: "https://i.ibb.co/gDFtqg8/bill-3.png", alt: "Bill 3" }, { src: "https://i.ibb.co/VvZg3dC/bill-4.png", alt: "Bill 4" }, { src: "https://i.ibb.co/JqjP0Sb/bill-5.png", alt: "Bill 5" }, { src: "https://i.ibb.co/9gJV04k/bill-6.png", alt: "Bill 6" }, { src: "https://i.ibb.co/vmQxkbN/bill-7.png", alt: "Bill 7" }, { src: "https://i.ibb.co/4RsJ4fF/bill-8.png", alt: "Bill 8" }, { src: "https://i.ibb.co/4gXCn0G/bill-9.png", alt: "Bill 9" }, { src: "https://i.ibb.co/yY9x0Yn/bill-10.png", alt: "Bill 10" }, { src: "https://i.ibb.co/mH0cBPd/bill-11.png", alt: "Bill 11" }
+                ];
+
+                billImages.forEach(imgData => {
+                    const item = document.createElement('div');
+                    item.className = 'bill-carousel-item';
+                    const img = document.createElement('img');
+                    img.src = imgData.src; img.alt = imgData.alt; img.loading = 'lazy';
+                    item.appendChild(img);
+                    billTrack.appendChild(item);
+                });
+
+                const items = Array.from(billTrack.children);
+                if (items.length <= 1) return;
+
+                let currentIndex = 0;
+                let autoSlideTimer;
+                let resumeTimer;
+                const autoSlideInterval = 3500;
+
+                function updateActiveState(centerIndex) {
+                    if (centerIndex === currentIndex && items[centerIndex]?.classList.contains('active')) return;
+                    if (centerIndex === -1) return;
+
+                    currentIndex = centerIndex;
+                    items.forEach((item, index) => {
+                        item.classList.toggle('active', index === currentIndex);
+                    });
+
+                    if (billSlider) {
+                        billSlider.value = currentIndex;
+                        const progressPercent = (items.length > 1) ? (currentIndex / (items.length - 1)) * 100 : 0;
+                        billSlider.style.setProperty('--progress', `${progressPercent}%`);
+                    }
+                    if (billCounter) {
+                        billCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+                    }
                 }
-            }
 
-            if (modalCloseBtn) {
-                modalCloseBtn.addEventListener('click', closeModal);
-            }
-            if (modalOverlayEl) {
-                modalOverlayEl.addEventListener('click', closeModal);
-            }
-            if (modal) {
-                modal.addEventListener('click', (e) => e.stopPropagation());
-            }
+                function getCenterIndex() {
+                    const trackRect = billTrack.getBoundingClientRect();
+                    const trackCenter = trackRect.left + trackRect.width / 2;
+                    let closestIndex = -1;
+                    let minDiff = Infinity;
 
-            const modalCards = document.querySelectorAll('.card');
-            modalCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    modal.classList.remove('image-view');
-                    if (modalTitle) modalTitle.textContent = card.dataset.title;
-                    if (modalHeadline) modalHeadline.innerHTML = card.dataset.headline;
-                    if (modalText) modalText.innerHTML = card.dataset.text;
-                    if (modalImage) modalImage.src = card.dataset.img || '';
-                    openModal();
-                    initFaqAccordion();
-                });
-            });
-
-            const billItems = document.querySelectorAll('.bill-item');
-            billItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    if (item.classList.contains('was-dragged')) {
-                        item.classList.remove('was-dragged');
-                        return;
-                    }
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    modal.style.transformOrigin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
-                    modal.classList.add('image-view');
-                    if (modalImage) modalImage.src = item.querySelector('img').src;
-                    openModal();
-                });
-            });
-
-            const animatedElements = document.querySelectorAll('.card, .section-title');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
-                });
-            }, { threshold: 0.1 });
-            animatedElements.forEach(el => observer.observe(el));
-
-            const slider = document.querySelector('.bill-section');
-            if (slider) {
-                let isDown = false;
-                let startX, scrollLeft, velocity = 0, lastPos = 0, lastTime = 0;
-                let animationFrameId, autoScrollId, idleTimer;
-
-                const FRICTION = 0.98;
-                const MIN_VELOCITY = 0.1;
-                const AUTO_SCROLL_SPEED = 35;
-                let lastAutoScrollTime = 0;
-
-                const autoScrollLoop = (timestamp) => {
-                    if (!lastAutoScrollTime) {
-                        lastAutoScrollTime = timestamp;
-                    }
-                    const deltaTime = timestamp - lastAutoScrollTime;
-                    lastAutoScrollTime = timestamp;
-                    const scrollAmount = (AUTO_SCROLL_SPEED * deltaTime) / 1000;
-
-                    if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
-                        slider.scrollLeft = 0;
-                    } else {
-                        slider.scrollLeft += scrollAmount;
-                    }
-                    autoScrollId = requestAnimationFrame(autoScrollLoop);
-                };
-
-                const stopAutoScroll = () => {
-                    cancelAnimationFrame(autoScrollId);
-                    clearTimeout(idleTimer);
-                };
-
-                const startAutoScroll = () => {
-                    stopAutoScroll();
-                    lastAutoScrollTime = 0;
-                    autoScrollId = requestAnimationFrame(autoScrollLoop);
-                };
-
-                const resetInteraction = () => { clearTimeout(idleTimer); idleTimer = setTimeout(startAutoScroll, 3000); };
-
-                const dragStart = (e) => {
-                    isDown = true;
-                    slider.classList.add('active');
-                    startX = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
-                    velocity = 0;
-                    lastPos = startX;
-                    lastTime = Date.now();
-                    cancelAnimationFrame(animationFrameId);
-                    stopAutoScroll();
-                };
-
-                const dragEnd = () => {
-                    if (!isDown) return;
-                    isDown = false;
-                    slider.classList.remove('active');
-                    if (Math.abs(velocity) > MIN_VELOCITY) {
-                        animationFrameId = requestAnimationFrame(inertiaLoop);
-                    }
-                    resetInteraction();
-                };
-
-                const dragMove = (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    slider.scrollLeft = scrollLeft - walk;
-                    if (Math.abs(walk) > 10) {
-                        const draggedItem = e.target.closest('.bill-item');
-                        if (draggedItem) draggedItem.classList.add('was-dragged');
-                    }
-                    const currentTime = Date.now();
-                    const deltaTime = currentTime - lastTime;
-                    if (deltaTime > 0) {
-                        velocity = ((x - lastPos) / deltaTime) * 16;
-                        lastPos = x;
-                        lastTime = currentTime;
-                    }
-                };
-
-                const inertiaLoop = () => {
-                    slider.scrollLeft -= velocity;
-                    velocity *= FRICTION;
-                    if (Math.abs(velocity) > MIN_VELOCITY) {
-                        animationFrameId = requestAnimationFrame(inertiaLoop);
-                    } else {
-                        cancelAnimationFrame(animationFrameId);
-                    }
-                };
-
-                slider.addEventListener('mousedown', dragStart);
-                slider.addEventListener('mouseleave', dragEnd);
-                slider.addEventListener('mouseup', dragEnd);
-                slider.addEventListener('mousemove', dragMove);
-                slider.addEventListener('touchstart', dragStart, { passive: false });
-                slider.addEventListener('touchend', dragEnd, { passive: false });
-                slider.addEventListener('touchmove', dragMove, { passive: false });
-
-                startAutoScroll();
-            }
-
-            const searchInput = document.getElementById('search-input');
-            const searchResultsContainer = document.getElementById('search-results');
-
-            if (searchInput && searchResultsContainer && typeof ALL_PRODUCTS !== 'undefined') {
-                searchInput.addEventListener('input', function () {
-                    const query = this.value.toLowerCase().trim();
-                    searchResultsContainer.innerHTML = '';
-                    if (query.length === 0) {
-                        searchResultsContainer.style.display = 'none';
-                        return;
-                    }
-                    const filteredProducts = ALL_PRODUCTS.filter(product =>
-                        product.title.toLowerCase().includes(query)
-                    );
-                    searchResultsContainer.style.display = 'block';
-                    if (filteredProducts.length > 0) {
-                        filteredProducts.forEach(product => {
-                            const itemLink = document.createElement('a');
-                            itemLink.href = "#";
-                            itemLink.classList.add('result-item');
-                            itemLink.dataset.cardSelector = product.cardSelector;
-                            itemLink.innerHTML = `
-                                               <img src="${product.image}" alt="${product.title}">
-                                               <div class="result-item-info">
-                                                  <h4>${product.title}</h4>
-                                                  <p>${product.shortDescription}</p>
-                                               </div>
-                                              `;
-                            itemLink.addEventListener('click', function (e) {
-                                e.preventDefault();
-                                const targetCard = document.querySelector(this.dataset.cardSelector);
-                                if (targetCard) {
-                                    targetCard.click();
-                                }
-                                searchInput.value = '';
-                                searchResultsContainer.style.display = 'none';
-                            });
-                            searchResultsContainer.appendChild(itemLink);
-                        });
-                    } else {
-                        searchResultsContainer.innerHTML = '<div class="no-results">Không tìm thấy kết quả nào.</div>';
-                    }
-                });
-                document.addEventListener('click', function (e) {
-                    if (searchInput && !searchInput.contains(e.target) && searchResultsContainer && !searchResultsContainer.contains(e.target)) {
-                        searchResultsContainer.style.display = 'none';
-                    }
-                });
-            }
-
-            const floatingActions = document.getElementById('floating-actions');
-            if (floatingActions) {
-                let lastScrollTop = 0;
-                window.addEventListener('scroll', function () {
-                    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    if (scrollTop > lastScrollTop && scrollTop > 200) {
-                        floatingActions.style.transform = 'translateY(150%)';
-                    } else {
-                        floatingActions.style.transform = 'translateY(0)';
-                    }
-                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-                }, false);
-            }
-
-            const youtubeCategoryLink = document.getElementById('youtube-category-link');
-            const youtubeCard = document.querySelector('.card-1');
-
-            if (youtubeCategoryLink && youtubeCard) {
-                youtubeCategoryLink.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    closeCategoryMenu();
-                    youtubeCard.click();
-                });
-            }
-
-            const billSectionForScrollbar = document.querySelector('.bill-section');
-            const allBillItems = document.querySelectorAll('.bill-item');
-            const thumb = document.querySelector('.bill-scrollbar-thumb');
-            const counter = document.querySelector('.bill-scroll-counter');
-
-            if (billSectionForScrollbar && allBillItems.length > 0 && thumb && counter) {
-                const totalItems = allBillItems.length;
-
-                const updateIndicator = () => {
-                    const scrollableWidth = billSectionForScrollbar.scrollWidth - billSectionForScrollbar.clientWidth;
-                    if (scrollableWidth <= 0) return;
-                    const progress = billSectionForScrollbar.scrollLeft / scrollableWidth;
-
-                    const trackWidth = thumb.parentElement.clientWidth;
-                    const thumbWidth = thumb.clientWidth;
-                    const maxThumbLeft = trackWidth - thumbWidth;
-                    thumb.style.left = `${progress * maxThumbLeft}px`;
-
-                    const sectionCenter = billSectionForScrollbar.getBoundingClientRect().left + billSectionForScrollbar.clientWidth / 2;
-                    let closestIndex = 0;
-                    let smallestDistance = Infinity;
-
-                    allBillItems.forEach((item, index) => {
-                        const itemCenter = item.getBoundingClientRect().left + item.clientWidth / 2;
-                        const distance = Math.abs(sectionCenter - itemCenter);
-                        if (distance < smallestDistance) {
-                            smallestDistance = distance;
+                    items.forEach((item, index) => {
+                        const itemRect = item.getBoundingClientRect();
+                        const itemCenter = itemRect.left + itemRect.width / 2;
+                        const diff = Math.abs(itemCenter - trackCenter);
+                        if (diff < minDiff) {
+                            minDiff = diff;
                             closestIndex = index;
                         }
                     });
-
-                    counter.textContent = `${closestIndex + 1} / ${totalItems}`;
-                };
-
-                billSectionForScrollbar.addEventListener('scroll', updateIndicator, { passive: true });
-
-                window.addEventListener('resize', updateIndicator);
-
-                setTimeout(updateIndicator, 300);
-            }
-
-            // THAY ĐỔI: Script cho hiệu ứng phóng to ảnh bill luân phiên
-            if (window.matchMedia("(max-width: 768px)").matches) {
-                const billItemsForZoom = document.querySelectorAll('.bill-item');
-                if (billItemsForZoom.length > 0) {
-
-                    const observerOptions = {
-                        root: document.querySelector('.bill-section'),
-                        rootMargin: '0px -50px 0px -50px',
-                        threshold: 1.0
-                    };
-
-                    const observerCallback = (entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                document.querySelectorAll('.bill-item.is-fully-visible').forEach(activeItem => {
-                                    activeItem.classList.remove('is-fully-visible');
-                                });
-                                entry.target.classList.add('is-fully-visible');
-                            } else {
-                                entry.target.classList.remove('is-fully-visible');
-                            }
-                        });
-                    };
-
-                    const billObserver = new IntersectionObserver(observerCallback, observerOptions);
-
-                    billItemsForZoom.forEach(item => {
-                        billObserver.observe(item);
-                    });
+                    return closestIndex;
                 }
+
+                function moveToSlide(index) {
+                    if (index < 0 || index >= items.length) return;
+                    const targetItem = items[index];
+                    if (targetItem) {
+                        // TÍNH TOÁN VỊ TRÍ CUỘN MỚI
+                        const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
+                        const scrollAmount = targetItem.offsetLeft - padding;
+
+                        // Cuộn track theo chiều ngang
+                        billTrack.scrollTo({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    }
+                    updateActiveState(index);
+                }
+
+                function startAutoSlide() {
+                    clearInterval(autoSlideTimer);
+                    autoSlideTimer = setInterval(() => {
+                        let nextIndex = (currentIndex + 1) % items.length;
+                        moveToSlide(nextIndex);
+                    }, autoSlideInterval);
+                }
+
+                function stopAutoSlide() {
+                    clearInterval(autoSlideTimer);
+                    clearTimeout(resumeTimer);
+                }
+
+                function resumeAutoSlideAfterDelay() {
+                    stopAutoSlide();
+                    resumeTimer = setTimeout(startAutoSlide, 1000);
+                }
+
+                // === LẮNG NGHE SỰ KIỆN ===
+                let isScrolling;
+                billTrack.addEventListener('scroll', () => {
+                    stopAutoSlide();
+                    window.clearTimeout(isScrolling);
+                    isScrolling = setTimeout(() => {
+                        const centerIndex = getCenterIndex();
+                        if (centerIndex !== -1) updateActiveState(centerIndex);
+                        resumeAutoSlideAfterDelay();
+                    }, 150);
+                });
+
+                billSlider.addEventListener('input', () => {
+                    stopAutoSlide();
+                    moveToSlide(parseInt(billSlider.value, 10));
+                });
+
+                billSlider.addEventListener('change', () => {
+                    resumeAutoSlideAfterDelay();
+                });
+
+                billTrack.addEventListener('click', (e) => {
+                    const img = e.target.closest('.bill-carousel-item img');
+                    if (img) {
+                        stopAutoSlide();
+                        modal.classList.add('image-view');
+                        modalImage.src = img.src;
+                        document.querySelector('.modal-overlay').classList.add('active');
+                        modal.classList.add('active');
+                        document.body.classList.add('modal-open');
+                    }
+                });
+
+                document.addEventListener('modalHasClosed', () => {
+                    resumeAutoSlideAfterDelay();
+                });
+
+
+                // === KHỞI TẠO ===
+                function initialize() {
+                    const padding = (billTrack.clientWidth - items[0].clientWidth) / 2;
+                    billTrack.style.paddingLeft = `${padding}px`;
+                    billTrack.style.paddingRight = `${padding}px`;
+                    billSlider.max = items.length - 1;
+
+                    setTimeout(() => {
+                        moveToSlide(0);
+                        startAutoSlide();
+                    }, 100);
+                }
+
+                initialize();
             }
         });
     </script>
