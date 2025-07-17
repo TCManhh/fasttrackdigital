@@ -382,12 +382,20 @@
             overflow: hidden;
             cursor: pointer;
             box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* THAY ĐỔI: Tinh chỉnh transition để hiệu ứng phóng to mượt hơn */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
         }
 
             .bill-item:hover {
                 transform: translateY(-8px) scale(1.03);
                 box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            }
+
+            /* THÊM MỚI: Trạng thái được phóng to của bill */
+            .bill-item.is-fully-visible {
+                transform: scale(1.08);
+                z-index: 10;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.15);
             }
 
             .bill-item img {
@@ -1313,7 +1321,7 @@
                 background: #f1f1f1;
             }
 
-            /* === THAY ĐỔI: Tối ưu hiển thị các gói dịch vụ trong modal === */
+            /* === Tối ưu hiển thị các gói dịch vụ trong modal === */
             .packages-container {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 10px;
@@ -1323,7 +1331,6 @@
                 padding: 10px;
             }
 
-            /* THAY ĐỔI: Giảm khoảng cách giữa giá và mô tả */
             .package-header {
                 margin-bottom: -1px;
                 padding-bottom: 5px;
@@ -1871,21 +1878,47 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
 
+        // THAY ĐỔI: Tối ưu lại toàn bộ script cho bill-section
         const slider = document.querySelector('.bill-section');
         if (slider) {
             let isDown = false;
             let startX, scrollLeft, velocity = 0, lastPos = 0, lastTime = 0;
-            let animationFrameId, autoScrollInterval, idleTimer;
-            const FRICTION = 0.96, MIN_VELOCITY = 0.5;
+            let animationFrameId, autoScrollId, idleTimer;
 
-            const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
+            const FRICTION = 0.98;
+            const MIN_VELOCITY = 0.1;
+            const AUTO_SCROLL_SPEED = 35;
+            let lastAutoScrollTime = 0;
+
+            const autoScrollLoop = (timestamp) => {
+                if (!lastAutoScrollTime) {
+                    lastAutoScrollTime = timestamp;
+                }
+                const deltaTime = timestamp - lastAutoScrollTime;
+                lastAutoScrollTime = timestamp;
+                const scrollAmount = (AUTO_SCROLL_SPEED * deltaTime) / 1000;
+
+                if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1) {
+                    slider.scrollLeft = 0;
+                } else {
+                    slider.scrollLeft += scrollAmount;
+                }
+                autoScrollId = requestAnimationFrame(autoScrollLoop);
+            };
+
+            const stopAutoScroll = () => {
+                cancelAnimationFrame(autoScrollId);
+                clearTimeout(idleTimer);
+            };
+
             const startAutoScroll = () => {
                 stopAutoScroll();
-                autoScrollInterval = setInterval(() => {
-                    slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1 ? slider.scrollLeft = 0 : slider.scrollLeft += 1;
-                }, 30);
+                lastAutoScrollTime = 0;
+                autoScrollId = requestAnimationFrame(autoScrollLoop);
             };
-            const resetInteraction = () => { clearTimeout(idleTimer); idleTimer = setTimeout(startAutoScroll, 2000); };
+
+            const resetInteraction = () => { clearTimeout(idleTimer); idleTimer = setTimeout(startAutoScroll, 3000); };
+
             const dragStart = (e) => {
                 isDown = true;
                 slider.classList.add('active');
@@ -1897,18 +1930,22 @@
                 cancelAnimationFrame(animationFrameId);
                 stopAutoScroll();
             };
+
             const dragEnd = () => {
                 if (!isDown) return;
                 isDown = false;
                 slider.classList.remove('active');
-                animationFrameId = requestAnimationFrame(inertiaLoop);
+                if (Math.abs(velocity) > MIN_VELOCITY) {
+                    animationFrameId = requestAnimationFrame(inertiaLoop);
+                }
                 resetInteraction();
             };
+
             const dragMove = (e) => {
                 if (!isDown) return;
                 e.preventDefault();
                 const x = (e.pageX || e.touches[0].pageX) - slider.offsetLeft;
-                const walk = (x - startX);
+                const walk = (x - startX) * 1.5;
                 slider.scrollLeft = scrollLeft - walk;
                 if (Math.abs(walk) > 10) {
                     const draggedItem = e.target.closest('.bill-item');
@@ -1917,11 +1954,12 @@
                 const currentTime = Date.now();
                 const deltaTime = currentTime - lastTime;
                 if (deltaTime > 0) {
-                    velocity = ((x - lastPos) / deltaTime) * 12;
+                    velocity = ((x - lastPos) / deltaTime) * 16;
                     lastPos = x;
                     lastTime = currentTime;
                 }
             };
+
             const inertiaLoop = () => {
                 slider.scrollLeft -= velocity;
                 velocity *= FRICTION;
@@ -1939,8 +1977,11 @@
             slider.addEventListener('touchstart', dragStart, { passive: false });
             slider.addEventListener('touchend', dragEnd, { passive: false });
             slider.addEventListener('touchmove', dragMove, { passive: false });
+
             startAutoScroll();
         }
+        // KẾT THÚC KHỐI SCRIPT CHO BILL SECTION
+
 
         const searchInput = document.getElementById('search-input');
         const searchResultsContainer = document.getElementById('search-results');
@@ -1964,12 +2005,12 @@
                         itemLink.classList.add('result-item');
                         itemLink.dataset.cardSelector = product.cardSelector;
                         itemLink.innerHTML = `
-                                           <img src="${product.image}" alt="${product.title}">
-                                           <div class="result-item-info">
-                                              <h4>${product.title}</h4>
-                                              <p>${product.shortDescription}</p>
-                                           </div>
-                                          `;
+                                               <img src="${product.image}" alt="${product.title}">
+                                               <div class="result-item-info">
+                                                  <h4>${product.title}</h4>
+                                                  <p>${product.shortDescription}</p>
+                                               </div>
+                                              `;
                         itemLink.addEventListener('click', function (e) {
                             e.preventDefault();
                             const targetCard = document.querySelector(this.dataset.cardSelector);
@@ -2057,6 +2098,36 @@
 
             setTimeout(updateIndicator, 300);
         }
+
+        // THÊM MỚI: Script cho hiệu ứng phóng to ảnh bill
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                const billItemsForZoom = document.querySelectorAll('.bill-item');
+                if (billItemsForZoom.length === 0) return;
+
+                const observerOptions = {
+                    root: document.querySelector('.bill-section'),
+                    rootMargin: '0px -50px 0px -50px', // Thu hẹp vùng quan sát để ảnh phải vào gần giữa hơn
+                    threshold: 1.0
+                };
+
+                const observerCallback = (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.intersectionRatio === 1) {
+                            entry.target.classList.add('is-fully-visible');
+                        } else {
+                            entry.target.classList.remove('is-fully-visible');
+                        }
+                    });
+                };
+
+                const billObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+                billItemsForZoom.forEach(item => {
+                    billObserver.observe(item);
+                });
+            }
+        });
     </script>
 </body>
 </html>
