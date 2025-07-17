@@ -175,7 +175,6 @@
             white-space: nowrap;
         }
 
-            /* [THÊM MỚI] CSS cho mục đang active trên thanh menu */
             .main-nav a.active-page {
                 color: #c00;
                 font-weight: 700;
@@ -229,6 +228,7 @@
             padding: 20px 0;
         }
 
+        /* === CSS CHO DỊCH VỤ CARD === */
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -237,18 +237,20 @@
         }
 
         .card {
-            position: relative;
             flex-shrink: 0;
-            width: calc(33.333% - var(--card-gap) * 2 / 3);
-            aspect-ratio: 1 / 1;
-            border-radius: 25px;
-            background-size: cover;
-            background-position: center;
+            width: calc(20% - var(--card-gap) * 4 / 5);
+            border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             opacity: 0;
             transform: scale(0.9);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
         }
 
             .card.is-visible {
@@ -258,12 +260,41 @@
 
             .card:hover {
                 transform: scale(1.02);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.12);
             }
 
-        /* [CẬP NHẬT] Ẩn dấu cộng */
         .plus-icon {
             display: none;
         }
+
+        .card-image-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content {
+            padding: 12px;
+            text-align: left;
+            background-color: #fff;
+            flex-grow: 1;
+        }
+
+            .card-content h4 {
+                font-size: 0.9rem;
+                font-weight: 600;
+                margin: 0 0 4px 0;
+                color: #1d1d1f;
+                line-height: 1.3;
+            }
+
+            .card-content p {
+                font-size: 0.85rem;
+                font-weight: 700;
+                margin: 0;
+                color: #c00;
+            }
 
         .card-1 {
             background-image: url('./images/card-1.png');
@@ -291,15 +322,24 @@
 
         @media (max-width: 900px) {
             .card {
-                width: calc(50% - var(--card-gap) / 2);
+                width: calc(33.333% - var(--card-gap) * 2 / 3);
             }
         }
 
         @media (max-width: 600px) {
             .card {
-                width: 100%;
+                width: calc(50% - var(--card-gap) / 2);
+            }
+
+            .card-content h4 {
+                font-size: 0.9rem;
+            }
+
+            .card-content p {
+                font-size: 0.85rem;
             }
         }
+
 
         .bill-showcase {
             background-color: #f9fafb;
@@ -1235,18 +1275,6 @@
                     font-size: 1.3rem;
                 }
 
-            .package-box h3 {
-                font-size: 16px !important;
-            }
-
-            .package-description {
-                font-size: 15px !important;
-            }
-
-            .package-price {
-                font-size: 1.8rem !important;
-            }
-
             .modal-benefits-section, .modal-faq-section, .faq-answer {
                 font-size: 15px;
             }
@@ -1283,6 +1311,41 @@
 
             .bill-section::-webkit-scrollbar-track {
                 background: #f1f1f1;
+            }
+
+            /* === THAY ĐỔI: Tối ưu hiển thị các gói dịch vụ trong modal === */
+            .packages-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 10px;
+            }
+
+            .package-option {
+                padding: 15px;
+            }
+
+            /* THAY ĐỔI: Giảm khoảng cách giữa giá và mô tả */
+            .package-header {
+                margin-bottom: -1px;
+                padding-bottom: 5px;
+            }
+
+            .package-title {
+                font-size: 1.05rem !important;
+            }
+
+            .package-price {
+                font-size: 1.6rem !important;
+            }
+
+            .package-description {
+                font-size: 0.85rem !important;
+                margin-bottom: 10px;
+            }
+
+            .package-features li {
+                font-size: 0.8rem;
+                padding-left: 20px;
+                margin-bottom: 6px;
             }
         }
 
@@ -1408,18 +1471,57 @@
 
     <section class="services-section">
         <div class="card-container">
-            <div class="card card-1"
+            <div class="card"
                  data-title="Fast Track - Dịch Vụ Premium Giá Rẻ"
                  data-img=""
                  data-headline="Nâng Cấp <span style='color: #FF0000;'>YouTube Premium</span> - Tặng Kèm <span style='color: #FF0000;'>YouTube Music Premium</span>"
                  data-text="<div class='packages-container'> <div class='package-option recommended'> <div class='package-header'> <h3 class='package-title'>Gói Nâng Cấp Chính Chủ</h3> <p class='package-price'>40.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Sử dụng Gmail cá nhân của bạn, ổn định và an toàn. Chỉ cần cung cấp email, không cần mật khẩu.</p> <ul class='package-features'> <li>Bảo mật 100%</li> <li>Không giới hạn thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói Thuê Tài Khoản</h3> <p class='package-price'>35.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Shop sẽ cấp tài khoản có sẵn Premium. Tiết kiệm chi phí, sử dụng đầy đủ tính năng.</p> <ul class='package-features'> <li>Giới hạn 3 thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói YouTube TV</h3> <p class='package-price'>20.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Tài khoản do shop cấp, chuyên dùng cho Smart TV và TV Box, tối ưu chi phí.</p> <ul class='package-features'> <li>Giới hạn đăng nhập trên 5 TV</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> </div> <div class='purchase-section'> <p class='purchase-note'>💡 <strong>Lưu ý:</strong> Giá trên là đơn giá theo tháng. Mua nhiều tháng chỉ cần nhân đơn giá với số tháng mong muốn.</p> <a href='https://zalo.me/0978879931' class='btn-contact-buy'>Liên hệ để mua ngay</a> </div> <div class='modal-full-width-wrapper'> <div class='modal-benefits-section'> <h3 style='color: #c00;'>🔥 Lợi ích khi sử dụng YouTube Premium</h3> <ul style='list-style: none; padding: 0; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> <div class='modal-faq-section'> <h3>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3> <div class='faq-container'> <div class='faq-item'> <button class='faq-question'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> bạn dùng tài khoản Gmail của mình. Shop chỉ gửi link mời vào Family.<br>→ <strong>Gói thuê:</strong> Shop cấp tài khoản riêng biệt.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>2. Sau khi thanh toán, tôi cần làm gì?</button> <div class='faq-answer'> <p>→ Shop sẽ gửi link mời vào Family qua Gmail. Bạn chỉ cần bấm vào link và đồng ý tham gia là dùng được ngay.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>3. Có thể gia hạn gói dịch vụ không?</button> <div class='faq-answer'> <p>→ Có. Shop sẽ nhắc bạn trước khi hết hạn qua email hoặc Zalo. Hoặc bạn có thể chủ động liên hệ để gia hạn.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>4. Nếu tôi vào nhầm tài khoản Google thì sao?</button> <div class='faq-answer'> <p>→ Liên hệ shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa dùng.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>5. Một tài khoản sử dụng được bao nhiêu thiết bị?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> Có thể đăng nhập và sử dụng trên mọi thiết bị. Không giới hạn số lượng thiết bị đăng nhập cũng như không giới hạn số lượng thiết bị sử dụng cùng lúc.<br>→ <strong>Gói thuê tài khoản:</strong> Có thể đăng nhập trên mọi thiết bị. Giới hạn tối đa 3 thiết bị được đăng nhập và 3 thiết bị sử dụng đồng thời.<br>→ <strong>Gói YouTube TV:</strong> Chỉ sử dụng được trên TV (Smart TV). Giới hạn đăng nhập trên 5 thiết bị TV và 3 thiết bị sử dụng đồng thời.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>6. Thông tin cá nhân có bị lộ khi vào Family không?</button> <div class='faq-answer'> <p>→ Tuyệt đối không. Các thành viên Family không thể nhìn thấy thông tin của nhau. Theo chuẩn điều khoản của Google.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>7. Tài khoản ở nước ngoài có tham gia được không?</button> <div class='faq-answer'> <p>→ Có thể, nhưng bạn cần liên hệ để shop hỗ trợ chuyển vùng phù hợp.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>8. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</button> <div class='faq-answer'> <p>→ Không. Hãy sử dụng Gmail cá nhân – G-suite thường bị hạn chế không tham gia được Family.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>9. Thời gian tính dịch vụ được bắt đầu khi nào?</button> <div class='faq-answer'> <p>→ Bắt đầu tính từ thời điểm bạn tham gia Family, không phải lúc thanh toán.</p> </div> </div> </div> </div> </div>">
-                <div class="plus-icon">+</div>
+                <div class="card-image-container card-1"></div>
+                <div class="card-content">
+                    <h4>Nâng Cấp YouTube Premium</h4>
+                    <p>Từ 40.000đ/tháng</p>
+                </div>
             </div>
-            <div class="card card-2" data-title="Cutting-Edge Cameras" data-img="" data-headline="Picture your best photos." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-3" data-title="Chip and Battery" data-img="" data-headline="Fast that lasts." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-4" data-title="New Service 1" data-img="" data-headline="Description for service 4." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-5" data-title="New Service 2" data-img="" data-headline="Description for service 5." data-text="..."><div class="plus-icon">+</div></div>
-            <div class="card card-6" data-title="New Service 3" data-img="" data-headline="Description for service 6." data-text="..."><div class="plus-icon">+</div></div>
+
+            <div class="card" data-title="Tăng Tương Tác MXH" data-img="" data-headline="Picture your best photos." data-text="Dịch vụ tăng tương tác mạng xã hội uy tín, an toàn. Vui lòng liên hệ để biết thêm chi tiết.">
+                <div class="card-image-container card-2"></div>
+                <div class="card-content">
+                    <h4>Tăng Tương Tác MXH</h4>
+                    <p>Giá liên hệ</p>
+                </div>
+            </div>
+
+            <div class="card" data-title="Spotify Premium" data-img="" data-headline="Nâng cấp Spotify Premium" data-text="Nghe nhạc không quảng cáo với Spotify Premium. Vui lòng liên hệ để biết thêm chi tiết.">
+                <div class="card-image-container card-3"></div>
+                <div class="card-content">
+                    <h4>Nâng Cấp Spotify Premium</h4>
+                    <p>Giá liên hệ</p>
+                </div>
+            </div>
+
+            <div class="card" data-title="Dịch vụ Sáng tạo" data-img="" data-headline="Description for service 4." data-text="Các gói dịch vụ dành cho nhà sáng tạo nội dung. Vui lòng liên hệ để biết thêm chi tiết.">
+                <div class="card-image-container card-4"></div>
+                <div class="card-content">
+                    <h4>Dịch vụ Sáng tạo</h4>
+                    <p>Giá liên hệ</p>
+                </div>
+            </div>
+
+            <div class="card" data-title="Giải pháp lưu trữ" data-img="" data-headline="Description for service 5." data-text="Các gói lưu trữ đám mây an toàn, dung lượng lớn. Vui lòng liên hệ để biết thêm chi tiết.">
+                <div class="card-image-container card-5"></div>
+                <div class="card-content">
+                    <h4>Giải pháp lưu trữ</h4>
+                    <p>Giá liên hệ</p>
+                </div>
+            </div>
+
+            <div class="card" data-title="Tài khoản Premium khác" data-img="" data-headline="Description for service 6." data-text="Chúng tôi cung cấp nhiều loại tài khoản Premium khác. Vui lòng liên hệ để biết thêm chi tiết.">
+                <div class="card-image-container card-6"></div>
+                <div class="card-content">
+                    <h4>Tài khoản Premium khác</h4>
+                    <p>Giá liên hệ</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1774,14 +1876,14 @@
             let isDown = false;
             let startX, scrollLeft, velocity = 0, lastPos = 0, lastTime = 0;
             let animationFrameId, autoScrollInterval, idleTimer;
-            const FRICTION = 0.95, MIN_VELOCITY = 0.5;
+            const FRICTION = 0.96, MIN_VELOCITY = 0.5;
 
             const stopAutoScroll = () => { clearInterval(autoScrollInterval); clearTimeout(idleTimer); };
             const startAutoScroll = () => {
                 stopAutoScroll();
                 autoScrollInterval = setInterval(() => {
                     slider.scrollLeft >= slider.scrollWidth - slider.clientWidth - 1 ? slider.scrollLeft = 0 : slider.scrollLeft += 1;
-                }, 25);
+                }, 30);
             };
             const resetInteraction = () => { clearTimeout(idleTimer); idleTimer = setTimeout(startAutoScroll, 2000); };
             const dragStart = (e) => {
@@ -1862,12 +1964,12 @@
                         itemLink.classList.add('result-item');
                         itemLink.dataset.cardSelector = product.cardSelector;
                         itemLink.innerHTML = `
-                                       <img src="${product.image}" alt="${product.title}">
-                                       <div class="result-item-info">
-                                          <h4>${product.title}</h4>
-                                          <p>${product.shortDescription}</p>
-                                       </div>
-                                      `;
+                                           <img src="${product.image}" alt="${product.title}">
+                                           <div class="result-item-info">
+                                              <h4>${product.title}</h4>
+                                              <p>${product.shortDescription}</p>
+                                           </div>
+                                          `;
                         itemLink.addEventListener('click', function (e) {
                             e.preventDefault();
                             const targetCard = document.querySelector(this.dataset.cardSelector);
