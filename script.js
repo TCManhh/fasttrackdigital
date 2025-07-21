@@ -1,17 +1,21 @@
 ﻿// =========================================================================================
-// PHẦN 2: LOGIC CHÍNH CỦA TRANG WEB
-// Code đã được tối ưu để chỉ tải dữ liệu khi cần thiết.
+// LOGIC CHÍNH CỦA TRANG WEB
+// Code đã được tối ưu và thêm chức năng tìm kiếm.
 // =========================================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Các biến và hàm global ---
+    // --- CÁC BIẾN TOÀN CỤC ---
     const siteHeader = document.querySelector('.site-header');
     const modal = document.querySelector('.modal');
     const modalOverlayEl = document.querySelector('.modal-overlay');
     const modalCloseBtn = document.querySelector('.modal-close');
     const modalImage = document.getElementById('modal-image');
+    const searchInput = document.getElementById('search-input');
+    const searchResultsContainer = document.getElementById('search-results');
+    const headerSearchContainer = document.querySelector('.header-search');
 
-    // --- Hàm mở và đóng pop-up (Modal) ---
+
+    // --- HÀM MỞ VÀ ĐÓNG POP-UP (MODAL) ---
     const openModal = () => {
         siteHeader.classList.add('is-hidden');
         modal.classList.add('active');
@@ -32,9 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.dispatchEvent(new CustomEvent('modalHasClosed'));
     };
 
-    // --- Hàm hiển thị chi tiết dịch vụ trong pop-up (Tải dữ liệu động) ---
+    // --- HÀM HIỂN THỊ CHI TIẾT DỊCH VỤ (TẢI DỮ LIỆU ĐỘNG) ---
     async function showServiceModal(serviceId) {
-        // Tải dữ liệu chỉ khi hàm này được gọi
         const { serviceData } = await import('./service-data.js');
         const data = serviceData[serviceId];
         if (!data) {
@@ -52,7 +55,73 @@ document.addEventListener('DOMContentLoaded', () => {
         initFaqAccordionInsideModal();
     }
 
-    // --- Hàm khởi tạo Accordion cho FAQ ---
+    // --- ✅ BẮT ĐẦU: LOGIC TÌM KIẾM ---
+    const handleSearch = async (event) => {
+        const query = event.target.value.toLowerCase().trim();
+        searchResultsContainer.innerHTML = '';
+
+        if (query.length < 2) {
+            searchResultsContainer.style.display = 'none';
+            return;
+        }
+
+        try {
+            const { serviceData } = await import('./service-data.js');
+
+            const results = Object.keys(serviceData)
+                .map(key => ({ id: key, ...serviceData[key] }))
+                .filter(service => {
+                    const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, ''); // Xóa tag HTML
+                    const title = service.title.toLowerCase();
+                    return headline.includes(query) || title.includes(query);
+                });
+
+            if (results.length > 0) {
+                searchResultsContainer.style.display = 'block';
+                results.forEach(result => {
+                    const card = document.querySelector(`.card[data-id="${result.id}"]`);
+                    const imgSrc = card ? card.querySelector('img').src : './images/logo11.png';
+
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'result-item';
+                    itemElement.innerHTML = `
+                        <img src="${imgSrc}" alt="${result.title}">
+                        <div class="result-item-info">
+                            <h4>${result.headline.replace(/<[^>]*>?/gm, '')}</h4>
+                            <p>${result.title}</p>
+                        </div>
+                    `;
+
+                    itemElement.addEventListener('click', () => {
+                        showServiceModal(result.id);
+                        searchInput.value = '';
+                        searchResultsContainer.style.display = 'none';
+                    });
+
+                    searchResultsContainer.appendChild(itemElement);
+                });
+            } else {
+                searchResultsContainer.style.display = 'none';
+            }
+        } catch (error) {
+            console.error("Error loading or searching service data:", error);
+            searchResultsContainer.style.display = 'none';
+        }
+    };
+
+    if (searchInput) {
+        searchInput.addEventListener('input', handleSearch);
+    }
+    // Đóng kết quả tìm kiếm khi click ra ngoài
+    document.addEventListener('click', (e) => {
+        if (headerSearchContainer && !headerSearchContainer.contains(e.target)) {
+            searchResultsContainer.style.display = 'none';
+        }
+    });
+    // --- ✅ KẾT THÚC: LOGIC TÌM KIẾM ---
+
+
+    // --- HÀM KHỞI TẠO ACCORDION CHO FAQ TRONG MODAL ---
     function initFaqAccordionInsideModal() {
         const faqContainer = modal.querySelector('.faq-container');
         if (!faqContainer) return;
@@ -78,22 +147,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Gán sự kiện cho các thành phần trên trang ---
+    // --- GÁN CÁC SỰ KIỆN CHUNG CHO TRANG ---
     function setupGlobalListeners() {
         if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
         if (modalOverlayEl) modalOverlayEl.addEventListener('click', closeModal);
-        if (modal) {
-            modal.addEventListener('click', (e) => e.stopPropagation());
-        }
+        if (modal) modal.addEventListener('click', (e) => e.stopPropagation());
 
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', () => {
                 const serviceId = card.dataset.id;
-                if (serviceId) {
-                    showServiceModal(serviceId);
-                }
+                if (serviceId) showServiceModal(serviceId);
             });
         });
+
+        // Logic cho menu danh mục dịch vụ
         const categoryTrigger = document.getElementById('category-trigger');
         const categoryOverlay = document.getElementById('category-overlay');
         const categoryMenu = document.getElementById('category-menu');
@@ -113,12 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('modal-open');
         };
 
-        if (categoryTrigger) {
-            categoryTrigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                openCategoryMenu();
-            });
-        }
+        if (categoryTrigger) categoryTrigger.addEventListener('click', (e) => { e.preventDefault(); openCategoryMenu(); });
         if (categoryOverlay) categoryOverlay.addEventListener('click', closeCategoryMenu);
         if (categoryCloseBtn) categoryCloseBtn.addEventListener('click', closeCategoryMenu);
 
@@ -139,35 +201,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+
+        // Logic cho menu mobile
         const hamburgerBtn = document.querySelector('.hamburger-btn');
         const mainNav = document.querySelector('.main-nav');
-        if (hamburgerBtn) {
-            hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open'));
-        }
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open'));
         if (mainNav) {
             mainNav.addEventListener('click', (e) => {
-                if (e.target.closest('a') && mainNav.classList.contains('is-open')) {
-                    mainNav.classList.remove('is-open');
-                }
+                if (e.target.closest('a') && mainNav.classList.contains('is-open')) mainNav.classList.remove('is-open');
             });
         }
 
+        // Logic cuộn mượt
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href').length <= 1) return;
                 e.preventDefault();
                 const targetElement = document.querySelector(this.getAttribute('href'));
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
+        // Hiệu ứng xuất hiện khi cuộn
         const animatedElements = document.querySelectorAll('.card, .section-title');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
@@ -186,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.target.classList.add('active');
                 const filterValue = e.target.getAttribute('data-filter');
                 serviceCards.forEach(card => {
-                    card.classList.toggle('hide', filterValue !== 'all' && card.dataset.category !== filterValue);
+                    card.style.display = (filterValue === 'all' || card.dataset.category === filterValue) ? 'flex' : 'none';
                 });
             }
         });
@@ -194,15 +255,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // LOGIC CAROUSEL BILL (Lazy loaded)
     const billShowcase = document.querySelector('.bill-showcase');
-    const carouselObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                initBillCarousel();
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    if (billShowcase) carouselObserver.observe(billShowcase);
+    if (billShowcase) {
+        const carouselObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initBillCarousel();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        carouselObserver.observe(billShowcase);
+    }
 
     function initBillCarousel() {
         const billTrack = document.querySelector('.bill-carousel-track');
@@ -212,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const billImages = [
             { src: "./images_bill_thanh_toan/0222YTATZL.png", alt: "Bill 10" }, { src: "./images_bill_thanh_toan/0219YTNTFB.png", alt: "Bill 9" }, { src: "./images_bill_thanh_toan/0218YTNCFB.png", alt: "Bill 8" }, { src: "./images_bill_thanh_toan/0216YTNTFB.png", alt: "Bill 7" }, { src: "./images_bill_thanh_toan/0215YTTHFB.png", alt: "Bill 6" }, { src: "./images_bill_thanh_toan/0215YTTNZL.png", alt: "Bill 5" }, { src: "./images_bill_thanh_toan/0204DSLHZL.png", alt: "Bill 4" }, { src: "./images_bill_thanh_toan/0203YTQPZL.png", alt: "Bill 3" }, { src: "./images_bill_thanh_toan/0202DSĐHFB.png", alt: "Bill 2" }, { src: "./images_bill_thanh_toan/0128YTVHZL.png", alt: "Bill 1" }
         ];
+
         billImages.forEach(imgData => {
             const item = document.createElement('div');
             item.className = 'bill-carousel-item';
@@ -222,15 +286,17 @@ document.addEventListener('DOMContentLoaded', () => {
             item.appendChild(img);
             billTrack.appendChild(item);
         });
+
         const items = Array.from(billTrack.children);
         if (items.length <= 1) return;
+
         let currentIndex = 0;
         let autoSlideTimer;
         let isModalOpen = false;
         const autoSlideInterval = 3500;
+
         function updateActiveState(centerIndex) {
-            if (centerIndex === currentIndex && items[centerIndex]?.classList.contains('active')) return;
-            if (centerIndex === -1) return;
+            if (centerIndex === -1 || centerIndex === currentIndex) return;
             currentIndex = centerIndex;
             items.forEach((item, index) => item.classList.toggle('active', index === currentIndex));
             if (billSlider) {
@@ -240,6 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (billCounter) billCounter.textContent = `${currentIndex + 1} / ${items.length}`;
         }
+
         function getCenterIndex() {
             const trackRect = billTrack.getBoundingClientRect();
             const trackCenter = trackRect.left + trackRect.width / 2;
@@ -256,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             return closestIndex;
         }
+
         function moveToSlide(index) {
             if (index < 0 || index >= items.length) return;
             const targetItem = items[index];
@@ -263,9 +331,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
                 const scrollAmount = targetItem.offsetLeft - padding;
                 billTrack.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+                updateActiveState(index);
             }
-            updateActiveState(index);
         }
+
         function startAutoSlide() {
             if (isModalOpen) return;
             clearInterval(autoSlideTimer);
@@ -274,9 +343,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 moveToSlide(nextIndex);
             }, autoSlideInterval);
         }
+
         function stopAutoSlide() {
             clearInterval(autoSlideTimer);
         }
+
         let isScrolling;
         billTrack.addEventListener('scroll', () => {
             stopAutoSlide();
@@ -286,11 +357,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 startAutoSlide();
             }, 150);
         });
-        billSlider.addEventListener('input', () => {
-            stopAutoSlide();
-            moveToSlide(parseInt(billSlider.value, 10));
-        });
-        billSlider.addEventListener('change', startAutoSlide);
+
+        if (billSlider) {
+            billSlider.addEventListener('input', () => {
+                stopAutoSlide();
+                moveToSlide(parseInt(billSlider.value, 10));
+            });
+            billSlider.addEventListener('change', startAutoSlide);
+        }
+
         billTrack.addEventListener('click', (e) => {
             const img = e.target.closest('.bill-carousel-item img');
             if (img) {
@@ -299,18 +374,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 openModal();
             }
         });
-        document.addEventListener('modalHasOpened', () => {
-            isModalOpen = true;
-            stopAutoSlide();
-        });
-        document.addEventListener('modalHasClosed', () => {
-            isModalOpen = false;
-            startAutoSlide();
-        });
-        const padding = (billTrack.clientWidth - items[0].clientWidth) / 2;
-        billTrack.style.paddingLeft = `${padding}px`;
-        billTrack.style.paddingRight = `${padding}px`;
-        billSlider.max = items.length - 1;
+
+        document.addEventListener('modalHasOpened', () => { isModalOpen = true; stopAutoSlide(); });
+        document.addEventListener('modalHasClosed', () => { isModalOpen = false; startAutoSlide(); });
+
+        const firstItem = items[0];
+        if (firstItem) {
+            const padding = (billTrack.clientWidth - firstItem.clientWidth) / 2;
+            billTrack.style.paddingLeft = `${padding}px`;
+            billTrack.style.paddingRight = `${padding}px`;
+        }
+        if (billSlider) billSlider.max = items.length - 1;
+
         setTimeout(() => {
             moveToSlide(0);
             startAutoSlide();
