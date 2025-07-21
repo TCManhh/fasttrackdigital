@@ -12,14 +12,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" fetchpriority="high" as="image" href="./images/banner.png" type="image/png">
+    <link rel="preload" as="image" href="./images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="preload" as="image" href="./images/banner.png">
-    <link rel="preload" href="style.min.css" as="style">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modal.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="modal.css"></noscript>
 
-    <link rel="stylesheet" href="style.min.css">
-
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"></noscript>
 </head>
 <body>
 
@@ -261,6 +261,6 @@
         </div>
     </footer>
 
-    <script src="script.min.js" defer></script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>

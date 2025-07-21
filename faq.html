@@ -12,9 +12,12 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" fetchpriority="high" as="image" href="./images/banner.png" type="image/png">
+    <link rel="preload" as="image" href="./images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* === GLOBAL STYLES & VARIABLES === */
         :root {
             --primary-red: #c00;
             --text-dark: #1d1d1f;
@@ -23,42 +26,44 @@
             --background-light: #ffffff;
             --background-grey: #f9f9f9;
             --border-color: #eee;
-            --card-gap: 15px
+            --card-gap: 15px;
         }
 
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box
+            box-sizing: border-box;
         }
 
         html {
             scroll-behavior: smooth;
-            font-size: 15px
+            font-size: 15px;
         }
 
         body {
-            font-family: 'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--background-light);
-            color: var(--text-dark)
+            color: var(--text-dark);
         }
 
             body.modal-open {
-                overflow: hidden
+                overflow: hidden;
             }
 
-        @media (min-width:768px) {
+        /* Responsive Font Sizing */
+        @media (min-width: 768px) {
             html {
-                font-size: 17px
+                font-size: 17px;
             }
         }
 
-        @media (min-width:1200px) {
+        @media (min-width: 1200px) {
             html {
-                font-size: 18px
+                font-size: 18px;
             }
         }
 
+        /* === HEADER === */
         .site-header {
             background-color: var(--background-light);
             padding: 15px 40px;
@@ -69,26 +74,26 @@
             gap: 20px;
             position: relative;
             z-index: 999;
-            transition: transform .4s ease;
-            height: 85px
+            transition: transform 0.4s ease;
+            height: 85px;
         }
 
             .site-header.is-hidden {
-                transform: translateY(-100%)
+                transform: translateY(-100%);
             }
 
         .header-logo img {
             height: 50px;
             width: auto;
             display: block;
-            flex-shrink: 0
+            flex-shrink: 0;
         }
 
         .main-nav ul {
             display: flex;
             list-style: none;
             gap: 30px;
-            align-items: center
+            align-items: center;
         }
 
         .main-nav a {
@@ -96,39 +101,40 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 20px !important;
-            white-space: nowrap
+            white-space: nowrap;
         }
 
             .main-nav a.active-page {
                 color: var(--primary-red);
-                font-weight: 700
+                font-weight: 700;
             }
 
         .mobile-controls {
-            display: none
+            display: none;
         }
 
+        /* === FAQ PAGE STYLES === */
         .faq-page-container {
             max-width: 1100px;
             margin: 40px auto;
-            padding: 20px
+            padding: 20px;
         }
 
         .faq-layout-container {
             display: flex;
             gap: 40px;
-            margin-top: 30px
+            margin-top: 30px;
         }
 
         .faq-nav {
-            flex: 0 0 280px
+            flex: 0 0 280px;
         }
 
             .faq-nav h4 {
                 font-size: 1.2rem;
                 margin-bottom: 15px;
                 padding-bottom: 10px;
-                border-bottom: 2px solid #f0f0f0
+                border-bottom: 2px solid #f0f0f0;
             }
 
         .faq-nav-link {
@@ -140,105 +146,106 @@
             color: var(--text-medium);
             font-weight: 600;
             background-color: #f9f9f9;
-            transition: background-color .2s ease,color .2s ease
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
             .faq-nav-link:hover {
-                background-color: #f0f0f0
+                background-color: #f0f0f0;
             }
 
             .faq-nav-link.active {
                 background-color: var(--primary-red);
-                color: var(--background-light)
+                color: var(--background-light);
             }
 
         .faq-content {
             flex: 1;
-            scroll-margin-top: 100px
+            scroll-margin-top: 100px;
         }
 
         .faq-article {
-            display: none
+            display: none;
         }
 
             .faq-article.active {
                 display: block;
-                animation: fadeIn .5s ease
+                animation: fadeIn 0.5s ease;
             }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px)
+                transform: translateY(10px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0)
+                transform: translateY(0);
             }
         }
 
         .faq-article h3 {
             font-size: 1.8rem;
-            margin-bottom: 15px
+            margin-bottom: 15px;
         }
 
         .faq-article p, .faq-article ol, .faq-article ul {
             font-size: 1rem;
             line-height: 1.7;
-            margin-bottom: 15px
+            margin-bottom: 15px;
         }
 
         .faq-article ol, .faq-article ul {
-            padding-left: 25px
+            padding-left: 25px;
         }
 
             .faq-article ol img {
                 cursor: pointer;
-                transition: transform .2s ease;
+                transition: transform 0.2s ease;
                 width: 100%;
                 max-width: 500px;
                 margin-top: 10px;
                 border-radius: 8px;
-                border: 1px solid #ddd
+                border: 1px solid #ddd;
             }
 
                 .faq-article ol img:hover {
-                    transform: scale(1.03)
+                    transform: scale(1.03);
                 }
 
         .faq-article .important-note {
             background-color: #fffbe6;
             border-left: 4px solid #ffc107;
             padding: 15px;
-            border-radius: 4px
+            border-radius: 4px;
         }
 
+        /* === MODAL & POP-UP STYLES === */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity .4s ease,visibility 0s linear .4s
+            transition: opacity 0.4s ease, visibility 0s linear 0.4s;
         }
 
             .modal-overlay.active {
                 opacity: 1;
                 visibility: visible;
-                transition-delay: 0s
+                transition-delay: 0s;
             }
 
         .modal {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%) scale(.9);
+            transform: translate(-50%, -50%) scale(0.9);
             z-index: 1001;
             background: var(--background-light);
             border-radius: 20px;
@@ -249,14 +256,14 @@
             padding: 0 8px;
             opacity: 0;
             visibility: hidden;
-            transition: transform .4s cubic-bezier(.4,0,.2,1),opacity .3s ease,visibility 0s linear .4s
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0s linear 0.4s;
         }
 
             .modal.active {
-                transform: translate(-50%,-50%) scale(1);
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
                 visibility: visible;
-                transition-delay: 0s
+                transition-delay: 0s;
             }
 
         .modal-close {
@@ -275,16 +282,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1002
+            z-index: 1002;
         }
 
         .modal-content {
-            padding: 40px 42px
+            padding: 40px 42px;
         }
 
         .modal-body {
             display: flex;
-            align-items: flex-start
+            align-items: flex-start;
         }
 
         #modal-image {
@@ -292,34 +299,35 @@
             max-width: 100%;
             max-height: 80vh;
             margin: 0 auto;
-            object-fit: contain
+            object-fit: contain;
         }
-
+        /* Image Viewer specific styles */
         .modal.image-view {
             background: transparent;
             box-shadow: none;
             width: auto;
             height: auto;
-            padding: 0
+            padding: 0;
         }
 
             .modal.image-view .modal-content {
-                padding: 0
+                padding: 0;
             }
 
             .modal.image-view .modal-close {
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: rgba(0,0,0,.5);
-                color: #fff
+                background: rgba(0,0,0,0.5);
+                color: white;
             }
 
+        /* === FOOTER === */
         .site-footer-main {
             background-color: #1a1a1c;
             color: #a9a9b3;
             padding: 60px 20px 0 20px;
-            margin-top: 50px
+            margin-top: 50px;
         }
 
         .footer-container {
@@ -328,73 +336,74 @@
             gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
-            padding-bottom: 40px
+            padding-bottom: 40px;
         }
 
         .footer-column {
             flex: 1;
-            min-width: 250px
+            min-width: 250px;
         }
 
             .footer-column h4 {
                 color: var(--background-light);
                 font-size: 1.1rem;
-                margin-bottom: 20px
+                margin-bottom: 20px;
             }
 
         .footer-logo {
             height: 40px;
-            margin-bottom: 20px
+            margin-bottom: 20px;
         }
 
         .footer-column ul {
             list-style: none;
-            padding: 0
+            padding: 0;
         }
 
             .footer-column ul li a {
                 color: #a9a9b3;
                 text-decoration: none;
                 line-height: 2.2;
-                transition: color .2s ease
+                transition: color 0.2s ease;
             }
 
                 .footer-column ul li a:hover {
-                    color: var(--background-light)
+                    color: var(--background-light);
                 }
 
         .footer-social-icons {
             display: flex;
             gap: 15px;
-            margin-top: 10px
+            margin-top: 10px;
         }
 
             .footer-social-icons img {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                transition: transform .2s ease
+                transition: transform 0.2s ease;
             }
 
                 .footer-social-icons img:hover {
-                    transform: scale(1.1)
+                    transform: scale(1.1);
                 }
 
         .footer-bottom {
             text-align: center;
             padding: 20px 0;
             border-top: 1px solid #333;
-            font-size: .9rem
+            font-size: 0.9rem;
         }
 
-        @media(max-width:992px) {
+        /* === RESPONSIVE STYLES === */
+        @media(max-width: 992px) {
             .main-nav {
-                display: none
+                display: none;
             }
 
             .mobile-controls {
                 display: flex;
-                align-items: center
+                align-items: center;
             }
 
             .hamburger-btn {
@@ -403,7 +412,7 @@
                 cursor: pointer;
                 padding: 8px;
                 font-size: 1.6rem;
-                color: var(--text-medium)
+                color: var(--text-medium);
             }
 
             .main-nav.is-open {
@@ -413,49 +422,50 @@
                 left: 0;
                 width: 100%;
                 background-color: var(--background-light);
-                box-shadow: 0 4px 6px rgba(0,0,0,.1);
-                z-index: 100
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 100;
             }
 
                 .main-nav.is-open ul {
                     flex-direction: column;
-                    gap: 0
+                    gap: 0;
                 }
 
                 .main-nav.is-open li {
                     width: 100%;
                     text-align: center;
-                    border-bottom: 1px solid var(--border-color)
+                    border-bottom: 1px solid var(--border-color);
                 }
 
                     .main-nav.is-open li:last-child {
-                        border-bottom: none
+                        border-bottom: none;
                     }
 
                 .main-nav.is-open a {
                     padding: 15px;
                     display: block;
-                    font-size: 15px !important
+                    font-size: 15px !important;
                 }
         }
 
-        @media(max-width:768px) {
+        @media(max-width: 768px) {
             .site-header {
                 padding: 10px 15px;
-                height: 68px
+                height: 68px; /* Thêm hoặc sửa dòng này */
             }
 
             .faq-layout-container {
-                flex-direction: column
+                flex-direction: column;
             }
 
             .faq-nav {
                 flex: 0 0 auto;
-                margin-bottom: 20px
+                margin-bottom: 20px;
             }
 
+            /* Thêm đoạn mã mới vào đây */
             .faq-page-container {
-                margin-top: 5px
+                margin-top: 5px;
             }
         }
     </style>
@@ -587,7 +597,78 @@
     </footer>
 
     <script defer>
-        document.addEventListener('DOMContentLoaded', function () { const e = document.querySelector('.modal'), t = document.querySelector('.modal-overlay'), o = document.querySelector('.modal-close'), c = document.getElementById('modal-image'), n = document.querySelector('.hamburger-btn'), a = document.querySelector('.main-nav'); function l() { e && t && (e.classList.add('active'), t.classList.add('active'), document.body.classList.add('modal-open')) } function i() { e && t && (e.classList.remove('active', 'image-view'), t.classList.remove('active'), document.body.classList.remove('modal-open')) } o && o.addEventListener('click', i), t && t.addEventListener('click', i), n && a && n.addEventListener('click', () => { a.classList.toggle('is-open') }); const d = document.querySelector('.faq-nav'), r = document.querySelector('.faq-content'); d && r && (d.addEventListener('click', function (e) { e.preventDefault(); const t = e.target.closest('.faq-nav-link'); if (!t || t.classList.contains('active')) return; const o = t.getAttribute('href'), c = document.querySelector(o); if (c) { var n, a; null === (n = d.querySelector('.active')) || void 0 === n || n.classList.remove('active'), t.classList.add('active'), null === (a = r.querySelector('.active')) || void 0 === a || a.classList.remove('active'), c.classList.add('active'), window.innerWidth <= 768 && c.scrollIntoView({ behavior: 'smooth' }) } }), r.addEventListener('click', t => { t.target.tagName === 'IMG' && t.target.closest('.faq-article') && (t.stopPropagation(), e && (e.classList.add('image-view'), c.src = t.target.src, l())) })) });
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- COMMON ELEMENTS ---
+            const modal = document.querySelector('.modal');
+            const modalOverlay = document.querySelector('.modal-overlay');
+            const modalCloseBtn = document.querySelector('.modal-close');
+            const modalImage = document.getElementById('modal-image');
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const mainNav = document.querySelector('.main-nav');
+
+            // --- GENERAL MODAL LOGIC ---
+            function openModal() {
+                if (!modal || !modalOverlay) return;
+                modal.classList.add('active');
+                modalOverlay.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+
+            function closeModal() {
+                if (!modal || !modalOverlay) return;
+                modal.classList.remove('active', 'image-view');
+                modalOverlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+            if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+
+            // --- MOBILE NAVIGATION ---
+            if (hamburgerBtn && mainNav) {
+                hamburgerBtn.addEventListener('click', () => {
+                    mainNav.classList.toggle('is-open');
+                });
+            }
+
+            // --- FAQ.HTML SPECIFIC LOGIC ---
+            const faqNavContainer = document.querySelector('.faq-nav');
+            const faqContentContainer = document.querySelector('.faq-content');
+
+            if (faqNavContainer && faqContentContainer) {
+                faqNavContainer.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const clickedLink = e.target.closest('.faq-nav-link');
+                    if (!clickedLink || clickedLink.classList.contains('active')) return;
+
+                    const targetId = clickedLink.getAttribute('href');
+                    const targetArticle = document.querySelector(targetId);
+
+                    if (targetArticle) {
+                        faqNavContainer.querySelector('.active')?.classList.remove('active');
+                        clickedLink.classList.add('active');
+                        faqContentContainer.querySelector('.active')?.classList.remove('active');
+                        targetArticle.classList.add('active');
+
+                        if (window.innerWidth <= 768) {
+                            targetArticle.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+
+                // Image pop-up logic for FAQ page
+                faqContentContainer.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'IMG' && e.target.closest('.faq-article')) {
+                        e.stopPropagation();
+                        if (modal) {
+                            modal.classList.add('image-view');
+                            modalImage.src = e.target.src;
+                            openModal();
+                        }
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
