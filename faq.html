@@ -229,9 +229,23 @@
             .main-nav.is-open a { padding: 15px; display: block; font-size: 15px !important; }
         }
         @media(max-width: 768px) {
-            .site-header { padding: 10px 15px; }
-            .faq-layout-container { flex-direction: column; }
-            .faq-nav { flex: 0 0 auto; margin-bottom: 20px; }
+            .site-header {
+                padding: 10px 15px;
+            }
+
+            .faq-layout-container {
+                flex-direction: column;
+            }
+
+            .faq-nav {
+                flex: 0 0 auto;
+                margin-bottom: 20px;
+            }
+
+            /* Thêm đoạn mã mới vào đây */
+            .faq-page-container {
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
@@ -268,34 +282,86 @@
 
             <div class="faq-content">
                 <article id="q1" class="faq-article active">
-                    <h3>Quy trình mua hàng tại Shop?</h3>
-                    <p>Quy trình của chúng tôi rất đơn giản và nhanh chóng để đảm bảo trải nghiệm tốt nhất cho bạn:</p>
-                    <ul>
-                        <li><strong>Bước 1:</strong> Chọn dịch vụ bạn quan tâm trên trang web.</li>
-                        <li><strong>Bước 2:</strong> Liên hệ trực tiếp với chúng tôi qua Zalo hoặc Messenger.</li>
-                        <li><strong>Bước 3:</strong> Thực hiện thanh toán theo hướng dẫn.</li>
-                        <li><strong>Bước 4:</strong> Cung cấp thông tin cần thiết và nhận sản phẩm trong vài phút.</li>
-                    </ul>
-                </article>
-                <article id="q2" class="faq-article">
-                    <h3>Chính sách bảo hành?</h3>
-                    <p>Chúng tôi cam kết bảo hành cho tất cả các sản phẩm và dịch vụ trong suốt thời gian bạn đăng ký sử dụng. Nếu có lỗi từ phía chúng tôi, chúng tôi sẽ khắc phục, cấp lại tài khoản mới, hoặc hoàn tiền tương ứng.</p>
-                </article>
-                <article id="q6" class="faq-article">
-                    <h3>Hướng dẫn thoát Nhóm Gia đình (Family) Google</h3>
+                    <h3>1. Làm sao để đặt mua sản phẩm tại Fast Track?</h3>
+                    <p>Chúng tôi thiết kế quy trình mua hàng đơn giản và nhanh chóng để bạn dễ dàng trải nghiệm:</p>
                     <ol>
-                        <li><strong>Truy cập trang quản lý Family:</strong> Mở trình duyệt và truy cập <a href="https://families.google.com/families" target="_blank">families.google.com</a>.</li>
-                        <li>
-                            <img src="./images/Fam.png" alt="Giao diện quản lý Google Family" loading="lazy">
-                        </li>
-                        <li><strong>Chọn "Rời khỏi nhóm gia đình"</strong> và xác nhận.</li>
-                        <li>
-                            <img src="./images/roiFam.png" alt="Xác nhận rời khỏi nhóm Google Family" loading="lazy">
-                        </li>
+                        <li><strong>Chọn sản phẩm hoặc dịch vụ</strong> bạn muốn từ danh mục trên website.</li>
+                        <li><strong>Liên hệ với chúng tôi</strong> qua Zalo hoặc Facebook Messenger để xác nhận thông tin.</li>
+                        <li><strong>Thanh toán theo hướng dẫn</strong> mà nhân viên cung cấp.</li>
+                        <li><strong>Gửi thông tin cần thiết</strong> (nếu có) và nhận sản phẩm chỉ trong vài phút.</li>
                     </ol>
                 </article>
-                </div>
-        </div>
+
+                <article id="q2" class="faq-article">
+                    <h3>2. Fast Track có chính sách bảo hành như thế nào?</h3>
+                    <p>Chúng tôi cam kết <strong>bảo hành đầy đủ</strong> trong suốt thời gian bạn sử dụng dịch vụ. Nếu xảy ra lỗi kỹ thuật từ phía chúng tôi, bạn sẽ được:</p>
+                    <ul>
+                        <li>Sửa lỗi nhanh chóng.</li>
+                        <li>Cấp lại tài khoản mới nếu cần thiết.</li>
+                        <li>Hoặc hoàn tiền tương ứng trong trường hợp không khắc phục được.</li>
+                    </ul>
+                </article>
+
+                <article id="q3" class="faq-article">
+                    <h3>3. Tôi cần thanh toán và xác nhận đơn hàng ra sao?</h3>
+                    <p>Khi bạn hoàn tất lựa chọn dịch vụ và liên hệ tư vấn viên:</p>
+                    <ul>
+                        <li>Chúng tôi sẽ <strong>gửi hướng dẫn thanh toán chi tiết</strong>.</li>
+                        <li>Sau khi thanh toán xong, bạn <strong>chụp và gửi lại biên lai</strong> để xác nhận.</li>
+                        <li>Ngay sau đó, hệ thống sẽ <strong>xử lý đơn hàng và bàn giao sản phẩm nhanh chóng</strong>.</li>
+                    </ul>
+                </article>
+
+                <article id="q4" class="faq-article">
+                    <h3>4. Tôi gặp vấn đề với tài khoản thì phải làm gì?</h3>
+                    <p>Khi gặp sự cố liên quan đến tài khoản (bị lỗi, không truy cập được...), bạn hãy:</p>
+                    <ol>
+                        <li>Gửi tin nhắn cho chúng tôi qua Zalo/Messenger.</li>
+                        <li>Cung cấp <strong>tài khoản và mô tả lỗi gặp phải</strong>.</li>
+                        <li>Chúng tôi sẽ <strong>kiểm tra và xử lý hỗ trợ trong thời gian sớm nhất</strong> (thường chỉ vài phút đến vài giờ).</li>
+                    </ol>
+                </article>
+
+                <article id="q5" class="faq-article">
+                    <h3>5. Fast Track có uy tín không?</h3>
+                    <p>Chúng tôi luôn đặt <strong>chữ tín và sự hài lòng của khách hàng lên hàng đầu</strong>, với các cam kết:</p>
+                    <ul>
+                        <li>Bán sản phẩm/dịch vụ chính hãng, rõ ràng.</li>
+                        <li>Minh bạch trong thanh toán và bảo hành.</li>
+                        <li>Có <strong>hệ thống đánh giá thực tế từ khách hàng cũ</strong> (bạn có thể kiểm tra tại mục “Check uy tín”).</li>
+                    </ul>
+                </article>
+
+                <article id="q6" class="faq-article">
+                    <h3>Hướng dẫn rời khỏi nhóm Gia đình (Family) Google</h3>
+                    <ol>
+                        <li>
+                            <strong>Truy cập trang quản lý nhóm gia đình:</strong><br>
+                            Mở trình duyệt và truy cập:
+                            <a href="https://families.google.com/families" target="_blank">https://families.google.com/families</a>
+                        </li>
+                        <li>
+                            <strong>Chọn tài khoản Google cần rời nhóm</strong> nếu bạn đang đăng nhập nhiều tài khoản.
+                            Sau đó bạn sẽ thấy giao diện quản lý nhóm như hình dưới:
+                            <br>
+                            <img src="./images/Fam.png" alt="Giao diện quản lý Google Family" loading="lazy">
+                        </li>
+                        <li>
+                            <strong>Chọn “Rời khỏi nhóm gia đình”</strong> (Leave family group). Một cửa sổ xác nhận sẽ hiện ra như sau:
+                            <br>
+                            <img src="./images/roiFam.png" alt="Xác nhận rời khỏi nhóm Google Family" loading="lazy">
+                        </li>
+                        <li>
+                            <strong>Nhấn “Rời khỏi” để xác nhận</strong>. Sau đó, bạn sẽ được xóa khỏi nhóm Family.
+                        </li>
+                    </ol>
+                    <div class="important-note">
+                        <strong>Lưu ý:</strong> Sau khi rời khỏi nhóm, tài khoản của bạn sẽ không còn chia sẻ quyền lợi hay bị ràng buộc với nhóm Family nữa.
+                        Nếu cần hỗ trợ thêm, bạn có thể liên hệ với chúng tôi qua Zalo hoặc Fanpage.
+                    </div>
+                </article>
+
+            </div>
     </main>
 
     <div class="modal-overlay"></div>

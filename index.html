@@ -1638,6 +1638,36 @@
             border-top: 1px solid #333;
             font-size: 0.9rem;
         }
+        @media(max-width: 768px) {
+            /* Thêm khối mới: Giảm khoảng cách trên của tiêu đề */
+            .section-title {
+                margin-top: 20px;
+            }
+            /* Chỉnh sửa nút */
+            .filter-btn {
+                padding: 8px 15px;
+                white-space: nowrap;
+            }
+
+            /* Chỉnh sửa khu vực chứa nút để cuộn ngang */
+            .filter-buttons {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                margin-bottom: 20px; /* Thêm dòng này: Giảm khoảng cách BÊN DƯỚI thanh nút */
+            }
+
+                .filter-buttons::-webkit-scrollbar {
+                    display: none;
+                }
+
+            /* Thêm khối mới: Giảm khoảng cách BÊN TRÊN các thẻ dịch vụ */
+            .services-section {
+                padding-top: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1956,7 +1986,7 @@
 
     <div id="floating-actions" class="floating-actions-container">
         <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
-        <a href="httpsis.t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
+        <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
         <a href="https://zalo.me/0978879931" target="_blank" class="floating-action-btn btn-zalo" aria-label="Zalo"></a>
     </div>
 
@@ -2032,7 +2062,7 @@
                     <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger">
                         <img src="./images/IcoinMess.webp" alt="Messenger">
                     </a>
-                    <a href="httpsis.t.me/TCManhh" target="_blank" aria-label="Telegram">
+                    <a href="https://t.me/TCManhh" target="_blank" aria-label="Telegram">
                         <img src="./images/IcoinTele.webp" alt="Telegram">
                     </a>
                     <a href="https://www.facebook.com/FastTrack68" target="_blank" aria-label="Facebook">
