@@ -2246,10 +2246,14 @@
 
 
             // =======================================================
-            // ======== BẮT ĐẦU SCRIPT CHO CAROUSEL NÂNG CAO =========
+            // ======== BẮT ĐẦU SCRIPT CHO CAROUSEL NÂNG CAO (ĐÃ SỬA LỖI SAFARI) =========
             // =======================================================
-            const billTrack = document.querySelector('.bill-carousel-track');
-            if (billTrack) { // Chỉ chạy script nếu có carousel
+            const billShowcase = document.querySelector('.bill-showcase');
+
+            function initBillCarousel() {
+                const billTrack = document.querySelector('.bill-carousel-track');
+                if (!billTrack) return;
+
                 const billSlider = document.querySelector('.bill-slider');
                 const billCounter = document.querySelector('.bill-counter');
 
@@ -2315,11 +2319,8 @@
                     if (index < 0 || index >= items.length) return;
                     const targetItem = items[index];
                     if (targetItem) {
-                        // TÍNH TOÁN VỊ TRÍ CUỘN MỚI
                         const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
                         const scrollAmount = targetItem.offsetLeft - padding;
-
-                        // Cuộn track theo chiều ngang
                         billTrack.scrollTo({
                             left: scrollAmount,
                             behavior: 'smooth'
@@ -2346,7 +2347,6 @@
                     resumeTimer = setTimeout(startAutoSlide, 1000);
                 }
 
-                // === LẮNG NGHE SỰ KIỆN ===
                 let isScrolling;
                 billTrack.addEventListener('scroll', () => {
                     stopAutoSlide();
@@ -2383,21 +2383,30 @@
                     resumeAutoSlideAfterDelay();
                 });
 
+                const padding = (billTrack.clientWidth - items[0].clientWidth) / 2;
+                billTrack.style.paddingLeft = `${padding}px`;
+                billTrack.style.paddingRight = `${padding}px`;
+                billSlider.max = items.length - 1;
 
-                // === KHỞI TẠO ===
-                function initialize() {
-                    const padding = (billTrack.clientWidth - items[0].clientWidth) / 2;
-                    billTrack.style.paddingLeft = `${padding}px`;
-                    billTrack.style.paddingRight = `${padding}px`;
-                    billSlider.max = items.length - 1;
+                setTimeout(() => {
+                    moveToSlide(0);
+                    startAutoSlide();
+                }, 100);
+            }
 
-                    setTimeout(() => {
-                        moveToSlide(0);
-                        startAutoSlide();
-                    }, 100);
-                }
+            // Sử dụng IntersectionObserver để chỉ khởi chạy carousel khi người dùng nhìn thấy nó
+            const carouselObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        initBillCarousel(); // Gọi hàm khởi tạo
+                        observer.unobserve(entry.target); // Ngừng theo dõi sau khi đã khởi tạo
+                    }
+                });
+            }, { threshold: 0.1 }); // Kích hoạt khi 10% của phần tử hiện ra
 
-                initialize();
+            // Bắt đầu theo dõi phần tử bill showcase
+            if (billShowcase) {
+                carouselObserver.observe(billShowcase);
             }
         });
     </script>
