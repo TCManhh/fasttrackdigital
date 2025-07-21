@@ -2,19 +2,31 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fast Track | Câu hỏi thường gặp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Hỗ Trợ & Giải Đáp Thắc Mắc | Fast Track</title>
+    <meta name="description" content="Các câu hỏi thường gặp về quy trình mua hàng, chính sách bảo hành, thanh toán và hỗ trợ tài khoản tại Fast Track.">
+    <meta name="keywords" content="hướng dẫn mua hàng, chính sách bảo hành, hỗ trợ tài khoản, câu hỏi thường gặp, fast track faq">
 
     <link rel="icon" type="image/png" href="./images/logo11.png">
     <link rel="apple-touch-icon" href="./images/logo11.png">
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
+    
     <style>
+        /* === GLOBAL STYLES & VARIABLES === */
+        :root {
+            --primary-red: #c00;
+            --text-dark: #1d1d1f;
+            --text-medium: #333;
+            --text-light: #6e6e73;
+            --background-light: #ffffff;
+            --background-grey: #f9f9f9;
+            --border-color: #eee;
+            --card-gap: 15px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -23,46 +35,28 @@
 
         html {
             scroll-behavior: smooth;
+            font-size: 15px;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-            color: #1d1d1f;
+            background-color: var(--background-light);
+            color: var(--text-dark);
         }
 
-            body.modal-open {
-                overflow: hidden;
-            }
-
-        /* === BẮT ĐẦU: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
-
-        /* 1. Đặt cỡ chữ mặc định cho điện thoại (dưới 768px) */
-        html {
-            font-size: 15px; /* Cỡ chữ phù hợp cho điện thoại */
+        body.modal-open {
+            overflow: hidden;
         }
 
-        /* 2. Tăng cỡ chữ cho máy tính bảng (từ 768px trở lên) */
-        @media (min-width: 768px) {
-            html {
-                font-size: 17px; /* Cỡ chữ lớn hơn, dễ đọc trên tablet */
-            }
-        }
+        /* Responsive Font Sizing */
+        @media (min-width: 768px) { html { font-size: 17px; } }
+        @media (min-width: 1200px) { html { font-size: 18px; } }
 
-        /* 3. Tăng cỡ chữ cho laptop và màn hình lớn (từ 1200px trở lên) */
-        @media (min-width: 1200px) {
-            html {
-                font-size: 18px; /* Cỡ chữ lý tưởng cho laptop và desktop */
-            }
-        }
-
-        /* === KẾT THÚC: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
-
-        /* === CSS CHO HEADER (GIỮ NGUYÊN) === */
+        /* === HEADER === */
         .site-header {
-            background-color: #fff;
-            padding: 15px 40px; /* Tăng khoảng đệm trên/dưới từ 10px lên 15px */
-            border-bottom: 1px solid #eee;
+            background-color: var(--background-light);
+            padding: 15px 40px;
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -70,24 +64,18 @@
             position: relative;
             z-index: 999;
             transition: transform 0.4s ease;
-            height: 85px; /* Tăng chiều cao từ 71px lên 85px */
+            height: 85px;
         }
 
-            .site-header.is-hidden {
-                transform: translateY(-100%);
-            }
+        .site-header.is-hidden {
+            transform: translateY(-100%);
+        }
 
         .header-logo img {
             height: 50px;
             width: auto;
             display: block;
             flex-shrink: 0;
-        }
-
-        .header-search {
-            flex-grow: 1;
-            max-width: 600px;
-            visibility: hidden;
         }
 
         .main-nav ul {
@@ -97,124 +85,82 @@
             align-items: center;
         }
 
-        /* === BẮT ĐẦU SỬA LỖI FONT === */
         .main-nav a {
             color: #555;
             text-decoration: none;
             font-weight: 600;
-            font-size: 20px !important; /* Đặt font-size cố định và ưu tiên cao nhất */
+            font-size: 20px !important;
             white-space: nowrap;
         }
-            /* === KẾT THÚC SỬA LỖI FONT === */
 
-            .main-nav a.active-page {
-                color: #c00;
-                font-weight: 700;
-            }
-
-        .mobile-controls {
-            display: none;
-            align-items: center;
+        .main-nav a.active-page {
+            color: var(--primary-red);
+            font-weight: 700;
         }
 
-        /* === BỐ CỤC 2 CỘT CHO TRANG FAQ === */
+        .mobile-controls { display: none; }
+
+        /* === FAQ PAGE STYLES === */
         .faq-page-container {
             max-width: 1100px;
             margin: 40px auto;
             padding: 20px;
         }
-
         .faq-layout-container {
             display: flex;
-            gap: 40px; /* Khoảng cách giữa 2 cột */
+            gap: 40px;
             margin-top: 30px;
         }
-
-        /* Cột điều hướng bên trái */
-        .faq-nav {
-            flex: 0 0 280px; /* Cố định chiều rộng cột trái */
+        .faq-nav { flex: 0 0 280px; }
+        .faq-nav h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
         }
-
-            .faq-nav h4 {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-                padding-bottom: 10px;
-                border-bottom: 2px solid #f0f0f0;
-            }
-
         .faq-nav-link {
             display: block;
             padding: 12px 15px;
             margin-bottom: 8px;
             border-radius: 8px;
             text-decoration: none;
-            color: #333;
+            color: var(--text-medium);
             font-weight: 600;
             background-color: #f9f9f9;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
-
-            .faq-nav-link:hover {
-                background-color: #f0f0f0;
-            }
-
-            .faq-nav-link.active {
-                background-color: #c00; /* Màu đỏ khi được chọn */
-                color: #fff;
-            }
-
-        /* Cột nội dung bên phải */
-        .faq-content {
-            flex: 1; /* Cột phải sẽ chiếm hết phần còn lại */
+        .faq-nav-link:hover { background-color: #f0f0f0; }
+        .faq-nav-link.active {
+            background-color: var(--primary-red);
+            color: var(--background-light);
         }
-
-        .faq-article {
-            display: none; /* Mặc định ẩn tất cả các câu trả lời */
+        .faq-content { flex: 1; scroll-margin-top: 100px; }
+        .faq-article { display: none; }
+        .faq-article.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
         }
-
-            .faq-article.active {
-                display: block; /* Chỉ hiện câu trả lời được chọn */
-                animation: fadeIn 0.5s ease;
-            }
-
-            .faq-article ol img {
-                cursor: pointer;
-                transition: transform 0.2s ease;
-            }
-
-                .faq-article ol img:hover {
-                    transform: scale(1.03);
-                }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .faq-article h3 {
-            font-size: 1.8rem;
-            color: #1d1d1f;
-            margin-bottom: 15px;
-        }
-
+        .faq-article h3 { font-size: 1.8rem; margin-bottom: 15px; }
         .faq-article p, .faq-article ol, .faq-article ul {
             font-size: 1rem;
             line-height: 1.7;
-            color: #333;
             margin-bottom: 15px;
         }
-
-        .faq-article ol, .faq-article ul {
-            padding-left: 25px;
+        .faq-article ol, .faq-article ul { padding-left: 25px; }
+        .faq-article ol img {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
         }
-
+        .faq-article ol img:hover { transform: scale(1.03); }
         .faq-article .important-note {
             background-color: #fffbe6;
             border-left: 4px solid #ffc107;
@@ -222,400 +168,86 @@
             border-radius: 4px;
         }
 
-        /* === BẮT ĐẦU: TĂNG CỠ CHỮ FAQ TRÊN MÁY TÍNH === */
-        @media (min-width: 768px) {
-            .faq-article p, .faq-article ol, .faq-article ul {
-                font-size: 1.1rem; /* Tăng cỡ chữ nội dung câu trả lời */
-            }
-        }
-        /* === KẾT THÚC === */
-
-        /* === CSS CHO POP-UP (MODAL) HÌNH ẢNH === */
+        /* === MODAL & POP-UP STYLES === */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px);
+            z-index: 1000; opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0s linear 0.4s;
         }
-
+        .modal-overlay.active { opacity: 1; visibility: visible; transition-delay: 0s; }
         .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            z-index: 1001; background: var(--background-light);
+            border-radius: 20px; width: 90%; max-width: 1100px;
+            max-height: 90vh; overflow-y: auto; padding: 0 8px;
+            opacity: 0; visibility: hidden;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0s linear 0.4s;
         }
-
-            .modal-overlay.active, .modal.active {
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .modal.active {
-                transform: translate(-50%, -50%) scale(1);
-            }
-
+        .modal.active { transform: translate(-50%, -50%) scale(1); opacity: 1; visibility: visible; transition-delay: 0s; }
         .modal-close {
-            position: fixed; /* Đổi thành fixed để luôn ở góc màn hình */
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1002;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: absolute; top: 15px; right: 15px;
+            background: #e0e0e0; border: none; width: 30px; height: 30px;
+            border-radius: 50%; font-size: 20px; font-weight: bold; color: #555;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1002;
         }
-
-        /* === ✅ BẮT ĐẦU SỬA LỖI ẢNH KHÔNG PHÓNG TO HẾT CỠ === */
-        .modal.image-view {
-            /* Ghi đè các thuộc tính cũ của modal để nó có thể phóng to */
-            width: 95vw; /* Chiếm 95% chiều rộng màn hình */
-            height: 95vh; /* Chiếm 95% chiều cao màn hình */
-            max-width: 95vw; /* Đảm bảo không vượt quá giới hạn */
-            max-height: 95vh;
-            background: transparent;
-            overflow: hidden; /* Ẩn bất kỳ phần nào thừa */
-            padding: 0; /* Xóa padding của modal gốc */
+        .modal-content { padding: 40px 42px; }
+        .modal-body { display: flex; align-items: flex-start; }
+        #modal-image {
+            display: block; max-width: 100%; max-height: 80vh;
+            margin: 0 auto; object-fit: contain;
         }
+        /* Image Viewer specific styles */
+        .modal.image-view { background: transparent; box-shadow: none; width: auto; height: auto; padding: 0;}
+        .modal.image-view .modal-content { padding: 0; }
+        .modal.image-view .modal-close { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.5); color: white; }
+        
+        /* === FOOTER === */
+        .site-footer-main { background-color: #1a1a1c; color: #a9a9b3; padding: 60px 20px 0 20px; margin-top: 50px; }
+        .footer-container { display: flex; flex-wrap: wrap; gap: 40px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; }
+        .footer-column { flex: 1; min-width: 250px; }
+        .footer-column h4 { color: var(--background-light); font-size: 1.1rem; margin-bottom: 20px; }
+        .footer-logo { height: 40px; margin-bottom: 20px; }
+        .footer-column ul { list-style: none; padding: 0; }
+        .footer-column ul li a { color: #a9a9b3; text-decoration: none; line-height: 2.2; transition: color 0.2s ease; }
+        .footer-column ul li a:hover { color: var(--background-light); }
+        .footer-social-icons { display: flex; gap: 15px; margin-top: 10px; }
+        .footer-social-icons img { width: 40px; height: 40px; border-radius: 50%; transition: transform 0.2s ease; }
+        .footer-social-icons img:hover { transform: scale(1.1); }
+        .footer-bottom { text-align: center; padding: 20px 0; border-top: 1px solid #333; font-size: 0.9rem; }
 
-            .modal.image-view #modal-image {
-                display: block;
-                width: 100%; /* Lấp đầy 100% chiều rộng của modal MỚI */
-                height: 100%; /* Lấp đầy 100% chiều cao của modal MỚI */
-                object-fit: contain; /* Giữ tỷ lệ ảnh, không cắt xén */
-                border-radius: 12px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            }
-        /* === ✅ KẾT THÚC SỬA LỖI === */
-
-        /* === CSS CHO MENU DANH MỤC === */
-        .category-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 1050;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-            .category-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
-
-        .category-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: transparent;
-            z-index: 1051;
-            overflow-y: auto;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-
-            .category-menu.active {
-                opacity: 1;
-                visibility: visible;
-            }
-
-        .category-columns-container {
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 110px 40px 40px 40px;
-        }
-
-        .category-column {
-            flex: 1 1 220px;
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
-        }
-
-            .category-column h4 {
-                font-size: 0.9rem;
-                color: #333;
-                font-weight: 600;
-                text-transform: uppercase;
-                margin-bottom: 15px;
-                padding-bottom: 5px;
-                border-bottom: 1px solid #ddd;
-            }
-
-        .category-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .category-menu li a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px;
-            text-decoration: none;
-            color: #1d1d1f;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
-        }
-
-            .category-menu li a:hover {
-                background-color: rgba(0, 0, 0, 0.05);
-            }
-
-        .category-menu li img {
-            height: 32px;
-            width: auto;
-            border-radius: 6px;
-        }
-
-        .category-menu li span {
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .category-close-btn {
-            position: fixed;
-            top: 90px;
-            right: 30px;
-            background: rgba(0, 0, 0, 0.1);
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            font-size: 28px;
-            color: #1d1d1f;
-            cursor: pointer;
-            z-index: 1061;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .category-menu.active ~ .category-close-btn,
-        .category-overlay.active ~ .category-close-btn {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* === KẾT THÚC CSS CHO MENU DANH MỤC === */
-
-
-        /* === CSS CHO FOOTER (GIỮ NGUYÊN) === */
-        .site-footer-main {
-            background-color: #1a1a1c;
-            color: #a9a9b3;
-            padding: 60px 20px 0 20px;
-            margin-top: 50px;
-            font-size: 0.95rem;
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 40px;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 250px;
-        }
-
-            .footer-column h4 {
-                color: #ffffff;
-                font-size: 1.1rem;
-                margin-bottom: 20px;
-                font-weight: 600;
-            }
-
-        .footer-logo {
-            height: 40px;
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-
-            .footer-column ul li a {
-                color: #a9a9b3;
-                text-decoration: none;
-                line-height: 2.2;
-                transition: color 0.2s ease;
-            }
-
-                .footer-column ul li a:hover {
-                    color: #ffffff;
-                }
-
-        .footer-social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-            .footer-social-icons img {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                transition: transform 0.2s ease;
-            }
-
-                .footer-social-icons img:hover {
-                    transform: scale(1.1);
-                }
-
-        .footer-bottom {
-            text-align: center;
-            padding: 20px 0;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-        }
-
-        /* CSS RESPONSIVE */
+        /* === RESPONSIVE STYLES === */
         @media(max-width: 992px) {
-            .main-nav.is-open a {
-                font-size: 15px !important; /* Cỡ chữ cho menu trên điện thoại */
-            }
-
-            .site-header {
-                padding: 10px 15px;
-            }
-
-            .main-nav {
-                display: none;
-            }
-
-            .mobile-controls {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .hamburger-btn {
-                background: none;
-                border: none;
-                cursor: pointer;
-                padding: 8px;
-                color: #333;
-                font-size: 1.6rem;
-            }
-
-            .main-nav.is-open {
-                display: block;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #fff;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 100;
-            }
-
-                .main-nav.is-open ul {
-                    flex-direction: column;
-                    gap: 0;
-                    width: 100%;
-                }
-
-                .main-nav.is-open li {
-                    width: 100%;
-                    text-align: center;
-                    border-bottom: 1px solid #eee;
-                }
-
-                    .main-nav.is-open li:last-child {
-                        border-bottom: none;
-                    }
-
-                .main-nav.is-open a {
-                    padding: 15px;
-                    display: block;
-                    width: 100%;
-                }
+            .main-nav { display: none; }
+            .mobile-controls { display: flex; align-items: center; }
+            .hamburger-btn { background: none; border: none; cursor: pointer; padding: 8px; font-size: 1.6rem; color: var(--text-medium); }
+            .main-nav.is-open { display: block; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--background-light); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 100; }
+            .main-nav.is-open ul { flex-direction: column; gap: 0; }
+            .main-nav.is-open li { width: 100%; text-align: center; border-bottom: 1px solid var(--border-color); }
+            .main-nav.is-open li:last-child { border-bottom: none; }
+            .main-nav.is-open a { padding: 15px; display: block; font-size: 15px !important; }
         }
-
         @media(max-width: 768px) {
-            .faq-layout-container {
-                flex-direction: column; /* Chuyển thành 1 cột trên mobile */
-            }
-
-            .faq-nav {
-                flex: 0 0 auto; /* Bỏ cố định chiều rộng */
-                margin-bottom: 20px;
-            }
-
-            .category-menu li a {
-                padding-top: 12px;
-                padding-bottom: 12px;
-            }
-
-            /* === BẮT ĐẦU: CSS MỚI ĐỂ TRÁNH HEADER CHE NỘI DUNG === */
-            .faq-content {
-                scroll-margin-top: 100px; /* Khoảng đệm cho header khi cuộn */
-            }
-            /* === KẾT THÚC: CSS MỚI === */
+            .site-header { padding: 10px 15px; }
+            .faq-layout-container { flex-direction: column; }
+            .faq-nav { flex: 0 0 auto; margin-bottom: 20px; }
         }
     </style>
 </head>
 <body>
     <header class="site-header">
         <div class="header-logo">
-            <a href="index.html"><img src="./images/logo.png" alt="Logo"></a>
+            <a href="index.html"><img src="./images/logo.png" alt="Fast Track Logo"></a>
         </div>
-
-        <div class="header-search">
-        </div>
-
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">TRANG CHỦ</a></li>
                 <li><a href="index.html#dich-vu">CỬA HÀNG</a></li>
                 <li><a href="index.html#check-uy-tin">CHECK UY TÍN</a></li>
-                <li><a href="#" id="category-trigger">DANH MỤC</a></li>
                 <li><a href="faq.html" class="active-page">CÁC CÂU HỎI THƯỜNG GẶP</a></li>
             </ul>
         </nav>
-
         <div class="mobile-controls">
             <button class="hamburger-btn">☰</button>
         </div>
@@ -623,9 +255,7 @@
 
     <main class="faq-page-container">
         <h1 style="font-size: 2.5rem;">Hỗ trợ & Giải đáp thắc mắc</h1>
-
         <div class="faq-layout-container">
-
             <nav class="faq-nav">
                 <h4>Chủ đề</h4>
                 <a href="#q1" class="faq-nav-link active">Quy trình mua hàng</a>
@@ -637,301 +267,120 @@
             </nav>
 
             <div class="faq-content">
-
                 <article id="q1" class="faq-article active">
-                    <h3>Quy trình mua hàng tại Shop diễn ra như thế nào?</h3>
+                    <h3>Quy trình mua hàng tại Shop?</h3>
                     <p>Quy trình của chúng tôi rất đơn giản và nhanh chóng để đảm bảo trải nghiệm tốt nhất cho bạn:</p>
                     <ul>
                         <li><strong>Bước 1:</strong> Chọn dịch vụ bạn quan tâm trên trang web.</li>
-                        <li><strong>Bước 2:</strong> Liên hệ trực tiếp với chúng tôi qua Zalo, Messenger hoặc Telegram để nhận tư vấn và thông tin chi tiết.</li>
-                        <li><strong>Bước 3:</strong> Thực hiện thanh toán theo hướng dẫn của nhân viên hỗ trợ.</li>
-                        <li><strong>Bước 4:</strong> Cung cấp thông tin cần thiết (ví dụ: email cho gói chính chủ) và chờ nhận sản phẩm/gói nâng cấp, thường chỉ trong vài phút.</li>
+                        <li><strong>Bước 2:</strong> Liên hệ trực tiếp với chúng tôi qua Zalo hoặc Messenger.</li>
+                        <li><strong>Bước 3:</strong> Thực hiện thanh toán theo hướng dẫn.</li>
+                        <li><strong>Bước 4:</strong> Cung cấp thông tin cần thiết và nhận sản phẩm trong vài phút.</li>
                     </ul>
                 </article>
-
                 <article id="q2" class="faq-article">
-                    <h3>Chính sách bảo hành của Shop được áp dụng ra sao?</h3>
-                    <p>Chúng tôi cam kết bảo hành cho tất cả các sản phẩm và dịch vụ trong suốt thời gian bạn đăng ký sử dụng.</p>
-                    <p>Nếu có bất kỳ lỗi nào phát sinh từ phía chúng tôi (ví dụ: tài khoản bị mất quyền Premium, lỗi đăng nhập không do khách hàng gây ra), chúng tôi sẽ thực hiện một trong các phương án sau:</p>
-                    <ul>
-                        <li>Khắc phục lỗi ngay lập tức.</li>
-                        <li>Cấp lại tài khoản mới tương đương.</li>
-                        <li>Hoàn lại tiền tương ứng với thời gian sử dụng còn lại nếu không thể khắc phục.</li>
-                    </ul>
-                    <p class="important-note"><em>Lưu ý: Chính sách bảo hành không áp dụng cho các trường hợp khách hàng vi phạm điều khoản sử dụng (ví dụ: chia sẻ tài khoản cho nhiều người hơn quy định, thay đổi thông tin tài khoản trái phép).</em></p>
+                    <h3>Chính sách bảo hành?</h3>
+                    <p>Chúng tôi cam kết bảo hành cho tất cả các sản phẩm và dịch vụ trong suốt thời gian bạn đăng ký sử dụng. Nếu có lỗi từ phía chúng tôi, chúng tôi sẽ khắc phục, cấp lại tài khoản mới, hoặc hoàn tiền tương ứng.</p>
                 </article>
-
-                <article id="q3" class="faq-article">
-                    <h3>Làm thế nào để thanh toán và xác nhận?</h3>
-                    <p>Hiện tại, chúng tôi hỗ trợ các phương thức thanh toán linh hoạt sau:</p>
-                    <ul>
-                        <li>Chuyển khoản ngân hàng (VietQR).</li>
-                        <li>Ví điện tử Momo.</li>
-                    </ul>
-                    <p>Sau khi chuyển khoản, bạn chỉ cần <strong>chụp lại màn hình giao dịch thành công</strong> và gửi cho nhân viên đang hỗ trợ bạn. Chúng tôi sẽ xác nhận ngay và tiến hành xử lý đơn hàng.</p>
-                </article>
-
-                <article id="q4" class="faq-article">
-                    <h3>Tôi cần làm gì nếu gặp sự cố với tài khoản?</h3>
-                    <p>Ngay khi phát hiện bất kỳ sự cố nào, bạn vui lòng liên hệ ngay với bộ phận hỗ trợ của chúng tôi qua kênh mà bạn đã mua hàng (Zalo, Messenger, Telegram).</p>
-                    <p>Để được hỗ trợ nhanh nhất, vui lòng cung cấp các thông tin sau:</p>
-                    <ul>
-                        <li>Tên dịch vụ bạn đang sử dụng.</li>
-                        <li>Mô tả ngắn gọn về sự cố bạn gặp phải.</li>
-                        <li>Ảnh chụp màn hình lỗi (nếu có).</li>
-                    </ul>
-                    <p>Đội ngũ của chúng tôi luôn sẵn sàng hỗ trợ bạn một cách nhanh chóng và hiệu quả.</p>
-                </article>
-
-                <article id="q5" class="faq-article">
-                    <h3>Làm sao để tôi có thể tin tưởng vào dịch vụ của Shop?</h3>
-                    <p>Chúng tôi hiểu rằng uy tín là yếu tố quan trọng nhất. Bạn có thể hoàn toàn yên tâm về dịch vụ của chúng tôi vì:</p>
-                    <ul>
-                        <li>Chúng tôi đã hoạt động lâu năm và phục vụ hàng ngàn khách hàng.</li>
-                        <li>Mục <strong>"Check Uy Tín"</strong> trên trang chủ có đăng tải hàng trăm hóa đơn, bill thanh toán thực tế từ khách hàng đã sử dụng dịch vụ.</li>
-                        <li>Chúng tôi luôn công khai các kênh liên hệ và sẵn sàng hỗ trợ, giải đáp mọi thắc mắc của bạn.</li>
-                        <li>Chính sách bảo hành rõ ràng, luôn đặt quyền lợi của khách hàng lên hàng đầu.</li>
-                    </ul>
-                </article>
-
                 <article id="q6" class="faq-article">
                     <h3>Hướng dẫn thoát Nhóm Gia đình (Family) Google</h3>
-                    <p>Việc thoát khỏi một nhóm gia đình Google là cần thiết khi bạn muốn tham gia một nhóm khác hoặc không còn nhu cầu sử dụng chung. Dưới đây là các bước thực hiện:</p>
                     <ol>
+                        <li><strong>Truy cập trang quản lý Family:</strong> Mở trình duyệt và truy cập <a href="https://families.google.com/families" target="_blank">families.google.com</a>.</li>
                         <li>
-                            <strong>Truy cập trang quản lý Family:</strong> Mở trình duyệt và truy cập vào đường dẫn: <a href="https://families.google.com/families" target="_blank">https://families.google.com/families</a>. Hãy chắc chắn bạn đã đăng nhập đúng tài khoản Google cần thoát.
-                            <br>
-                            <img src="./images/Fam.png" alt="Giao diện quản lý Google Family" style="width:100%; max-width:500px; margin-top:10px; border-radius:8px; border: 1px solid #ddd;">
+                            <img src="./images/Fam.png" alt="Giao diện quản lý Google Family" loading="lazy">
                         </li>
+                        <li><strong>Chọn "Rời khỏi nhóm gia đình"</strong> và xác nhận.</li>
                         <li>
-                            <strong>Chọn "Rời khỏi nhóm gia đình":</strong> Sau khi vào trang quản lý, hãy tìm và chọn vào mục "Rời khỏi nhóm gia đình" (Leave family group) từ menu hoặc các tùy chọn có sẵn.
-                            <br>
-                            <img src="./images/roiFam.png" alt="Xác nhận rời khỏi nhóm Google Family" style="width:100%; max-width:500px; margin-top:10px; border-radius:8px; border: 1px solid #ddd;">
-                        </li>
-                        <li>
-                            <strong>Xác nhận rời khỏi:</strong> Một cửa sổ sẽ hiện lên yêu cầu bạn xác nhận lại lần cuối. Hãy nhập mật khẩu của bạn để xác thực, sau đó chọn "Rời khỏi".
-                            <br>
-                            <img src="./images/XacNhanRoiFam.png" alt="Nhập mật khẩu xác nhận rời nhóm" style="width:100%; max-width:500px; margin-top:10px; border-radius:8px; border: 1px solid #ddd;">
+                            <img src="./images/roiFam.png" alt="Xác nhận rời khỏi nhóm Google Family" loading="lazy">
                         </li>
                     </ol>
-                    <p>Sau khi hoàn tất, bạn sẽ nhận được thông báo đã thoát khỏi nhóm thành công. Google cũng sẽ gửi một email xác nhận đến hòm thư của bạn.</p>
-                    <p class="important-note"><strong>Lưu ý quan trọng:</strong> Mỗi tài khoản Google chỉ có thể chuyển đổi nhóm gia đình <strong>một lần mỗi 12 tháng</strong>. Hãy cân nhắc kỹ trước khi thực hiện.</p>
                 </article>
-
-            </div>
+                </div>
         </div>
     </main>
-
-    <div id="category-overlay" class="category-overlay"></div>
-    <div id="category-menu" class="category-menu">
-        <div class="category-columns-container">
-            <div class="category-column">
-                <h4>Tài khoản giải trí</h4>
-                <ul>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/zhRcmWx9/image.png" alt="YouTube"><span>YouTube Premium</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/tYHk9cK/spotify-1.png" alt="Spotify"><span>Spotify</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/L6v9v04/netflix-3.png" alt="Netflix"><span>Netflix</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/yBPNtC5/vieon.png" alt="Vieon"><span>Vieon</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/GvxB4zG/fptplay.png" alt="FPT Play"><span>FPT Play</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/SVSrHr6/galaxyplay.png" alt="Galaxy Play"><span>Galaxy Play</span></a></li>
-                </ul>
-            </div>
-
-            <div class="category-column">
-                <h4>Tài khoản học tập</h4>
-                <ul>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/yqg0GzR/elsa.png" alt="Elsa"><span>Elsa</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/D8yWzBq/canva.png" alt="Canva"><span>Canva</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/3kXNfV7/duolingo.png" alt="Duolingo"><span>Duolingo</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/bF0bJmQ/lingokids.png" alt="Lingokids"><span>Lingokids</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/mS7yG0z/rabitala.png" alt="Rabitala"><span>Rabitala</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/JqjP0Sb/bill-5.png" alt="Monkey Junior"><span>Monkey Junior</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/T4jBfH5/office.png" alt="Hanji"><span>Hanji</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/yY9x0Yn/bill-10.png" alt="Kidsup"><span>Kidsup</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/mH0cBPd/bill-11.png" alt="Flyer"><span>Flyer</span></a></li>
-                </ul>
-            </div>
-
-            <div class="category-column">
-                <h4>Tài khoản làm việc</h4>
-                <ul>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/9s1PgLq/bill-13.png" alt="Adobe full"><span>Adobe full</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/S6J0vBP/bill-14.png" alt="Google one"><span>Google one</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/K07h4YD/bill-12.png" alt="Zoom"><span>Zoom</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/4Y4R7G6/bill-15.png" alt="Chat GPT"><span>Chat GPT</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/b3gQYhY/capcut.png" alt="Capcut Pro"><span>Capcut Pro</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/gDFtqg8/bill-3.png" alt="Window 365"><span>Window 365</span></a></li>
-                </ul>
-            </div>
-
-            <div class="category-column">
-                <h4>Khóa học và tài liệu</h4>
-                <ul>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/b3gQYhY/capcut.png" alt="Khoá học Capcut PC"><span>Khoá học Capcut PC</span></a></li>
-                    <li><a href="index.html#dich-vu"><img src="https://i.ibb.co/D8yWzBq/canva.png" alt="Khoá học Canva Pro"><span>Khoá học Canva Pro</span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <button id="category-close-btn" class="category-close-btn">&times;</button>
-
-
-    <footer class="site-footer-main">
-        <div class="footer-container">
-            <div class="footer-column about">
-                <img src="./images/logo11.png" alt="Logo Fast Track" class="footer-logo">
-                <p>Dịch vụ nâng cấp tài khoản Premium uy tín, nhanh chóng và an toàn. Luôn đặt trải nghiệm của khách hàng lên hàng đầu.</p>
-            </div>
-            <div class="footer-column links">
-                <h4>Liên kết nhanh</h4>
-                <ul>
-                    <li><a href="index.html#dich-vu">Cửa hàng</a></li>
-                    <li><a href="index.html#check-uy-tin">Check Uy tín</a></li>
-                    <li><a href="faq.html">Câu hỏi thường gặp</a></li>
-                </ul>
-            </div>
-            <div class="footer-column contact">
-                <h4>Liên hệ với chúng tôi</h4>
-                <p>Hỗ trợ nhanh nhất qua:</p>
-                <div class="footer-social-icons">
-                    <a href="https://zalo.me/0978879931" target="_blank" aria-label="Zalo">
-                        <img src="https://i.ibb.co/Pz1Mmrjx/image.png" alt="Zalo">
-                    </a>
-                    <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger">
-                        <img src="https://i.ibb.co/VWD70rLr/image.png" alt="Messenger">
-                    </a>
-                    <a href="httpsis.t.me/TCManhh" target="_blank" aria-label="Telegram">
-                        <img src="https://i.ibb.co/XZyQS4NN/image.png" alt="Telegram">
-                    </a>
-                    <a href="https://www.facebook.com/FastTrack68" target="_blank" aria-label="Facebook">
-                        <img src="https://i.ibb.co/hRsQS5rh/image.png" alt="Facebook">
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 - 2025 Fast Track Digital. All Rights Reserved.</p>
-        </div>
-    </footer>
 
     <div class="modal-overlay"></div>
     <div class="modal">
         <button class="modal-close">&times;</button>
-        <img id="modal-image" src="" alt="Hình ảnh phóng to">
+        <div class="modal-content">
+            <img id="modal-image" src="" alt="Hình ảnh phóng to">
+        </div>
     </div>
 
+    <footer class="site-footer-main">
+       </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const siteHeader = document.querySelector('.site-header');
-
-            // --- LOGIC CHO MENU DANH MỤC ---
-            const categoryTrigger = document.getElementById('category-trigger');
-            const categoryOverlay = document.getElementById('category-overlay');
-            const categoryMenu = document.getElementById('category-menu');
-            const categoryCloseBtn = document.getElementById('category-close-btn');
-
-            function openCategoryMenu() {
-                if (siteHeader) siteHeader.classList.add('is-hidden');
-                if (categoryOverlay) categoryOverlay.classList.add('active');
-                if (categoryMenu) categoryMenu.classList.add('active');
-                document.body.classList.add('modal-open');
-            }
-
-            function closeCategoryMenu() {
-                if (siteHeader) siteHeader.classList.remove('is-hidden');
-                if (categoryOverlay) categoryOverlay.classList.remove('active');
-                if (categoryMenu) categoryMenu.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            }
-
-            if (categoryTrigger) {
-                categoryTrigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openCategoryMenu();
-                });
-            }
-            if (categoryOverlay) categoryOverlay.addEventListener('click', closeCategoryMenu);
-            if (categoryCloseBtn) categoryCloseBtn.addEventListener('click', closeCategoryMenu);
-            if (categoryMenu) {
-                categoryMenu.addEventListener('click', (e) => {
-                    if (e.target.closest('a')) closeCategoryMenu();
-                });
-            }
-
-            // --- LOGIC CHO FAQ TABS ---
-            const navContainer = document.querySelector('.faq-nav');
-            if (navContainer) {
-                navContainer.addEventListener('click', function (e) {
-                    const clickedLink = e.target.closest('.faq-nav-link');
-                    if (!clickedLink) return;
-                    e.preventDefault();
-
-                    const targetId = clickedLink.getAttribute('href');
-                    const targetArticle = document.querySelector(targetId);
-
-                    document.querySelectorAll('.faq-nav-link').forEach(link => link.classList.remove('active'));
-                    document.querySelectorAll('.faq-article').forEach(article => article.classList.remove('active'));
-
-                    clickedLink.classList.add('active');
-                    if (targetArticle) {
-                        targetArticle.classList.add('active');
-                        if (window.innerWidth <= 768) {
-                            document.querySelector('.faq-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                    }
-                });
-            }
-
-            // --- LOGIC CHO MENU MOBILE ---
-            const hamburgerBtn = document.querySelector('.hamburger-btn');
-            const mainNav = document.querySelector('.main-nav');
-            if (hamburgerBtn && mainNav) {
-                hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open'));
-            }
-
-            // --- LOGIC CHO POP-UP ẢNH (ĐÃ SỬA LỖI) ---
+            // --- COMMON ELEMENTS ---
             const modal = document.querySelector('.modal');
             const modalOverlay = document.querySelector('.modal-overlay');
             const modalCloseBtn = document.querySelector('.modal-close');
             const modalImage = document.getElementById('modal-image');
-
-            function openImageModal(imgSrc) {
-                if (!modal || !modalOverlay || !modalImage) return;
-                modalImage.src = imgSrc;
-                if (siteHeader) siteHeader.classList.add('is-hidden');
-                modal.classList.add('active', 'image-view');
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const mainNav = document.querySelector('.main-nav');
+            
+            // --- GENERAL MODAL LOGIC ---
+            function openModal() {
+                if (!modal || !modalOverlay) return;
+                modal.classList.add('active');
                 modalOverlay.classList.add('active');
                 document.body.classList.add('modal-open');
             }
 
-            function closeImageModal() {
+            function closeModal() {
                 if (!modal || !modalOverlay) return;
-                if (siteHeader) siteHeader.classList.remove('is-hidden');
                 modal.classList.remove('active', 'image-view');
                 modalOverlay.classList.remove('active');
                 document.body.classList.remove('modal-open');
             }
 
-            // Gán sự kiện đóng modal cho nút 'x' và vùng mờ
-            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeImageModal);
-            if (modalOverlay) modalOverlay.addEventListener('click', closeImageModal);
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+            if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
 
-            // Ngăn sự kiện click trên chính tấm ảnh (modalImage) làm đóng modal
-            if (modalImage) {
-                modalImage.addEventListener('click', (e) => {
-                    e.stopPropagation();
+            // --- MOBILE NAVIGATION ---
+            if (hamburgerBtn && mainNav) {
+                hamburgerBtn.addEventListener('click', () => {
+                    mainNav.classList.toggle('is-open');
                 });
             }
 
-            // Gán sự kiện mở modal cho tất cả ảnh trong mục FAQ
-            const faqImages = document.querySelectorAll('.faq-article ol img');
-            faqImages.forEach(img => {
-                img.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Ngăn các sự kiện click khác
-                    openImageModal(img.src);
+            // --- FAQ.HTML SPECIFIC LOGIC ---
+            const faqNavContainer = document.querySelector('.faq-nav');
+            const faqContentContainer = document.querySelector('.faq-content');
+
+            if (faqNavContainer && faqContentContainer) {
+                faqNavContainer.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const clickedLink = e.target.closest('.faq-nav-link');
+                    if (!clickedLink || clickedLink.classList.contains('active')) return;
+
+                    const targetId = clickedLink.getAttribute('href');
+                    const targetArticle = document.querySelector(targetId);
+                    
+                    if (targetArticle) {
+                        faqNavContainer.querySelector('.active')?.classList.remove('active');
+                        clickedLink.classList.add('active');
+                        faqContentContainer.querySelector('.active')?.classList.remove('active');
+                        targetArticle.classList.add('active');
+
+                        if (window.innerWidth <= 768) {
+                            targetArticle.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
                 });
-            });
+
+                // Image pop-up logic for FAQ page
+                faqContentContainer.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'IMG' && e.target.closest('.faq-article')) {
+                        e.stopPropagation();
+                        if (modal) {
+                            modal.classList.add('image-view');
+                            modalImage.src = e.target.src;
+                            openModal();
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
