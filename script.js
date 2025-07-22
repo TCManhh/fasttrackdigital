@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchResultsContainer.style.display = 'block';
                 results.forEach(result => {
                     const card = document.querySelector(`.card[data-id="${result.id}"]`);
-                    const imgSrc = card ? card.querySelector('img').src : './images/logo11.png';
+                    const imgSrc = card ? card.querySelector('img').src : './images/logo11.webp';
 
                     const itemElement = document.createElement('div');
                     itemElement.className = 'result-item';
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const billSlider = document.querySelector('.bill-slider');
         const billCounter = document.querySelector('.bill-counter');
         const billImages = [
-            { src: "./images_bill_thanh_toan/0222YTATZL.png", alt: "Bill 10" }, { src: "./images_bill_thanh_toan/0219YTNTFB.png", alt: "Bill 9" }, { src: "./images_bill_thanh_toan/0218YTNCFB.png", alt: "Bill 8" }, { src: "./images_bill_thanh_toan/0216YTNTFB.png", alt: "Bill 7" }, { src: "./images_bill_thanh_toan/0215YTTHFB.png", alt: "Bill 6" }, { src: "./images_bill_thanh_toan/0215YTTNZL.png", alt: "Bill 5" }, { src: "./images_bill_thanh_toan/0204DSLHZL.png", alt: "Bill 4" }, { src: "./images_bill_thanh_toan/0203YTQPZL.png", alt: "Bill 3" }, { src: "./images_bill_thanh_toan/0202DSĐHFB.png", alt: "Bill 2" }, { src: "./images_bill_thanh_toan/0128YTVHZL.png", alt: "Bill 1" }
+            { src: "./images_bill_thanh_toan/0222YTATZL.webp", alt: "Bill 10" }, { src: "./images_bill_thanh_toan/0219YTNTFB.webp", alt: "Bill 9" }, { src: "./images_bill_thanh_toan/0218YTNCFB.webp", alt: "Bill 8" }, { src: "./images_bill_thanh_toan/0216YTNTFB.webp", alt: "Bill 7" }, { src: "./images_bill_thanh_toan/0215YTTHFB.webp", alt: "Bill 6" }, { src: "./images_bill_thanh_toan/0215YTTNZL.webp", alt: "Bill 5" }, { src: "./images_bill_thanh_toan/0204DSLHZL.webp", alt: "Bill 4" }, { src: "./images_bill_thanh_toan/0203YTQPZL.webp", alt: "Bill 3" }, { src: "./images_bill_thanh_toan/0202DSĐHFB.webp", alt: "Bill 2" }, { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" }
         ];
 
         billImages.forEach(imgData => {
