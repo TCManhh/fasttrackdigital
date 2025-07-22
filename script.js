@@ -272,22 +272,59 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!billTrack) return;
         const billSlider = document.querySelector('.bill-slider');
         const billCounter = document.querySelector('.bill-counter');
-        const billImages = [
-            { src: "./images_bill_thanh_toan/0222YTATZL.webp", alt: "Bill 10" }, { src: "./images_bill_thanh_toan/0219YTNTFB.webp", alt: "Bill 9" }, { src: "./images_bill_thanh_toan/0218YTNCFB.webp", alt: "Bill 8" }, { src: "./images_bill_thanh_toan/0216YTNTFB.webp", alt: "Bill 7" }, { src: "./images_bill_thanh_toan/0215YTTHFB.webp", alt: "Bill 6" }, { src: "./images_bill_thanh_toan/0215YTTNZL.webp", alt: "Bill 5" }, { src: "./images_bill_thanh_toan/0204DSLHZL.webp", alt: "Bill 4" }, { src: "./images_bill_thanh_toan/0203YTQPZL.webp", alt: "Bill 3" }, { src: "./images_bill_thanh_toan/0202DSĐHFB.webp", alt: "Bill 2" }, { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" }
+
+        // --- BẮT ĐẦU: ĐOẠN MÃ ĐÃ SỬA ---
+        // 1. Danh sách tổng hợp tất cả các ảnh có sẵn
+        const allBillImages = [
+            { src: "./images_bill_thanh_toan/0222YTATZL.webp", alt: "Bill 10" },
+            { src: "./images_bill_thanh_toan/0219YTNTFB.webp", alt: "Bill 9" },
+            { src: "./images_bill_thanh_toan/0218YTNCFB.webp", alt: "Bill 8" },
+            { src: "./images_bill_thanh_toan/0216YTNTFB.webp", alt: "Bill 7" },
+            { src: "./images_bill_thanh_toan/0215YTTHFB.webp", alt: "Bill 6" },
+            { src: "./images_bill_thanh_toan/0215YTTNZL.webp", alt: "Bill 5" },
+            { src: "./images_bill_thanh_toan/0204DSLHZL.webp", alt: "Bill 4" },
+            { src: "./images_bill_thanh_toan/0203YTQPZL.webp", alt: "Bill 3" },
+            { src: "./images_bill_thanh_toan/0202DSĐHFB.webp", alt: "Bill 2" },
+            { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" },
+            // Thêm các ảnh khác vào đây để tải động
+            { src: "./images_bill_thanh_toan/bill_11.webp", alt: "Bill 11" },
+            { src: "./images_bill_thanh_toan/bill_12.webp", alt: "Bill 12" },
+            { src: "./images_bill_thanh_toan/bill_13.webp", alt: "Bill 13" },
+            { src: "./images_bill_thanh_toan/bill_14.webp", alt: "Bill 14" },
+            { src: "./images_bill_thanh_toan/bill_15.webp", alt: "Bill 15" },
+            { src: "./images_bill_thanh_toan/bill_16.webp", alt: "Bill 16" },
+            { src: "./images_bill_thanh_toan/bill_17.webp", alt: "Bill 17" },
+            { src: "./images_bill_thanh_toan/bill_18.webp", alt: "Bill 18" },
+            { src: "./images_bill_thanh_toan/bill_19.webp", alt: "Bill 19" },
+            { src: "./images_bill_thanh_toan/bill_20.webp", alt: "Bill 20" }
         ];
 
-        billImages.forEach(imgData => {
+        const initialLoadCount = 10;
+        let items = []; // Sẽ được cập nhật động
+
+        // Hàm hỗ trợ để thêm một ảnh mới vào DOM của carousel
+        function addImageToCarousel(index) {
+            if (index >= allBillImages.length || billTrack.children[index]) return;
+
+            const imgData = allBillImages[index];
             const item = document.createElement('div');
             item.className = 'bill-carousel-item';
             const img = document.createElement('img');
             img.src = imgData.src;
             img.alt = imgData.alt;
             img.loading = 'lazy';
+            // Thêm xử lý lỗi để ẩn các ảnh bị hỏng
+            img.onerror = () => item.style.display = 'none';
             item.appendChild(img);
             billTrack.appendChild(item);
-        });
+        }
 
-        const items = Array.from(billTrack.children);
+        // 2. Tải ban đầu 10 ảnh đầu tiên
+        for (let i = 0; i < initialLoadCount && i < allBillImages.length; i++) {
+            addImageToCarousel(i);
+        }
+        
+        items = Array.from(billTrack.children);
         if (items.length <= 1) return;
 
         let currentIndex = 0;
@@ -299,12 +336,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (centerIndex === -1 || centerIndex === currentIndex) return;
             currentIndex = centerIndex;
             items.forEach((item, index) => item.classList.toggle('active', index === currentIndex));
+            
             if (billSlider) {
                 billSlider.value = currentIndex;
-                const progressPercent = (items.length > 1) ? (currentIndex / (items.length - 1)) * 100 : 0;
+                const progressPercent = (allBillImages.length > 1) ? (currentIndex / (allBillImages.length - 1)) * 100 : 0;
                 billSlider.style.setProperty('--progress', `${progressPercent}%`);
             }
-            if (billCounter) billCounter.textContent = `${currentIndex + 1} / ${items.length}`;
+            if (billCounter) billCounter.textContent = `${currentIndex + 1} / ${allBillImages.length}`;
         }
 
         function getCenterIndex() {
@@ -323,9 +361,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             return closestIndex;
         }
-
+        
+        // 3. Hàm chính để di chuyển slide, đã tích hợp logic tải động
         function moveToSlide(index) {
+            // Tải động ảnh mục tiêu nếu nó chưa được thêm vào DOM
+            if (index >= items.length && index < allBillImages.length) {
+                addImageToCarousel(index);
+                items = Array.from(billTrack.children); // Làm mới lại danh sách `items`
+            }
+
             if (index < 0 || index >= items.length) return;
+            
             const targetItem = items[index];
             if (targetItem) {
                 const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
@@ -339,10 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isModalOpen) return;
             clearInterval(autoSlideTimer);
             autoSlideTimer = setInterval(() => {
-                let nextIndex = (currentIndex + 1) % items.length;
+                let nextIndex = (currentIndex + 1) % allBillImages.length; // Sử dụng tổng số ảnh để lặp lại
                 moveToSlide(nextIndex);
             }, autoSlideInterval);
         }
+        // --- KẾT THÚC: ĐOẠN MÃ ĐÃ SỬA ---
 
         function stopAutoSlide() {
             clearInterval(autoSlideTimer);
@@ -384,7 +431,11 @@ document.addEventListener('DOMContentLoaded', () => {
             billTrack.style.paddingLeft = `${padding}px`;
             billTrack.style.paddingRight = `${padding}px`;
         }
-        if (billSlider) billSlider.max = items.length - 1;
+        
+        // Đặt giá trị max của thanh trượt và bộ đếm theo tổng số ảnh có sẵn
+        if (billSlider) billSlider.max = allBillImages.length - 1;
+        if (billCounter) billCounter.textContent = `1 / ${allBillImages.length}`;
+
 
         setTimeout(() => {
             moveToSlide(0);
