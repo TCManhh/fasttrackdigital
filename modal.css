@@ -830,8 +830,9 @@
 
 @media (max-width: 768px) {
     .modal.image-view .modal-close {
-        top: 5px;    /* chỉnh lại số này cho phù hợp trên mobile */
-        right: 4px;  /* chỉnh lại số này cho phù hợp trên mobile */
+        top: calc(12px + env(safe-area-inset-top));
+        right: calc(12px + env(safe-area-inset-right));
+
         width: 32px;
         height: 32px;
         font-size: 1.5rem;

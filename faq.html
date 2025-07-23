@@ -336,8 +336,8 @@
         .modal.image-view .modal-close {
             display: flex;
             position: absolute;
-            top: 4px;
-            right: 4px;
+            top: calc(12px + env(safe-area-inset-top));
+            right: calc(12px + env(safe-area-inset-right));
             background: #fff;
             color: #c00;
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
