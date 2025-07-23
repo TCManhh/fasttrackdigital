@@ -845,6 +845,7 @@
         vertical-align: middle;
         /* Nếu vẫn lệch, thử thêm: */
         font-family: Arial, sans-serif;
+    }
 
     #floating-actions .floating-action-item {
         width: 40px;
