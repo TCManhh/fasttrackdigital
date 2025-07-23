@@ -174,8 +174,6 @@
     <div class="modal-overlay"></div>
     <div class="modal">
         <div class="modal-content">
-            <h4 id="modal-title"></h4>
-            <h3 id="modal-headline"></h3>
             <div class="modal-body">
                 <div class="modal-image-wrapper">
                     <button class="modal-close">&times;</button>
@@ -285,8 +283,16 @@
 .modal.image-view .modal-image-wrapper {
     position: relative;
     display: inline-block;
-    width: 100%;
     max-width: 95vw;
+    max-height: 95vh;
+}
+
+.modal.image-view #modal-image {
+    display: block;
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .modal.image-view .modal-close {
@@ -312,10 +318,18 @@
 @media (max-width: 768px) {
     .modal.image-view .modal-close {
         top: 4px;
-        right: 4px;
+        right: -15px; /* Dịch sang phải hơn trên mobile */
         width: 32px;
         height: 32px;
         font-size: 1.5rem;
+    }
+    .modal.image-view .modal-image-wrapper {
+        max-width: 98vw;
+        max-height: 80vh;
+    }
+    .modal.image-view #modal-image {
+        max-width: 98vw;
+        max-height: 80vh;
     }
 }
 </style>
