@@ -840,6 +840,11 @@
         justify-content: center;
         line-height: 1;    /* Đảm bảo không bị lệch dọc */
         padding: 0;        /* Không padding dư */
+        /* Thêm thuộc tính này để căn giữa tuyệt đối ký tự X */
+        text-align: center;
+        vertical-align: middle;
+        /* Nếu vẫn lệch, thử thêm: */
+        font-family: Arial, sans-serif;
 
     #floating-actions .floating-action-item {
         width: 40px;
@@ -948,4 +953,3 @@
     }
 }
 /* === KẾT THÚC === */
-
