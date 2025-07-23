@@ -97,8 +97,8 @@
     .modal.image-view .modal-close {
     display: flex;
     position: absolute;
-    top: 9px;
-    right: 9px;
+    top: 12px;
+    right: 12px;
     background: #fff;
     color: #c00;
     box-shadow: 0 2px 8px rgba(0,0,0,0.12);
@@ -830,9 +830,6 @@
 
 @media (max-width: 768px) {
     .modal.image-view .modal-close {
-        top: calc(12px + env(safe-area-inset-top));
-        right: calc(12px + env(safe-area-inset-right));
-
         width: 32px;
         height: 32px;
         font-size: 1.5rem;

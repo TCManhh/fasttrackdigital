@@ -314,15 +314,16 @@
         }
 
         .modal.image-view .modal-content {
-        padding: 0 !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        width: auto !important;
-        height: auto !important;
-        max-height: 100% !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+            position: relative; /* Đảm bảo nút X căn theo modal-content */
+            display: inline-block;
+            padding: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            width: auto !important;
+            height: auto !important;
+            max-height: 100% !important;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal.image-view #modal-image {
@@ -334,10 +335,10 @@
             transition: transform 0.3s, filter 0.3s, opacity 0.3s;
         }
         .modal.image-view .modal-close {
-            display: flex;
             position: absolute;
-            top: calc(12px + env(safe-area-inset-top));
-            right: calc(12px + env(safe-area-inset-right));
+            top: 8px;
+            right: 8px;
+            z-index: 2;
             background: #fff;
             color: #c00;
             box-shadow: 0 2px 8px rgba(0,0,0,0.12);
@@ -624,11 +625,11 @@
 
     <div class="modal-overlay"></div>
     <div class="modal">
+    <div class="modal-content">
         <button class="modal-close">&times;</button>
-        <div class="modal-content">
-            <img id="modal-image" src="" alt="Hình ảnh phóng to">
-        </div>
+        <img id="modal-image" src="" alt="Hình ảnh phóng to">
     </div>
+</div>
 
     <footer class="site-footer-main">
     </footer>
