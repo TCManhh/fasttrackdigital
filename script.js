@@ -276,6 +276,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- BẮT ĐẦU: ĐOẠN MÃ ĐÃ SỬA ---
         // 1. Danh sách tổng hợp tất cả các ảnh có sẵn
         const allBillImages = [
+            { src: "./images_bill_thanh_toan/0308YTDVFB.webp", alt: "Bill 20" },
+            { src: "./images_bill_thanh_toan/0308DSMTZL.webp", alt: "Bill 19" },
+            { src: "./images_bill_thanh_toan/0306YTVPFB.webp", alt: "Bill 18" },
+            { src: "./images_bill_thanh_toan/0305YTNLFB.webp", alt: "Bill 17" },
+            { src: "./images_bill_thanh_toan/0305YTAVFB.webp", alt: "Bill 16" },
+            { src: "./images_bill_thanh_toan/0305DSĐHFB.webp", alt: "Bill 15" },
+            { src: "./images_bill_thanh_toan/0302YTVHZL.webp", alt: "Bill 14" },
+            { src: "./images_bill_thanh_toan/0302DSATFB.webp", alt: "Bill 13" },
+            { src: "./images_bill_thanh_toan/0227YTTFB.webp", alt: "Bill 12" },
+            { src: "./images_bill_thanh_toan/0223YTTLFB.webp", alt: "Bill 11" },
             { src: "./images_bill_thanh_toan/0222YTATZL.webp", alt: "Bill 10" },
             { src: "./images_bill_thanh_toan/0219YTNTFB.webp", alt: "Bill 9" },
             { src: "./images_bill_thanh_toan/0218YTNCFB.webp", alt: "Bill 8" },
@@ -285,18 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: "./images_bill_thanh_toan/0204DSLHZL.webp", alt: "Bill 4" },
             { src: "./images_bill_thanh_toan/0203YTQPZL.webp", alt: "Bill 3" },
             { src: "./images_bill_thanh_toan/0202DSĐHFB.webp", alt: "Bill 2" },
-            { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" },
-            // Thêm các ảnh khác vào đây để tải động
-            { src: "./images_bill_thanh_toan/bill_11.webp", alt: "Bill 11" },
-            { src: "./images_bill_thanh_toan/bill_12.webp", alt: "Bill 12" },
-            { src: "./images_bill_thanh_toan/bill_13.webp", alt: "Bill 13" },
-            { src: "./images_bill_thanh_toan/bill_14.webp", alt: "Bill 14" },
-            { src: "./images_bill_thanh_toan/bill_15.webp", alt: "Bill 15" },
-            { src: "./images_bill_thanh_toan/bill_16.webp", alt: "Bill 16" },
-            { src: "./images_bill_thanh_toan/bill_17.webp", alt: "Bill 17" },
-            { src: "./images_bill_thanh_toan/bill_18.webp", alt: "Bill 18" },
-            { src: "./images_bill_thanh_toan/bill_19.webp", alt: "Bill 19" },
-            { src: "./images_bill_thanh_toan/bill_20.webp", alt: "Bill 20" }
+            { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" }
         ];
 
         const initialLoadCount = 10;
@@ -330,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentIndex = 0;
         let autoSlideTimer;
         let isModalOpen = false;
-        const autoSlideInterval = 3500;
+        const autoSlideInterval = 2000;
 
         function updateActiveState(centerIndex) {
             if (centerIndex === -1 || centerIndex === currentIndex) return;
@@ -369,6 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 addImageToCarousel(index);
                 items = Array.from(billTrack.children); // Làm mới lại danh sách `items`
             }
+
+            // --- BỔ SUNG: Khi chuyển đến ảnh thứ N thì load ảnh thứ N+9 ---
+            const preloadIndex = index + 9;
+            if (preloadIndex < allBillImages.length && !billTrack.children[preloadIndex]) {
+                addImageToCarousel(preloadIndex);
+                items = Array.from(billTrack.children);
+            }
+            // --- KẾT THÚC BỔ SUNG ---
 
             if (index < 0 || index >= items.length) return;
             
@@ -430,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const padding = (billTrack.clientWidth - firstItem.clientWidth) / 2;
             billTrack.style.paddingLeft = `${padding}px`;
             billTrack.style.paddingRight = `${padding}px`;
+            firstItem.classList.add('active');
         }
         
         // Đặt giá trị max của thanh trượt và bộ đếm theo tổng số ảnh có sẵn

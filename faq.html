@@ -303,24 +303,61 @@
         }
         /* Image Viewer specific styles */
         .modal.image-view {
-            background: transparent;
-            box-shadow: none;
-            width: auto;
-            height: auto;
-            padding: 0;
+            background: transparent !important;
+            box-shadow: none !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: 95vw !important;
+            max-height: 95vh !important;
+            padding: 0 !important;
+            overflow: visible !important;
         }
 
-            .modal.image-view .modal-content {
-                padding: 0;
-            }
+        .modal.image-view .modal-content {
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        width: auto !important;
+        height: auto !important;
+        max-height: 100% !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
 
-            .modal.image-view .modal-close {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: rgba(0,0,0,0.5);
-                color: white;
-            }
+        .modal.image-view #modal-image {
+            max-width: 95vw;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, filter 0.3s, opacity 0.3s;
+        }
+        .modal.image-view .modal-close {
+            display: flex;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #fff;
+            color: #c00;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 2rem;
+            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0.95;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .modal.image-view .modal-close:hover {
+            background: #ffeaea;
+            color: #a00;
+            box-shadow: 0 4px 16px rgba(192,0,0,0.18);
+        }
 
         /* === FOOTER === */
         .site-footer-main {

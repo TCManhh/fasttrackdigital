@@ -95,13 +95,29 @@
     }
 
     .modal.image-view .modal-close {
-        display: block;
-        position: absolute;
-        top: -15px;
-        right: -15px;
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    display: flex;
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    background: #fff;
+    color: #c00;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    font-size: 2rem;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0.95;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .modal.image-view .modal-close:hover {
+        background: #ffeaea;
+        color: #a00;
+        box-shadow: 0 4px 16px rgba(192,0,0,0.18);
     }
 
     .modal.image-view h4, .modal.image-view h3, .modal.image-view p {
@@ -813,6 +829,17 @@
 }
 
 @media (max-width: 768px) {
+    .modal.image-view .modal-close {
+        top: 5px;    /* chỉnh lại số này cho phù hợp trên mobile */
+        right: 4px;  /* chỉnh lại số này cho phù hợp trên mobile */
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;    /* Đảm bảo không bị lệch dọc */
+        padding: 0;        /* Không padding dư */
 
     #floating-actions .floating-action-item {
         width: 40px;
