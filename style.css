@@ -56,7 +56,7 @@ html {
     align-items: center;
     gap: 20px;
     position: relative;
-    z-index: 999;
+    z-index: 1001;
     transition: transform 0.4s ease;
     height: 85px; /* Tăng chiều cao từ 71px lên 85px */
 }
@@ -141,11 +141,12 @@ html {
     }
 
     .result-item img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
+        height: 35px;         /* Cố định chiều cao là 50px */
+        width: auto;          /* Chiều rộng sẽ tự động điều chỉnh để giữ đúng tỉ lệ */
+        object-fit: contain;  /* Đảm bảo toàn bộ ảnh hiển thị, không bị cắt */
         border-radius: 6px;
         margin-right: 15px;
+        flex-shrink: 0;
     }
 
 .result-item-info h4 {
@@ -177,14 +178,15 @@ html {
 }
     /* === KẾT THÚC SỬA LỖI FONT === */
 
-    .main-nav a.active-page {
-        color: #c00;
-        font-weight: 700;
-    }
+.main-nav a.active-page {
+    color: #c00;
+    font-weight: 700;
+}
 
 .mobile-controls {
-    display: none;
+    display: none; /* Sửa ở dòng này */
     align-items: center;
+    gap: 15px;
 }
 
 
@@ -220,6 +222,7 @@ html {
     margin: -15px auto 4px auto;
     line-height: 1.6;
 }
+
 /* === BẮT ĐẦU: TĂNG CỠ CHỮ TIÊU ĐỀ TRÊN MÁY TÍNH === */
 @media (min-width: 992px) {
     .section-title {
@@ -668,6 +671,19 @@ input[type="range"].bill-slider {
 }
 
 @media(max-width: 768px) {
+    .site-header.search-active {
+        padding-bottom: 65px; /* Tạo không gian cho thanh tìm kiếm bên dưới */
+        flex-wrap: wrap;
+    }
+
+        .site-header.search-active .header-search {
+            display: block; /* Hiện thanh tìm kiếm */
+            position: absolute;
+            top: 70px; /* Đặt vị trí ngay dưới header */
+            left: 0;
+            width: 100%;
+            padding: 0 15px; /* Căn lề hai bên */
+        }
     .site-header {
         padding: 10px 15px;
         height: 68px; /* Thêm hoặc sửa dòng này */
@@ -701,66 +717,479 @@ input[type="range"].bill-slider {
         padding-top: 0;
     }
 }
-
-/* === BẮT ĐẦU: CSS CHO KHUNG KẾT QUẢ TÌM KIẾM === */
-
-.header-search {
-    position: relative; /* Đảm bảo các thành phần con định vị theo nó */
+/* Điều chỉnh kích thước icon kính lúp bên trong nút */
+.mobile-search-icon animated-icons {
+    width: 24px;
+    height: 24px;
+    position: relative; /* Thêm dòng này */
+    top: -6px;          /* Thêm dòng này để đẩy icon lên 2px */
 }
 
-#search-results {
-    position: absolute;
-    top: calc(100% + 5px); /* Hiển thị ngay bên dưới thanh tìm kiếm */
-    left: 0;
-    width: 100%;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    border: 1px solid #ddd;
-    z-index: 1100;
-    max-height: 400px;
-    overflow-y: auto;
-    display: none; /* Mặc định ẩn đi */
+/* === CSS CHO GỢI Ý NHANH TRONG LỚP PHỦ TÌM KIẾM === */
+
+.search-quick-links {
+    margin-top: 40px;
+    text-align: center;
 }
 
-.result-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    transition: background-color 0.2s ease;
+.search-quick-links h4 {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
 }
 
-    .result-item:hover {
-        background-color: #f5f5f5;
-    }
-
-    .result-item:not(:last-child) {
-        border-bottom: 1px solid #eee;
-    }
-
-    .result-item img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 6px;
-        margin-right: 15px;
-        flex-shrink: 0;
-    }
-
-.result-item-info h4 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 4px 0;
-    line-height: 1.3;
-}
-
-.result-item-info p {
-    font-size: 0.85rem;
-    color: #666;
+.search-quick-links ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
 }
 
-/* === KẾT THÚC: CSS CHO KHUNG KẾT QUẢ TÌM KIẾM === */
+.search-quick-links li {
+    /* Trạng thái ẩn ban đầu để tạo hiệu ứng */
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.search-quick-links li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1f;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.search-quick-links li a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* === HIỆU ỨNG XUẤT HIỆN TỪNG DÒNG KHI MỞ TÌM KIẾM === */
+
+.search-overlay.active .search-quick-links li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tạo độ trễ cho mỗi dòng để có hiệu ứng xếp chồng */
+.search-overlay.active .search-quick-links li:nth-child(1) { transition-delay: 0.1s; }
+.search-overlay.active .search-quick-links li:nth-child(2) { transition-delay: 0.15s; }
+.search-overlay.active .search-quick-links li:nth-child(3) { transition-delay: 0.2s; }
+.search-overlay.active .search-quick-links li:nth-child(4) { transition-delay: 0.25s; }
+.search-overlay.active .search-quick-links li:nth-child(5) { transition-delay: 0.3s; }
+
+/* === CSS CHO KẾT QUẢ TÌM KIẾM TRONG LỚP PHỦ === */
+.overlay-search-results {
+    margin-top: 20px;
+    max-height: 45vh; /* Chiều cao tối đa, tránh bị quá dài */
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+/* Tái sử dụng style của .result-item đã có */
+.overlay-search-results .result-item {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.overlay-search-results .result-item:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.overlay-search-results .result-item:last-child {
+    border-bottom: none;
+}
+
+/* === BẮT ĐẦU: CSS CHO LỚP PHỦ TÌM KIẾM (APPLE STYLE) === */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Nền trắng trong suốt */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1050; /* Cao hơn header */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    display: flex;
+    justify-content: center;
+    padding-top: 8vh; /* Đẩy nội dung xuống một chút */
+}
+
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-overlay-content {
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    /* Hiệu ứng trượt vào khi mở */
+    transform: translateY(-20px);
+    transition: transform 0.4s ease 0.1s;
+}
+
+.search-overlay.active .search-overlay-content {
+    transform: translateY(0);
+}
+
+.close-search-btn {
+    position: fixed;
+    top: 30px;
+    right: 40px;
+    background: rgba(0, 0, 0, 0.08);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 28px;
+    color: #1d1d1f;
+    cursor: pointer;
+    z-index: 1060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Ẩn ban đầu */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.search-overlay.active .close-search-btn {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.2s; /* Xuất hiện sau một chút */
+}
+
+#search-overlay-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #333;
+    padding: 15px 10px;
+    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Cỡ chữ lớn, responsive */
+    font-weight: 600;
+    color: #1d1d1f;
+    outline: none;
+    text-align: center;
+}
+
+/* === CSS CHO GỢI Ý NHANH TRONG LỚP PHỦ TÌM KIẾM === */
+.search-quick-links {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.search-quick-links h4 {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.search-quick-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-quick-links li {
+    /* Trạng thái ẩn ban đầu để tạo hiệu ứng */
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.search-quick-links li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #1d1d1f;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.search-quick-links li a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* HIỆU ỨNG XUẤT HIỆN TỪNG DÒNG KHI MỞ TÌM KIẾM */
+.search-overlay.active .search-quick-links li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tạo độ trễ cho mỗi dòng để có hiệu ứng xếp chồng */
+.search-overlay.active .search-quick-links li:nth-child(1) { transition-delay: 0.2s; }
+.search-overlay.active .search-quick-links li:nth-child(2) { transition-delay: 0.25s; }
+.search-overlay.active .search-quick-links li:nth-child(3) { transition-delay: 0.3s; }
+.search-overlay.active .search-quick-links li:nth-child(4) { transition-delay: 0.35s; }
+
+/* CSS CHO KẾT QUẢ TÌM KIẾM TRONG LỚP PHỦ */
+.overlay-search-results {
+    margin-top: 20px;
+    max-height: 45vh; /* Chiều cao tối đa, tránh bị quá dài */
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+/* Tái sử dụng style của .result-item đã có */
+.overlay-search-results .result-item {
+    background-color: rgba(255, 255, 255, 0.5); /* Hơi trong suốt */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: background-color 0.2s ease;
+}
+
+.overlay-search-results .result-item:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.overlay-search-results .result-item:last-child {
+    border-bottom: none;
+}
+/* === KẾT THÚC: CSS CHO LỚP PHỦ TÌM KIẾM === */
+
+
+/* ======================================= */
+/* === CSS TỔNG HỢP CHO HEADER MOBILE === */
+/* ======================================= */
+@media (max-width: 992px) {
+    /* 1. Ẩn các thành phần của desktop */
+    .header-search,
+    .main-nav {
+        display: none;
+    }
+
+    /* 2. Tùy chỉnh chung cho Header */
+    .site-header {
+        padding: 10px 15px;
+        height: 68px;
+        flex-wrap: nowrap;
+    }
+    
+    .header-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+    /* 3. Hiển thị và tùy chỉnh các nút mobile */
+    .mobile-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* === BẮT ĐẦU CODE THAY THẾ === */
+
+.mobile-search-icon,
+.hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Chỉnh sửa để đồng bộ kích thước */
+    width: 44px;  /* Đặt chiều rộng cố định */
+    height: 44px; /* Đặt chiều cao cố định */
+    padding: 0;   /* Bỏ padding để kích thước được chuẩn */
+}
+
+/* Điều chỉnh kích thước icon kính lúp bên trong nút */
+.mobile-search-icon animated-icons {
+    width: 24px;
+    height: 24px;
+}
+
+/* Điều chỉnh kích thước icon 3 gạch bên trong nút */
+.hamburger-btn {
+    font-size: 1.6rem; /* Thay đổi cỡ chữ để cân đối */
+    line-height: 1;    /* Giúp căn giữa tốt hơn */
+}
+
+/* === KẾT THÚC CODE THAY THẾ === */
+
+    /* 5. Logic khi nhấn nút tìm kiếm */
+    .site-header.search-active {
+        padding-bottom: 65px;
+        flex-wrap: wrap;
+    }
+
+    .site-header.search-active .header-search {
+        display: block;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    /* 6. Logic khi nhấn nút menu (hamburger) */
+    .main-nav.is-open {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .main-nav.is-open ul {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+
+    .main-nav.is-open li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+
+    .main-nav.is-open a {
+        padding: 15px;
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal.image-view .modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;    /* Đảm bảo không bị lệch dọc */
+        padding: 0;        /* Không padding dư */
+        /* Thêm thuộc tính này để căn giữa tuyệt đối ký tự X */
+        text-align: center;
+        vertical-align: middle;
+        /* Nếu vẫn lệch, thử thêm: */
+        font-family: Arial, sans-serif;
+    }
+
+    #floating-actions .floating-action-item {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+        #floating-actions .floating-action-item i {
+            font-size: 18px;
+        }
+
+        #floating-actions .floating-action-item img {
+            width: 20px;
+            height: 20px;
+        }
+
+    #floating-toggle-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .modal-content {
+        padding: 30px 12px;
+    }
+
+        .modal-content h3 {
+            font-size: 1.4rem;
+        }
+
+    .modal-body {
+        flex-direction: column;
+    }
+
+        .modal-body #modal-image {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+    .modal-full-width-wrapper {
+        margin: 30px -20px -30px -20px;
+    }
+
+    .modal-benefits-section, .modal-faq-section {
+        padding: 25px 20px;
+    }
+
+        .modal-benefits-section h3, .modal-faq-section h3 {
+            font-size: 1.3rem;
+        }
+
+    .modal-benefits-section, .modal-faq-section, .faq-answer {
+        font-size: 0.95rem; /* Cỡ chữ mobile cho Lợi ích/FAQ */
+    }
+
+    .faq-question {
+        font-size: 0.95rem !important;
+    }
+
+    .floating-actions-container {
+        gap: 12px;
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .floating-action-btn {
+        width: 52px;
+        height: 52px;
+    }
+
+    .category-menu li a, .footer-column ul li a {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .package-option {
+        padding: 10px;
+    }
+
+    .package-header {
+        margin-bottom: -1px;
+        padding-bottom: 5px;
+    }
+
+    .package-title {
+        font-size: 1.05rem !important;
+    }
+
+    .package-price {
+        font-size: 1.6rem !important;
+    }
+
+    .package-description {
+        font-size: 0.9rem !important;
+    }
+
+    .package-features li {
+        font-size: 0.85rem;
+    }
+}
+
+/* === BẮT ĐẦU: TĂNG CỠ CHỮ LỢI ÍCH DỊCH VỤ TRÊN MÁY TÍNH === */
+@media (min-width: 1024px) {
+    .modal-benefits-section ul li {
+        font-size: 1.25rem; /* Tăng cỡ chữ cho các dòng lợi ích */
+        line-height: 1.8; /* Tăng khoảng cách dòng cho dễ đọc hơn */
+    }
+}
+/* === KẾT THÚC === */

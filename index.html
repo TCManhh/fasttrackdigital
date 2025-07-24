@@ -20,6 +20,73 @@
     <link rel="stylesheet" href="modal.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="modal.css"></noscript>
 
+    <style>
+.modal.image-view .modal-content {
+    position: relative;
+    display: inline-block;
+    /* ...các thuộc tính khác... */
+}
+
+.modal.image-view .modal-body {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+}
+
+.modal.image-view .modal-image-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 95vw;
+    max-height: 95vh;
+}
+
+.modal.image-view #modal-image {
+    display: block;
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal.image-view .modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    font-size: 2rem;
+    background: #fff;
+    color: #c00;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    opacity: 0.95;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+@media (max-width: 768px) {
+    .modal.image-view .modal-close {
+        top: 4px;
+        right: -15px; /* Dịch sang phải hơn trên mobile */
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+    }
+    .modal.image-view .modal-image-wrapper {
+        max-width: 98vw;
+        max-height: 80vh;
+    }
+    .modal.image-view #modal-image {
+        max-width: 98vw;
+        max-height: 80vh;
+    }
+}
+</style>
 </head>
 <body>
 
@@ -32,11 +99,9 @@
 
         <div class="header-search">
             <input type="text" id="search-input" placeholder="Dịch Vụ Premium Cần Tìm...">
-            <span class="search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="14 14 15 16" fill="currentColor">
-                    <path d="M14.298,27.202l-3.87-3.87c0.701-0.929,1.122-2.081,1.122-3.332c0-3.06-2.489-5.55-5.55-5.55c-3.06,0-5.55,2.49-5.55,5.55 c0,3.061,2.49,5.55,5.55,5.55c1.251,0,2.403-0.421,3.332-1.122l3.87,3.87c0.151,0.151,0.35,0.228,0.548,0.228 s0.396-0.076,0.548-0.228C14.601,27.995,14.601,27.505,14.298,27.202z M1.55,20c0-2.454,1.997-4.45,4.45-4.45 c2.454,0,4.45,1.997,4.45,4.45S8.454,24.45,6,24.45C3.546,24.45,1.55,22.454,1.55,20z"></path>
-                </svg>
-            </span>
+            <span class="search-icon" id="desktop-search-trigger" style="cursor: pointer;">
+    <animated-icons src="https://animatedicons.co/get-icon?name=search&style=minimalistic&token=12e9ffab-e7da-417f-a9d9-d7f67b64d808" trigger="hover" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1.44,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="35" width="35"></animated-icons>
+</span>
             <div id="search-results"></div>
         </div>
 
@@ -51,13 +116,11 @@
             </ul>
         </nav>
         <div class="mobile-controls">
-            <button class="mobile-search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="14 14 15 16" fill="currentColor">
-                    <path d="M14.298,27.202l-3.87-3.87c0.701-0.929,1.122-2.081,1.122-3.332c0-3.06-2.489-5.55-5.55-5.55c-3.06,0-5.55,2.49-5.55,5.55 c0,3.061,2.49,5.55,5.55,5.55c1.251,0,2.403-0.421,3.332-1.122l3.87,3.87c0.151,0.151,0.35,0.228,0.548,0.228 s0.396-0.076,0.548-0.228C14.601,27.995,14.601,27.505,14.298,27.202z M1.55,20c0-2.454,1.997-4.45,4.45-4.45 c2.454,0,4.45,1.997,4.45,4.45S8.454,24.45,6,24.45C3.546,24.45,1.55,22.454,1.55,20z"></path>
-                </svg>
-            </button>
-            <button class="hamburger-btn">☰</button>
-        </div>
+    <button class="mobile-search-icon" id="mobile-search-trigger">
+    <animated-icons src="https://animatedicons.co/get-icon?name=search&style=minimalistic&token=12e9ffab-e7da-417f-a9d9-d7f67b64d808" trigger="hover" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1.44,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="30" width="40"></animated-icons>
+</button>
+    <button class="hamburger-btn">☰</button>
+</div>
     </header>
 
     <img class="full-width-image" src="./images/banner.webp" alt="Dịch vụ Premium Giá Rẻ" loading="eager" width="1920" height="580">
@@ -185,6 +248,30 @@
     </div>
     <div class="modal-overlay"></div>
 
+    <div id="search-overlay" class="search-overlay">
+        <button id="close-search-btn" class="close-search-btn">&times;</button>
+        <div class="search-overlay-content">
+            <input type="text" id="search-overlay-input" placeholder="Tìm kiếm dịch vụ bạn cần..." autocomplete="off">
+            
+            <div id="overlay-search-results" class="overlay-search-results"></div>
+
+            <div class="search-quick-links">
+                <h4>Gợi ý nhanh</h4>
+                <ul>
+                    <li><a href="#" data-id="youtube">Tìm hiểu về YouTube Premium</a></li>
+                    <li><a href="#" data-id="netflix">Các gói Netflix hiện có</a></li>
+                    <li><a href="#" data-id="chatgpt">Nâng cấp ChatGPT Plus</a></li>
+                    <li><a href="#" data-id="canva">Thiết kế không giới hạn với Canva Pro</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="floating-actions" class="floating-actions-container">
+        <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
+        <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
+        <a href="https://zalo.me/0978879931" target="_blank" class="floating-action-btn btn-zalo" aria-label="Zalo"></a>
+    </div>
+
     <div id="floating-actions" class="floating-actions-container">
         <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
         <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
@@ -231,6 +318,17 @@
         </div>
     </div>
     <button id="category-close-btn" class="category-close-btn">&times;</button>
+    <div id="search-overlay" class="search-overlay">
+    <button id="close-search-btn" class="close-search-btn">&times;</button>
+    <div class="search-overlay-content">
+        <input type="text" id="search-overlay-input" placeholder="Tìm kiếm dịch vụ bạn cần...">
+        
+        <div id="overlay-search-results" class="overlay-search-results"></div>
+
+        <div class="search-quick-links">
+            </div>
+    </div>
+</div>
 
     <footer class="site-footer-main">
         <div class="footer-container">
@@ -263,74 +361,9 @@
         </div>
     </footer>
 
-    <script src="script.js" type="module"></script>
+<script src="script.js" type="module"></script>
+    
+    <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
 </body>
 </html>
 
-<style>
-.modal.image-view .modal-content {
-    position: relative;
-    display: inline-block;
-    /* ...các thuộc tính khác... */
-}
-
-.modal.image-view .modal-body {
-    position: relative;
-    display: inline-block;
-    padding: 0;
-    background: transparent;
-}
-
-.modal.image-view .modal-image-wrapper {
-    position: relative;
-    display: inline-block;
-    max-width: 95vw;
-    max-height: 95vh;
-}
-
-.modal.image-view #modal-image {
-    display: block;
-    max-width: 95vw;
-    max-height: 95vh;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.modal.image-view .modal-close {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    font-size: 2rem;
-    background: #fff;
-    color: #c00;
-    border-radius: 50%;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    opacity: 0.95;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-}
-
-@media (max-width: 768px) {
-    .modal.image-view .modal-close {
-        top: 4px;
-        right: -15px; /* Dịch sang phải hơn trên mobile */
-        width: 32px;
-        height: 32px;
-        font-size: 1.5rem;
-    }
-    .modal.image-view .modal-image-wrapper {
-        max-width: 98vw;
-        max-height: 80vh;
-    }
-    .modal.image-view #modal-image {
-        max-width: 98vw;
-        max-height: 80vh;
-    }
-}
-</style>

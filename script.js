@@ -1,6 +1,6 @@
 ﻿// =========================================================================================
 // LOGIC CHÍNH CỦA TRANG WEB
-// Code đã được tối ưu và thêm chức năng tìm kiếm.
+// Code đã được tối ưu và thêm chức năng tìm kiếm toàn màn hình (Apple Style).
 // =========================================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -10,9 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalOverlayEl = document.querySelector('.modal-overlay');
     const modalCloseBtn = document.querySelector('.modal-close');
     const modalImage = document.getElementById('modal-image');
-    const searchInput = document.getElementById('search-input');
-    const searchResultsContainer = document.getElementById('search-results');
+
+    // Biến cho tìm kiếm cũ (để xử lý click bên ngoài)
     const headerSearchContainer = document.querySelector('.header-search');
+    const searchResultsContainer = document.getElementById('search-results');
+    
+    // --- Biến cho TÌM KIẾM MỚI (OVERLAY) ---
+    const searchOverlay = document.getElementById('search-overlay');
+    const searchInputOverlay = document.getElementById('search-overlay-input');
+    const overlaySearchResultsContainer = document.getElementById('overlay-search-results');
+    const closeSearchBtn = document.getElementById('close-search-btn');
+    const desktopSearchTrigger = document.getElementById('desktop-search-trigger');
+    const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
 
 
     // --- HÀM MỞ VÀ ĐÓNG POP-UP (MODAL) ---
@@ -55,13 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
         initFaqAccordionInsideModal();
     }
 
-    // --- ✅ BẮT ĐẦU: LOGIC TÌM KIẾM ---
-    const handleSearch = async (event) => {
+    // --- HÀM TÌM KIẾM CHO LỚP PHỦ OVERLAY ---
+    const handleOverlaySearch = async (event) => {
         const query = event.target.value.toLowerCase().trim();
-        searchResultsContainer.innerHTML = '';
+        overlaySearchResultsContainer.innerHTML = '';
+
+        // Ẩn gợi ý nhanh khi người dùng bắt đầu gõ
+        const quickLinks = document.querySelector('.search-quick-links');
+        if (quickLinks) {
+            quickLinks.style.display = query.length > 0 ? 'none' : 'block';
+        }
 
         if (query.length < 2) {
-            searchResultsContainer.style.display = 'none';
+            overlaySearchResultsContainer.style.display = 'none';
             return;
         }
 
@@ -77,10 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
             if (results.length > 0) {
-                searchResultsContainer.style.display = 'block';
+                overlaySearchResultsContainer.style.display = 'block';
                 results.forEach(result => {
-                    const card = document.querySelector(`.card[data-id="${result.id}"]`);
-                    const imgSrc = card ? card.querySelector('img').src : './images/logo11.webp';
+                    const imgSrc = result.searchImg || './images/logo11.webp';
 
                     const itemElement = document.createElement('div');
                     itemElement.className = 'result-item';
@@ -93,32 +107,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
 
                     itemElement.addEventListener('click', () => {
-                        showServiceModal(result.id);
-                        searchInput.value = '';
-                        searchResultsContainer.style.display = 'none';
+                        // Đóng lớp phủ và mở modal chi tiết
+                        closeSearch();
+                        setTimeout(() => showServiceModal(result.id), 400); // Đợi hiệu ứng đóng xong
                     });
 
-                    searchResultsContainer.appendChild(itemElement);
+                    overlaySearchResultsContainer.appendChild(itemElement);
                 });
             } else {
-                searchResultsContainer.style.display = 'none';
+                overlaySearchResultsContainer.style.display = 'none';
             }
         } catch (error) {
             console.error("Error loading or searching service data:", error);
-            searchResultsContainer.style.display = 'none';
+            overlaySearchResultsContainer.style.display = 'none';
         }
     };
+    
+    // --- LOGIC MỞ/ĐÓNG LỚP PHỦ TÌM KIẾM ---
+    const openSearch = (e) => {
+        if(e) e.preventDefault();
+        searchOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Chặn cuộn trang
+        // Focus vào ô input sau khi hiệu ứng hoàn tất
+        setTimeout(() => searchInputOverlay.focus(), 400);
+    };
 
-    if (searchInput) {
-        searchInput.addEventListener('input', handleSearch);
-    }
-    // Đóng kết quả tìm kiếm khi click ra ngoài
-    document.addEventListener('click', (e) => {
-        if (headerSearchContainer && !headerSearchContainer.contains(e.target)) {
-            searchResultsContainer.style.display = 'none';
-        }
-    });
-    // --- ✅ KẾT THÚC: LOGIC TÌM KIẾM ---
+    const closeSearch = () => {
+        searchOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Cho phép cuộn lại
+        searchInputOverlay.value = ''; // Xóa nội dung tìm kiếm
+        overlaySearchResultsContainer.innerHTML = ''; // Xóa kết quả
+        const quickLinks = document.querySelector('.search-quick-links');
+        if (quickLinks) quickLinks.style.display = 'block'; // Hiện lại gợi ý
+    };
 
 
     // --- HÀM KHỞI TẠO ACCORDION CHO FAQ TRONG MODAL ---
@@ -151,7 +172,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupGlobalListeners() {
         if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
         if (modalOverlayEl) modalOverlayEl.addEventListener('click', closeModal);
-        if (modal) modal.addEventListener('click', (e) => e.stopPropagation());
+        // Ngăn modal tự đóng khi click bên trong nó
+        if (modal) {
+             modal.addEventListener('click', (e) => {
+                 if (e.target.closest('.modal-content')) {
+                    e.stopPropagation();
+                 }
+             });
+        }
+
 
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', () => {
@@ -159,6 +188,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (serviceId) showServiceModal(serviceId);
             });
         });
+
+        // --- GÁN SỰ KIỆN CHO TÌM KIẾM MỚI ---
+        if (desktopSearchTrigger) desktopSearchTrigger.addEventListener('click', openSearch);
+        if (mobileSearchTrigger) mobileSearchTrigger.addEventListener('click', openSearch);
+        if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
+        // Đóng khi click vào nền mờ (nhưng không phải nội dung bên trong)
+        if (searchOverlay) {
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) {
+                    closeSearch();
+                }
+            });
+        }
+        // Gán sự kiện tìm kiếm cho ô input trong overlay
+        if (searchInputOverlay) {
+            searchInputOverlay.addEventListener('input', handleOverlaySearch);
+        }
+        
+        // Đóng khi nhấn phím 'Escape'
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+                closeSearch();
+            }
+        });
+        
+        // Mở pop-up chi tiết dịch vụ từ "Gợi ý nhanh"
+        const quickLinksContainer = searchOverlay.querySelector('.search-quick-links');
+        if (quickLinksContainer) {
+            quickLinksContainer.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+                const serviceId = link ? link.dataset.id : null;
+                if (serviceId) {
+                    e.preventDefault();
+                    closeSearch();
+                    // Chờ lớp phủ đóng rồi mới mở modal
+                    setTimeout(() => showServiceModal(serviceId), 400);
+                }
+            });
+        }
 
         // Logic cho menu danh mục dịch vụ
         const categoryTrigger = document.getElementById('category-trigger');
@@ -237,6 +305,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupGlobalListeners();
 
+    // --- THÊM MỚI: Mở lớp phủ tìm kiếm khi nhấn vào thanh tìm kiếm trên desktop ---
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      // Khi người dùng NHẤN vào ô tìm kiếm...
+      searchInput.addEventListener('click', (event) => {
+        // Ngăn các hành vi mặc định của trình duyệt
+        event.preventDefault();
+        // Gọi hàm openSearch để mở lớp phủ tìm kiếm
+        openSearch(event);
+      });
+    }
+
     // LOGIC BỘ LỌC DỊCH VỤ
     const filterContainer = document.querySelector('.filter-buttons');
     const serviceCards = document.querySelectorAll('.services-section .card');
@@ -273,8 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const billSlider = document.querySelector('.bill-slider');
         const billCounter = document.querySelector('.bill-counter');
 
-        // --- BẮT ĐẦU: ĐOẠN MÃ ĐÃ SỬA ---
-        // 1. Danh sách tổng hợp tất cả các ảnh có sẵn
         const allBillImages = [
             { src: "./images_bill_thanh_toan/0308YTDVFB.webp", alt: "Bill 20" },
             { src: "./images_bill_thanh_toan/0308DSMTZL.webp", alt: "Bill 19" },
@@ -299,9 +377,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const initialLoadCount = 10;
-        let items = []; // Sẽ được cập nhật động
+        let items = [];
 
-        // Hàm hỗ trợ để thêm một ảnh mới vào DOM của carousel
         function addImageToCarousel(index) {
             if (index >= allBillImages.length || billTrack.children[index]) return;
 
@@ -312,13 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
             img.src = imgData.src;
             img.alt = imgData.alt;
             img.loading = 'lazy';
-            // Thêm xử lý lỗi để ẩn các ảnh bị hỏng
             img.onerror = () => item.style.display = 'none';
             item.appendChild(img);
             billTrack.appendChild(item);
         }
 
-        // 2. Tải ban đầu 10 ảnh đầu tiên
         for (let i = 0; i < initialLoadCount && i < allBillImages.length; i++) {
             addImageToCarousel(i);
         }
@@ -361,21 +436,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return closestIndex;
         }
         
-        // 3. Hàm chính để di chuyển slide, đã tích hợp logic tải động
         function moveToSlide(index) {
-            // Tải động ảnh mục tiêu nếu nó chưa được thêm vào DOM
             if (index >= items.length && index < allBillImages.length) {
                 addImageToCarousel(index);
-                items = Array.from(billTrack.children); // Làm mới lại danh sách `items`
+                items = Array.from(billTrack.children);
             }
 
-            // --- BỔ SUNG: Khi chuyển đến ảnh thứ N thì load ảnh thứ N+9 ---
             const preloadIndex = index + 9;
             if (preloadIndex < allBillImages.length && !billTrack.children[preloadIndex]) {
                 addImageToCarousel(preloadIndex);
                 items = Array.from(billTrack.children);
             }
-            // --- KẾT THÚC BỔ SUNG ---
 
             if (index < 0 || index >= items.length) return;
             
@@ -392,11 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isModalOpen) return;
             clearInterval(autoSlideTimer);
             autoSlideTimer = setInterval(() => {
-                let nextIndex = (currentIndex + 1) % allBillImages.length; // Sử dụng tổng số ảnh để lặp lại
+                let nextIndex = (currentIndex + 1) % allBillImages.length;
                 moveToSlide(nextIndex);
             }, autoSlideInterval);
         }
-        // --- KẾT THÚC: ĐOẠN MÃ ĐÃ SỬA ---
 
         function stopAutoSlide() {
             clearInterval(autoSlideTimer);
@@ -440,10 +510,8 @@ document.addEventListener('DOMContentLoaded', () => {
             firstItem.classList.add('active');
         }
         
-        // Đặt giá trị max của thanh trượt và bộ đếm theo tổng số ảnh có sẵn
         if (billSlider) billSlider.max = allBillImages.length - 1;
         if (billCounter) billCounter.textContent = `1 / ${allBillImages.length}`;
-
 
         setTimeout(() => {
             moveToSlide(0);
