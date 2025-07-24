@@ -354,6 +354,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const billCounter = document.querySelector('.bill-counter');
 
         const allBillImages = [
+            { src: "./images_bill_thanh_toan/0313YTCAZL.webp", alt: "Bill 30" },
+            { src: "./images_bill_thanh_toan/0311YTVBZL.webp", alt: "Bill 29" },
+            { src: "./images_bill_thanh_toan/0311YTTVFB.webp", alt: "Bill 28" },
+            { src: "./images_bill_thanh_toan/0311YTNHZL.webp", alt: "Bill 27" },
+            { src: "./images_bill_thanh_toan/0311YTDMZL.webp", alt: "Bill 26" },
+            { src: "./images_bill_thanh_toan/0310YTTNFB.webp", alt: "Bill 25" },
+            { src: "./images_bill_thanh_toan/0310DSDAFB.webp", alt: "Bill 24" },
+            { src: "./images_bill_thanh_toan/0309YTQHFB.webp", alt: "Bill 23" },
+            { src: "./images_bill_thanh_toan/0308YTTAFB.webp", alt: "Bill 22" },
+            { src: "./images_bill_thanh_toan/0308YTMTFB.webp", alt: "Bill 21" },
             { src: "./images_bill_thanh_toan/0308YTDVFB.webp", alt: "Bill 20" },
             { src: "./images_bill_thanh_toan/0308DSMTZL.webp", alt: "Bill 19" },
             { src: "./images_bill_thanh_toan/0306YTVPFB.webp", alt: "Bill 18" },
