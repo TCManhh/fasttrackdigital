@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Giá Dịch Vụ - Fast Track</title>
+    <meta name="description" content="Bảng giá chi tiết các dịch vụ YouTube Premium, Netflix, Spotify, ChatGPT Plus, Canva Pro và nhiều dịch vụ khác tại Fast Track.">
+    <meta name="keywords" content="bảng giá, giá dịch vụ, youtube premium, netflix, spotify, chatgpt plus">
+
+    <link rel="icon" type="image/png" href="./images/logo11.webp">
+    <link rel="apple-touch-icon" href="./images/logo11.webp">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modal.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="modal.css"></noscript>
+    
+    <style>
+        .pricing-page-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .pricing-page-container h1 {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .table-wrapper {
+            overflow-x: auto; /* Allows horizontal scrolling on small screens */
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        .pricing-table th, .pricing-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .pricing-table thead th {
+            background-color: #f9fafb;
+            font-weight: 700;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Thêm CSS cho hàng có thể nhấp */
+        .pricing-table .clickable-row {
+            cursor: pointer;
+        }
+
+        .pricing-table tbody .clickable-row:hover {
+            background-color: #f5f5f5;
+        }
+
+        .pricing-table .service-name {
+            font-weight: 600;
+            color: #1d1d1f;
+            vertical-align: middle;
+        }
+
+        .pricing-table .price {
+            font-weight: 700;
+            color: #c00;
+            white-space: nowrap;
+        }
+        
+        .service-name.youtube { color: #FF0000; }
+        .service-name.netflix { color: #E50914; }
+        .service-name.spotify { color: #1DB954; }
+        .service-name.chatgpt { color: #10a37f; }
+        .service-name.supergrok { color: #8A2BE2; }
+        .service-name.gemini { color: #4285F4; }
+        .service-name.canva { color: #8338ec; }
+        .service-name.duolingo { color: #58CC02; }
+
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-logo">
+            <a href="index.html"><img src="./images/logo.webp" alt="Logo Fast Track"></a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">TRANG CHỦ</a></li>
+                <li><a href="index.html#dich-vu">CỬA HÀNG</a></li>
+                <li><a href="pricing.html" class="active-page">BẢNG GIÁ DỊCH VỤ</a></li>
+                <li><a href="index.html#check-uy-tin">CHECK UY TÍN</a></li>
+                <li><a href="faq.html">CÁC CÂU HỎI THƯỜNG GẶP</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-controls">
+            <button class="hamburger-btn">☰</button>
+        </div>
+    </header>
+
+    <main class="pricing-page-container">
+        <h1>Bảng Giá Chi Tiết Dịch Vụ</h1>
+        <div class="table-wrapper">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Dịch vụ</th>
+                        <th>Gói</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="clickable-row" data-id="chatgpt">
+                        <td rowspan="4" class="service-name chatgpt">ChatGPT Plus</td>
+                        <td>Chung 5 Người Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">60.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="chatgpt">
+                        <td>Chung 3 Người Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">100.000đ / tháng</td>
+                    </tr>
+                     <tr class="clickable-row" data-id="chatgpt">
+                        <td>Chung 2 Người Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">150.000đ / tháng</td>
+                    </tr>
+                     <tr class="clickable-row" data-id="chatgpt">
+                        <td>Cá Nhân Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">250.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="supergrok">
+                        <td rowspan="4" class="service-name supergrok">SuperGrok AI</td>
+                        <td>Chung 5 Người Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">30.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="supergrok">
+                        <td>Chung 3 Người Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">60.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="supergrok">
+                        <td>Chung 2 Người Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">110.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="supergrok">
+                        <td>Cá Nhân Sử Dụng (Cấp Tài Khoản)</td>
+                        <td class="price">200.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="gemini">
+                        <td class="service-name gemini">Google AI Pro (Gemini)</td>
+                        <td>Nâng Cấp Tài Khoản Gmail Chính Chủ (Tặng 2TB Google Drive)</td>
+                        <td class="price">30.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="youtube">
+                        <td rowspan="3" class="service-name youtube">YouTube Premium</td>
+                        <td>Nâng Cấp Tài Khoản Gmail Chính Chủ</td>
+                        <td class="price">40.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="youtube">
+                        <td>Thuê Tài Khoản</td>
+                        <td class="price">35.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="youtube">
+                        <td>Thuê Tài Khoản Riêng Để Xem TV</td>
+                        <td class="price">20.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="spotify">
+                        <td class="service-name spotify">Spotify Premium</td>
+                        <td>Nâng Cấp Tài Khoản Spotify Chính Chủ</td>
+                        <td class="price">25.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="netflix">
+                        <td class="service-name netflix">Netflix Premium</td>
+                        <td>Slot Netflix Premium Chất Lượng 4k</td>
+                        <td class="price">60.000đ / tháng</td>
+                    </tr>
+                     <tr class="clickable-row" data-id="duolingo">
+                        <td rowspan="2" class="service-name duolingo">Duolingo Super</td>
+                        <td>Nâng Cấp Duolingo Super Chính Chủ</td>
+                        <td class="price">20.000đ / tháng</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="duolingo">
+                        <td>Nâng Cấp Duolingo Super Chính Chủ</td>
+                        <td class="price">200.000đ / năm</td>
+                    </tr>
+                    <tr class="clickable-row" data-id="canva">
+                        <td class="service-name canva">Canva Pro</td>
+                        <td>Nâng Cấp Canva Pro Chính Chủ</td>
+                        <td class="price">50.000đ / tháng</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+    <div class="modal">
+        <div class="modal-content">
+            <button class="modal-close" type="button">&times;</button>
+            <h4 id="modal-title"></h4>
+            <h3 id="modal-headline"></h3>
+            <div class="modal-body">
+                <p id="modal-text"></p>
+                <img id="modal-image" src="" alt="Modal Image">
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay"></div>
+
+    <footer class="site-footer-main">
+        <div class="footer-container">
+            <div class="footer-column about">
+                <img src="./images/logo11.webp" alt="Logo Fast Track" class="footer-logo">
+                <p>Dịch vụ nâng cấp tài khoản Premium uy tín, nhanh chóng và an toàn. Luôn đặt trải nghiệm của khách hàng lên hàng đầu.</p>
+            </div>
+            <div class="footer-column links">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                    <li><a href="index.html#dich-vu">Cửa hàng</a></li>
+                    <li><a href="index.html#check-uy-tin">Check Uy tín</a></li>
+                    <li><a href="#">Chính sách Bảo hành</a></li>
+                    <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact">
+                <h4>Liên hệ với chúng tôi</h4>
+                <p>Hỗ trợ nhanh nhất qua:</p>
+                <div class="footer-social-icons">
+                    <a href="https://zalo.me/0978879931" target="_blank" aria-label="Zalo"><img src="./images/IcoinZalo.webp" alt="Zalo"></a>
+                    <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger"><img src="./images/IcoinMess.webp" alt="Messenger"></a>
+                    <a href="https://t.me/TCManhh" target="_blank" aria-label="Telegram"><img src="./images/IcoinTele.webp" alt="Telegram"></a>
+                    <a href="https://www.facebook.com/FastTrack68" target="_blank" aria-label="Facebook"><img src="./images/IcoinFb.webp" alt="Facebook"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 - 2025 Fast Track Digital. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>

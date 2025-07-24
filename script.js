@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- HÀM MỞ VÀ ĐÓNG POP-UP (MODAL) ---
     const openModal = () => {
+        if (!modal || !modalOverlayEl) return;
         siteHeader.classList.add('is-hidden');
         modal.classList.add('active');
         modalOverlayEl.classList.add('active');
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const closeModal = () => {
+        if (!modal || !modalOverlayEl) return;
         siteHeader.classList.remove('is-hidden');
         modal.classList.remove('active');
         modalOverlayEl.classList.remove('active');
@@ -69,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = event.target.value.toLowerCase().trim();
         overlaySearchResultsContainer.innerHTML = '';
 
-        // Ẩn gợi ý nhanh khi người dùng bắt đầu gõ
         const quickLinks = document.querySelector('.search-quick-links');
         if (quickLinks) {
             quickLinks.style.display = query.length > 0 ? 'none' : 'block';
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const results = Object.keys(serviceData)
                 .map(key => ({ id: key, ...serviceData[key] }))
                 .filter(service => {
-                    const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, ''); // Xóa tag HTML
+                    const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, '');
                     const title = service.title.toLowerCase();
                     return headline.includes(query) || title.includes(query);
                 });
@@ -107,9 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
 
                     itemElement.addEventListener('click', () => {
-                        // Đóng lớp phủ và mở modal chi tiết
                         closeSearch();
-                        setTimeout(() => showServiceModal(result.id), 400); // Đợi hiệu ứng đóng xong
+                        setTimeout(() => showServiceModal(result.id), 400);
                     });
 
                     overlaySearchResultsContainer.appendChild(itemElement);
@@ -127,18 +127,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const openSearch = (e) => {
         if(e) e.preventDefault();
         searchOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Chặn cuộn trang
-        // Focus vào ô input sau khi hiệu ứng hoàn tất
+        document.body.style.overflow = 'hidden';
         setTimeout(() => searchInputOverlay.focus(), 400);
     };
 
     const closeSearch = () => {
         searchOverlay.classList.remove('active');
-        document.body.style.overflow = ''; // Cho phép cuộn lại
-        searchInputOverlay.value = ''; // Xóa nội dung tìm kiếm
-        overlaySearchResultsContainer.innerHTML = ''; // Xóa kết quả
+        document.body.style.overflow = '';
+        searchInputOverlay.value = '';
+        overlaySearchResultsContainer.innerHTML = '';
         const quickLinks = document.querySelector('.search-quick-links');
-        if (quickLinks) quickLinks.style.display = 'block'; // Hiện lại gợi ý
+        if (quickLinks) quickLinks.style.display = 'block';
     };
 
 
@@ -172,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupGlobalListeners() {
         if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
         if (modalOverlayEl) modalOverlayEl.addEventListener('click', closeModal);
-        // Ngăn modal tự đóng khi click bên trong nó
+        
         if (modal) {
              modal.addEventListener('click', (e) => {
                  if (e.target.closest('.modal-content')) {
@@ -193,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (desktopSearchTrigger) desktopSearchTrigger.addEventListener('click', openSearch);
         if (mobileSearchTrigger) mobileSearchTrigger.addEventListener('click', openSearch);
         if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
-        // Đóng khi click vào nền mờ (nhưng không phải nội dung bên trong)
+        
         if (searchOverlay) {
             searchOverlay.addEventListener('click', (e) => {
                 if (e.target === searchOverlay) {
@@ -201,20 +200,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        // Gán sự kiện tìm kiếm cho ô input trong overlay
+        
         if (searchInputOverlay) {
             searchInputOverlay.addEventListener('input', handleOverlaySearch);
         }
         
-        // Đóng khi nhấn phím 'Escape'
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
                 closeSearch();
             }
         });
         
-        // Mở pop-up chi tiết dịch vụ từ "Gợi ý nhanh"
-        const quickLinksContainer = searchOverlay.querySelector('.search-quick-links');
+        const quickLinksContainer = document.querySelector('.search-quick-links');
         if (quickLinksContainer) {
             quickLinksContainer.addEventListener('click', (e) => {
                 const link = e.target.closest('a');
@@ -222,13 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (serviceId) {
                     e.preventDefault();
                     closeSearch();
-                    // Chờ lớp phủ đóng rồi mới mở modal
                     setTimeout(() => showServiceModal(serviceId), 400);
                 }
             });
         }
 
-        // Logic cho menu danh mục dịch vụ
         const categoryTrigger = document.getElementById('category-trigger');
         const categoryOverlay = document.getElementById('category-overlay');
         const categoryMenu = document.getElementById('category-menu');
@@ -270,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Logic cho menu mobile
         const hamburgerBtn = document.querySelector('.hamburger-btn');
         const mainNav = document.querySelector('.main-nav');
         if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open'));
@@ -280,7 +274,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Logic cuộn mượt
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href').length <= 1) return;
@@ -290,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Hiệu ứng xuất hiện khi cuộn
         const animatedElements = document.querySelectorAll('.card, .section-title');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -305,19 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setupGlobalListeners();
 
-    // --- THÊM MỚI: Mở lớp phủ tìm kiếm khi nhấn vào thanh tìm kiếm trên desktop ---
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
-      // Khi người dùng NHẤN vào ô tìm kiếm...
       searchInput.addEventListener('click', (event) => {
-        // Ngăn các hành vi mặc định của trình duyệt
         event.preventDefault();
-        // Gọi hàm openSearch để mở lớp phủ tìm kiếm
         openSearch(event);
       });
     }
 
-    // LOGIC BỘ LỌC DỊCH VỤ
     const filterContainer = document.querySelector('.filter-buttons');
     const serviceCards = document.querySelectorAll('.services-section .card');
     if (filterContainer && serviceCards.length > 0) {
@@ -333,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // LOGIC CAROUSEL BILL (Lazy loaded)
     const billShowcase = document.querySelector('.bill-showcase');
     if (billShowcase) {
         const carouselObserver = new IntersectionObserver((entries, observer) => {
@@ -346,6 +332,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.1 });
         carouselObserver.observe(billShowcase);
     }
+    
+    // --- BẮT ĐẦU CODE MỚI: XỬ LÝ CLICK TRÊN BẢNG GIÁ ---
+    const pricingTable = document.querySelector('.pricing-table');
+    if (pricingTable) {
+        pricingTable.addEventListener('click', (e) => {
+            const row = e.target.closest('.clickable-row');
+            if (row) {
+                const serviceId = row.dataset.id;
+                if (serviceId) {
+                    showServiceModal(serviceId);
+                }
+            }
+        });
+    }
+    // --- KẾT THÚC CODE MỚI ---
 
     function initBillCarousel() {
         const billTrack = document.querySelector('.bill-carousel-track');
