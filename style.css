@@ -420,19 +420,45 @@ html {
 
     .card-content p {
         font-size: 1.4rem; /* Tăng cỡ chữ cho giá tiền */
+        color: #c00;
     }
 }
 /* === KẾT THÚC === */
+.duolingo-gradient {
+    background: linear-gradient(135deg, #58CC02, #29A8E1, #E84A9B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
 
 /* === ✅ BẮT ĐẦU: CSS CHO HIỆU ỨNG CHỮ GEMINI === */
-.gemini-gradient-text {
-    background: linear-gradient(160deg, #E94C51, #F5D26C, #4CB88D, #3A78D7);
+.google-ai-gradient {
+    background: linear-gradient(135deg, #fbbc04 0%, #ea4335 25%, #34a853 50%, #4285f4 75%, #a142f4 100%);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
-    display: inline-block; /* Đảm bảo background được áp dụng đúng */
+    background-clip: text;
+    text-fill-color: transparent;
+    font-weight: bold;
+    display: inline-block;
 }
 /* === ✅ KẾT THÚC: CSS CHO HIỆU ỨNG CHỮ GEMINI === */
+
+/* === ✅ BẮT ĐẦU: CSS CHO HIỆU ỨNG CHỮ CANVA === */
+.canva-gradient {
+    background: linear-gradient(135deg, #00C4CC, #8D36E8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    font-weight: bold;
+    display: inline-block;
+}
+/* === ✅ KẾT THÚC: CSS CHO HIỆU ỨNG CHỮ CANVA === */
 
 @media (max-width: 900px) {
     .card {
@@ -1251,3 +1277,24 @@ input[type="range"].bill-slider {
         font-size: 15px !important; /* hoặc chọn kích thước bạn muốn áp dụng chung */
     }
 }
+
+/* === BẮT ĐẦU: HIỆU ỨNG CHUYỂN TRANG === */
+#page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1d1d1f; /* Sử dụng màu đen giống footer cho đồng bộ */
+    z-index: 9999; /* Đảm bảo lớp phủ luôn nằm trên cùng */
+    opacity: 0; /* Mặc định sẽ ẩn đi */
+    pointer-events: none; /* Cho phép click xuyên qua khi đang ẩn */
+    transition: opacity 0.4s ease-in-out; /* Hiệu ứng mờ dần trong 0.4s */
+}
+
+/* Thêm lớp 'is-active' để kích hoạt hiệu ứng */
+#page-transition-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto; /* Chặn click khi đang hoạt động */
+}
+/* === KẾT THÚC: HIỆU ỨNG CHUYỂN TRANG === */

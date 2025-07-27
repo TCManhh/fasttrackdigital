@@ -413,6 +413,41 @@ window.addEventListener('scroll', () => {
     }
     // --- KẾT THÚC CODE CHO TRANG FAQ.HTML ---
 
+    // --- BẮT ĐẦU: HIỆU ỨNG CHUYỂN TRANG ---
+    const transitionOverlay = document.getElementById('page-transition-overlay');
+
+    // Lấy tất cả các thẻ <a> trên trang
+    document.querySelectorAll('a').forEach(link => {
+        const href = link.getAttribute('href');
+        const target = link.getAttribute('target');
+
+        // Chỉ áp dụng hiệu ứng cho các liên kết nội bộ (internal links)
+        // Bỏ qua:
+        // - Các liên kết ngoài (bắt đầu bằng http)
+        // - Các liên kết anchor (bắt đầu bằng #)
+        // - Các liên kết mở tab mới (target="_blank")
+        // - Các liên kết gọi điện, gửi mail
+        if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:') && target !== '_blank') {
+            link.addEventListener('click', function(e) {
+                // Kiểm tra xem có phải là trang web của bạn không
+                const linkUrl = new URL(href, window.location.origin);
+                if (linkUrl.origin !== window.location.origin) {
+                    return; // Nếu là link ngoài, không làm gì cả
+                }
+
+                e.preventDefault(); // Ngăn trình duyệt chuyển trang ngay
+
+                // Hiệu ứng chuyển trang
+                transitionOverlay.classList.add('active');
+
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 300); // Thay đổi thời gian trễ nếu cần
+            });
+        }
+    });
+    // --- KẾT THÚC: HIỆU ỨNG CHUYỂN TRANG ---
+
     function initBillCarousel() {
         const billTrack = document.querySelector('.bill-carousel-track');
         if (!billTrack) return;
