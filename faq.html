@@ -12,12 +12,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" fetchpriority="high" as="image" href="./images/banner.webp" type="image/png">
-    <link rel="preload" as="image" href="./images/logo.webp">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+    
+    <link rel="stylesheet" href="modal.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="style.css">
+    <noscript><link rel="stylesheet" href="modal.css"></noscript>
     <style>
-        /* === GLOBAL STYLES & VARIABLES === */
+        /* CSS còn lại chỉ là những quy tắc đặc thù cho trang FAQ */
         :root {
             --primary-red: #c00;
             --text-dark: #1d1d1f;
@@ -26,91 +27,6 @@
             --background-light: #ffffff;
             --background-grey: #f9f9f9;
             --border-color: #eee;
-            --card-gap: 15px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 15px;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-dark);
-        }
-
-            body.modal-open {
-                overflow: hidden;
-            }
-
-        /* Responsive Font Sizing */
-        @media (min-width: 768px) {
-            html {
-                font-size: 17px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            html {
-                font-size: 18px;
-            }
-        }
-
-        /* === HEADER === */
-        .site-header {
-            background-color: var(--background-light);
-            padding: 15px 40px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-            z-index: 999;
-            transition: transform 0.4s ease;
-            height: 85px;
-        }
-
-            .site-header.is-hidden {
-                transform: translateY(-100%);
-            }
-
-        .header-logo img {
-            height: 50px;
-            width: auto;
-            display: block;
-            flex-shrink: 0;
-        }
-
-        .main-nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .main-nav a {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 20px !important;
-            white-space: nowrap;
-        }
-
-            .main-nav a.active-page {
-                color: var(--primary-red);
-                font-weight: 700;
-            }
-
-        .mobile-controls {
-            display: none;
         }
 
         /* === FAQ PAGE STYLES === */
@@ -220,278 +136,8 @@
             border-radius: 4px;
         }
 
-        /* === MODAL & POP-UP STYLES === */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0s linear 0.4s;
-        }
-
-            .modal-overlay.active {
-                opacity: 1;
-                visibility: visible;
-                transition-delay: 0s;
-            }
-
-        .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            z-index: 1001;
-            background: var(--background-light);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 1100px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 0 8px;
-            opacity: 0;
-            visibility: hidden;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0s linear 0.4s;
-        }
-
-            .modal.active {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-                visibility: visible;
-                transition-delay: 0s;
-            }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #e0e0e0;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            font-size: 20px;
-            font-weight: bold;
-            color: #555;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1002;
-        }
-
-        .modal-content {
-            padding: 40px 42px;
-        }
-
-        .modal-body {
-            display: flex;
-            align-items: flex-start;
-        }
-
-        #modal-image {
-            display: block;
-            max-width: 100%;
-            max-height: 80vh;
-            margin: 0 auto;
-            object-fit: contain;
-        }
-        /* Image Viewer specific styles */
-        .modal.image-view {
-            background: transparent !important;
-            box-shadow: none !important;
-            width: auto !important;
-            height: auto !important;
-            max-width: 95vw !important;
-            max-height: 95vh !important;
-            padding: 0 !important;
-            overflow: visible !important;
-        }
-
-        .modal.image-view .modal-content {
-            position: relative; /* Đảm bảo nút X căn theo modal-content */
-            display: inline-block;
-            padding: 0 !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            width: auto !important;
-            height: auto !important;
-            max-height: 100% !important;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.image-view #modal-image {
-            max-width: 95vw;
-            max-height: 95vh;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s, filter 0.3s, opacity 0.3s;
-        }
-        .modal.image-view .modal-close {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 2;
-            background: #fff;
-            color: #c00;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-            border: none;
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
-            font-size: 2rem;
-            font-weight: bold;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            opacity: 0.95;
-            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-        }
-        .modal.image-view .modal-close:hover {
-            background: #ffeaea;
-            color: #a00;
-            box-shadow: 0 4px 16px rgba(192,0,0,0.18);
-        }
-
-        /* === FOOTER === */
-        .site-footer-main {
-            background-color: #1a1a1c;
-            color: #a9a9b3;
-            padding: 60px 20px 0 20px;
-            margin-top: 50px;
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 40px;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 250px;
-        }
-
-            .footer-column h4 {
-                color: var(--background-light);
-                font-size: 1.1rem;
-                margin-bottom: 20px;
-            }
-
-        .footer-logo {
-            height: 40px;
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-
-            .footer-column ul li a {
-                color: #a9a9b3;
-                text-decoration: none;
-                line-height: 2.2;
-                transition: color 0.2s ease;
-            }
-
-                .footer-column ul li a:hover {
-                    color: var(--background-light);
-                }
-
-        .footer-social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-            .footer-social-icons img {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                transition: transform 0.2s ease;
-            }
-
-                .footer-social-icons img:hover {
-                    transform: scale(1.1);
-                }
-
-        .footer-bottom {
-            text-align: center;
-            padding: 20px 0;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-        }
-
-        /* === RESPONSIVE STYLES === */
-        @media(max-width: 992px) {
-            .main-nav {
-                display: none;
-            }
-
-            .mobile-controls {
-                display: flex;
-                align-items: center;
-            }
-
-            .hamburger-btn {
-                background: none;
-                border: none;
-                cursor: pointer;
-                padding: 8px;
-                font-size: 1.6rem;
-                color: var(--text-medium);
-            }
-
-            .main-nav.is-open {
-                display: block;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--background-light);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                z-index: 100;
-            }
-
-                .main-nav.is-open ul {
-                    flex-direction: column;
-                    gap: 0;
-                }
-
-                .main-nav.is-open li {
-                    width: 100%;
-                    text-align: center;
-                    border-bottom: 1px solid var(--border-color);
-                }
-
-                    .main-nav.is-open li:last-child {
-                        border-bottom: none;
-                    }
-
-                .main-nav.is-open a {
-                    padding: 15px;
-                    display: block;
-                    font-size: 15px !important;
-                }
-        }
-
+        /* === RESPONSIVE STYLES (FAQ specific) === */
         @media(max-width: 768px) {
-            .site-header {
-                padding: 10px 15px;
-                height: 68px; /* Thêm hoặc sửa dòng này */
-            }
-
             .faq-layout-container {
                 flex-direction: column;
             }
@@ -501,7 +147,6 @@
                 margin-bottom: 20px;
             }
 
-            /* Thêm đoạn mã mới vào đây */
             .faq-page-container {
                 margin-top: 5px;
             }
@@ -513,16 +158,27 @@
         <div class="header-logo">
             <a href="index.html"><img src="./images/logo.webp" alt="Fast Track Logo"></a>
         </div>
+        <div class="header-search">
+            <input type="text" id="search-input" placeholder="Dịch Vụ Premium Cần Tìm...">
+            <span class="search-icon" id="desktop-search-trigger" style="cursor: pointer;">
+                <animated-icons src="https://animatedicons.co/get-icon?name=search&style=minimalistic&token=12e9ffab-e7da-417f-a9d9-d7f67b64d808" trigger="hover" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1.44,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="35" width="35"></animated-icons>
+            </span>
+            <div id="search-results"></div>
+        </div>
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">TRANG CHỦ</a></li>
                 <li><a href="index.html#dich-vu">CỬA HÀNG</a></li>
                 <li><a href="pricing.html">BẢNG GIÁ DỊCH VỤ</a></li>
                 <li><a href="index.html#check-uy-tin">CHECK UY TÍN</a></li>
+                <li><a href="#" id="category-trigger">DỊCH VỤ </a></li>
                 <li><a href="faq.html" class="active-page">CÁC CÂU HỎI THƯỜNG GẶP</a></li>
             </ul>
         </nav>
         <div class="mobile-controls">
+            <button class="mobile-search-icon" id="mobile-search-trigger">
+                <animated-icons src="https://animatedicons.co/get-icon?name=search&style=minimalistic&token=12e9ffab-e7da-417f-a9d9-d7f67b64d808" trigger="hover" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1.44,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="30" width="40"></animated-icons>
+            </button>
             <button class="hamburger-btn">☰</button>
         </div>
     </header>
@@ -620,94 +276,121 @@
                         Nếu cần hỗ trợ thêm, bạn có thể liên hệ với chúng tôi qua Zalo hoặc Fanpage.
                     </div>
                 </article>
-
             </div>
+        </div>
     </main>
 
-    <div class="modal-overlay"></div>
     <div class="modal">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <img id="modal-image" src="" alt="Hình ảnh phóng to">
+        <div class="modal-content">
+            <button class="modal-close" type="button">&times;</button>
+            <h4 id="modal-title"></h4>
+            <h3 id="modal-headline"></h3>
+            <div class="modal-body">
+                <p id="modal-text"></p>
+                <img id="modal-image" src="" alt="Modal Image">
+            </div>
+        </div>
     </div>
-</div>
+    <div class="modal-overlay"></div>
+
+    <div id="search-overlay" class="search-overlay">
+        <button id="close-search-btn" class="close-search-btn">&times;</button>
+        <div class="search-overlay-content">
+            <input type="text" id="search-overlay-input" placeholder="Tìm kiếm dịch vụ bạn cần..." autocomplete="off">
+            
+            <div id="overlay-search-results" class="overlay-search-results"></div>
+
+            <div class="search-quick-links">
+                <h4>Gợi ý nhanh</h4>
+                <ul>
+                    <li><a href="#" data-id="youtube">Tìm hiểu về YouTube Premium</a></li>
+                    <li><a href="#" data-id="netflix">Các gói Netflix hiện có</a></li>
+                    <li><a href="#" data-id="chatgpt">Nâng cấp ChatGPT Plus</a></li>
+                    <li><a href="#" data-id="canva">Thiết kế không giới hạn với Canva Pro</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-actions" class="floating-actions-container">
+        <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
+        <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
+        <a href="https://zalo.me/0978879931" target="_blank" class="floating-action-btn btn-zalo" aria-label="Zalo"></a>
+    </div>
+
+    <div id="category-overlay" class="category-overlay"></div>
+    <div id="category-menu" class="category-menu">
+        <div class="category-columns-container">
+            <div class="category-column">
+                <h4>📺 Giải Trí & Xem Phim</h4>
+                <ul>
+                    <li><a href="#" data-id="youtube"><img src="./images/IcoinYoutube.webp" alt="YouTube"><span>YouTube Premium</span></a></li>
+                    <li><a href="#" data-id="netflix"><img src="./images/IcoinNetflix.webp" alt="Netflix"><span>Netflix</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>🎧 Nghe Nhạc Premium</h4>
+                <ul>
+                    <li><a href="#" data-id="spotify"><img src="./images/IcoinSpotify.webp" alt="Spotify"><span>Spotify</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>📚 Học Online & Ngoại Ngữ</h4>
+                <ul>
+                    <li><a href="#" data-id="duolingo"><img src="./images/IcoinDuolingo.webp" alt="Duolingo"><span>Duolingo</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>💼 Công Cụ Làm Việc</h4>
+                <ul>
+                    <li><a href="#" data-id="canva"><img src="./images/IcoinCanva.webp" alt="Canva"><span>Canva Pro</span></a></li>
+                    <li><a href="#"><img src="./images/IcoinGoogleOne.webp" alt="Google one"><span>Google one</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>🤖 Trí Tuệ Nhân Tạo (AI)</h4>
+                <ul>
+                    <li><a href="#" data-id="chatgpt"><img src="./images/IcoinChatGPT.webp"Chat GPT"><span>Chat GPT Plus</span></a></li>
+                    <li><a href="#" data-id="supergrok"><img src="./images/IcoinGrok.webp" alt="SuperGrok"><span>SuperGrok</span></a></li>
+                    <li><a href="#" data-id="gemini"><img src="./images/IcoinGemini.webp" alt="Google AI Pro"><span>Google AI Pro</span></a></li>   
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button id="category-close-btn" class="category-close-btn">&times;</button>
 
     <footer class="site-footer-main">
+        <div class="footer-container">
+            <div class="footer-column about">
+                <img src="./images/logo11.webp" alt="Logo Fast Track" class="footer-logo">
+                <p>Dịch vụ nâng cấp tài khoản Premium uy tín, nhanh chóng và an toàn. Luôn đặt trải nghiệm của khách hàng lên hàng đầu.</p>
+            </div>
+            <div class="footer-column links">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                    <li><a href="index.html#dich-vu">Cửa hàng</a></li>
+                    <li><a href="index.html#check-uy-tin">Check Uy tín</a></li>
+                    <li><a href="#">Chính sách Bảo hành</a></li>
+                    <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+            <div class="footer-column contact">
+                <h4>Liên hệ với chúng tôi</h4>
+                <p>Hỗ trợ nhanh nhất qua:</p>
+                <div class="footer-social-icons">
+                    <a href="https://zalo.me/0978879931" target="_blank" aria-label="Zalo"><img src="./images/IcoinZalo.webp" alt="Zalo"></a>
+                    <a href="https://www.messenger.com/t/100082075575045" target="_blank" aria-label="Messenger"><img src="./images/IcoinMess.webp" alt="Messenger"></a>
+                    <a href="https://t.me/TCManhh" target="_blank" aria-label="Telegram"><img src="./images/IcoinTele.webp" alt="Telegram"></a>
+                    <a href="https://www.facebook.com/FastTrack68" target="_blank" aria-label="Facebook"><img src="./images/IcoinFb.webp" alt="Facebook"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 - 2025 Fast Track Digital. All Rights Reserved.</p>
+        </div>
     </footer>
 
-    <script defer>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- COMMON ELEMENTS ---
-            const modal = document.querySelector('.modal');
-            const modalOverlay = document.querySelector('.modal-overlay');
-            const modalCloseBtn = document.querySelector('.modal-close');
-            const modalImage = document.getElementById('modal-image');
-            const hamburgerBtn = document.querySelector('.hamburger-btn');
-            const mainNav = document.querySelector('.main-nav');
-
-            // --- GENERAL MODAL LOGIC ---
-            function openModal() {
-                if (!modal || !modalOverlay) return;
-                modal.classList.add('active');
-                modalOverlay.classList.add('active');
-                document.body.classList.add('modal-open');
-            }
-
-            function closeModal() {
-                if (!modal || !modalOverlay) return;
-                modal.classList.remove('active', 'image-view');
-                modalOverlay.classList.remove('active');
-                document.body.classList.remove('modal-open');
-            }
-
-            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-            if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
-
-            // --- MOBILE NAVIGATION ---
-            if (hamburgerBtn && mainNav) {
-                hamburgerBtn.addEventListener('click', () => {
-                    mainNav.classList.toggle('is-open');
-                });
-            }
-
-            // --- FAQ.HTML SPECIFIC LOGIC ---
-            const faqNavContainer = document.querySelector('.faq-nav');
-            const faqContentContainer = document.querySelector('.faq-content');
-
-            if (faqNavContainer && faqContentContainer) {
-                faqNavContainer.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const clickedLink = e.target.closest('.faq-nav-link');
-                    if (!clickedLink || clickedLink.classList.contains('active')) return;
-
-                    const targetId = clickedLink.getAttribute('href');
-                    const targetArticle = document.querySelector(targetId);
-
-                    if (targetArticle) {
-                        faqNavContainer.querySelector('.active')?.classList.remove('active');
-                        clickedLink.classList.add('active');
-                        faqContentContainer.querySelector('.active')?.classList.remove('active');
-                        targetArticle.classList.add('active');
-
-                        if (window.innerWidth <= 768) {
-                            targetArticle.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
-                });
-
-                // Image pop-up logic for FAQ page
-                faqContentContainer.addEventListener('click', (e) => {
-                    if (e.target.tagName === 'IMG' && e.target.closest('.faq-article')) {
-                        e.stopPropagation();
-                        if (modal) {
-                            modal.classList.add('image-view');
-                            modalImage.src = e.target.src;
-                            openModal();
-                        }
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="script.js" type="module"></script>
+    <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
 </body>
 </html>

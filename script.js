@@ -293,6 +293,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
+        // Hiệu ứng Glass cho header khi cuộn
+window.addEventListener('scroll', () => {
+    const siteHeader = document.querySelector('.site-header');
+    if (window.scrollY > 50) {
+        siteHeader.classList.add('scrolled');
+    } else {
+        siteHeader.classList.remove('scrolled');
+    }
+});
+
     }
 
     setupGlobalListeners();
@@ -333,7 +343,21 @@ document.addEventListener('DOMContentLoaded', () => {
         carouselObserver.observe(billShowcase);
     }
     
-    // --- BẮT ĐẦU CODE MỚI: XỬ LÝ CLICK TRÊN BẢNG GIÁ ---
+    // --- BẮT ĐẦU: CODE MỚI ĐỂ XỬ LÝ CLICK TRÊN TRANG BẢNG GIÁ ---
+    const pricingGrid = document.querySelector('.pricing-grid');
+    if (pricingGrid) {
+        pricingGrid.addEventListener('click', (e) => {
+            const card = e.target.closest('.price-card');
+            if (card) {
+                const serviceId = card.dataset.id;
+                if (serviceId) {
+                    showServiceModal(serviceId);
+                }
+            }
+        });
+    }
+    // --- KẾT THÚC CODE MỚI ---
+
     const pricingTable = document.querySelector('.pricing-table');
     if (pricingTable) {
         pricingTable.addEventListener('click', (e) => {
@@ -346,7 +370,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    // --- KẾT THÚC CODE MỚI ---
+
+    // --- BẮT ĐẦU: CODE MỚI CHO TRANG FAQ.HTML ---
+    const faqNavContainer = document.querySelector('.faq-nav');
+    const faqContentContainer = document.querySelector('.faq-content');
+
+    if (faqNavContainer && faqContentContainer) {
+        // Xử lý click vào menu điều hướng của FAQ
+        faqNavContainer.addEventListener('click', function (e) {
+            e.preventDefault();
+            const clickedLink = e.target.closest('.faq-nav-link');
+            if (!clickedLink || clickedLink.classList.contains('active')) return;
+
+            const targetId = clickedLink.getAttribute('href');
+            const targetArticle = document.querySelector(targetId);
+
+            if (targetArticle) {
+                // Cập nhật trạng thái active cho menu và nội dung
+                faqNavContainer.querySelector('.active')?.classList.remove('active');
+                clickedLink.classList.add('active');
+                faqContentContainer.querySelector('.active')?.classList.remove('active');
+                targetArticle.classList.add('active');
+
+                // Tự động cuộn đến nội dung trên mobile
+                if (window.innerWidth <= 768) {
+                    targetArticle.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Xử lý click để phóng to ảnh trong bài viết FAQ
+        faqContentContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG' && e.target.closest('.faq-article')) {
+                e.stopPropagation();
+                if (modal && modalImage) {
+                    modal.classList.add('image-view');
+                    modalImage.src = e.target.src;
+                    openModal(); // Dùng hàm openModal toàn cục
+                }
+            }
+        });
+    }
+    // --- KẾT THÚC CODE CHO TRANG FAQ.HTML ---
 
     function initBillCarousel() {
         const billTrack = document.querySelector('.bill-carousel-track');

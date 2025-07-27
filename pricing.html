@@ -12,87 +12,140 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="modal.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="style.css">
     <noscript><link rel="stylesheet" href="modal.css"></noscript>
     
     <style>
+        /* === BỐ CỤC CHUNG === */
         .pricing-page-container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 20px;
         }
 
-        .pricing-page-container h1 {
+        .pricing-page-container .page-title {
             text-align: center;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 700;
-            margin-bottom: 30px;
-            color: #333;
+            margin-bottom: 15px;
+            color: #1d1d1f;
         }
 
-        .table-wrapper {
-            overflow-x: auto; /* Allows horizontal scrolling on small screens */
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .pricing-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1rem;
-        }
-
-        .pricing-table th, .pricing-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .pricing-table thead th {
-            background-color: #f9fafb;
-            font-weight: 700;
-            color: #333;
+        .pricing-page-container .page-subtitle {
+            text-align: center;
             font-size: 1.1rem;
+            color: #6e6e73;
+            max-width: 600px;
+            margin: 0 auto 50px auto;
         }
 
-        .pricing-table tbody tr:last-child td {
+        /* === CONTAINER CHO CÁC THẺ GIÁ (BỐ CỤC MASONRY) === */
+        .pricing-grid {
+            column-count: 3; /* Mặc định 3 cột cho desktop */
+            column-gap: 25px; /* Khoảng cách giữa các cột */
+        }
+
+        /* === THIẾT KẾ THẺ DỊCH VỤ (CARD) === */
+        .price-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+
+            /* Thuộc tính mới cho bố cục Masonry */
+            break-inside: avoid; /* Ngăn thẻ bị ngắt giữa các cột */
+            margin-bottom: 25px; /* Đóng vai trò như khoảng cách giữa các hàng */
+        }
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+        }
+
+        /* --- Phần Header của Card --- */
+        .price-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f3f4f6;
+            margin-bottom: 15px;
+        }
+        .service-icon {
+            height: 40px; /* Giữ chiều cao cố định để các card đồng đều */
+            width: auto; /* Để chiều rộng tự điều chỉnh theo tỉ lệ của ảnh */
+            border-radius: 8px;
+        }
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* --- Phần các gói dịch vụ --- */
+        .packages-list {
+            /* flex-grow: 1; -- Đã xóa thuộc tính này */
+        }
+        .package-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .package-item:last-child {
             border-bottom: none;
         }
-        
-        /* Thêm CSS cho hàng có thể nhấp */
-        .pricing-table .clickable-row {
-            cursor: pointer;
+        .package-name {
+            font-weight: 500;
+            color: #374151;
         }
-
-        .pricing-table tbody .clickable-row:hover {
-            background-color: #f5f5f5;
-        }
-
-        .pricing-table .service-name {
-            font-weight: 600;
-            color: #1d1d1f;
-            vertical-align: middle;
-        }
-
-        .pricing-table .price {
+        .package-price {
             font-weight: 700;
             color: #c00;
+            font-size: 1.1rem;
             white-space: nowrap;
         }
+        .package-note {
+            display: block;
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 2px;
+        }
         
-        .service-name.youtube { color: #FF0000; }
-        .service-name.netflix { color: #E50914; }
-        .service-name.spotify { color: #1DB954; }
-        .service-name.chatgpt { color: #10a37f; }
-        .service-name.supergrok { color: #8A2BE2; }
-        .service-name.gemini { color: #4285F4; }
-        .service-name.canva { color: #8338ec; }
-        .service-name.duolingo { color: #58CC02; }
+        /* === MÀU SẮC RIÊNG CHO TỪNG DỊCH VỤ === */
+        .price-card.youtube:hover { border-top: 4px solid #FF0000; }
+        .price-card.netflix:hover { border-top: 4px solid #E50914; }
+        .price-card.spotify:hover { border-top: 4px solid #1DB954; }
+        .price-card.chatgpt:hover { border-top: 4px solid #10a37f; }
+        .price-card.supergrok:hover { border-top: 4px solid #8A2BE2; }
+        .price-card.gemini:hover { border-top: 4px solid #4285F4; }
+        .price-card.canva:hover { border-top: 4px solid #8338ec; }
+        .price-card.duolingo:hover { border-top: 4px solid #58CC02; }
+        
+        /* === RESPONSIVE CHO BỐ CỤC MASONRY === */
+        @media (max-width: 992px) {
+            .pricing-grid {
+                column-count: 2; /* 2 cột cho tablet */
+            }
+        }
 
+        @media (max-width: 768px) {
+            .pricing-page-container {
+                margin-top: 20px;
+                padding: 15px;
+            }
+             .pricing-grid {
+                column-count: 1; /* 1 cột cho mobile */
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,110 +154,182 @@
         <div class="header-logo">
             <a href="index.html"><img src="./images/logo.webp" alt="Logo Fast Track"></a>
         </div>
+
+        <div class="header-search">
+            <input type="text" id="search-input" placeholder="Dịch Vụ Premium Cần Tìm...">
+            <span class="search-icon" id="desktop-search-trigger" style="cursor: pointer;">
+                <animated-icons src="https://animatedicons.co/get-icon?name=search&style=minimalistic&token=12e9ffab-e7da-417f-a9d9-d7f67b64d808" trigger="hover" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1.44,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="35" width="35"></animated-icons>
+            </span>
+            <div id="search-results"></div>
+        </div>
+
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">TRANG CHỦ</a></li>
                 <li><a href="index.html#dich-vu">CỬA HÀNG</a></li>
                 <li><a href="pricing.html" class="active-page">BẢNG GIÁ DỊCH VỤ</a></li>
                 <li><a href="index.html#check-uy-tin">CHECK UY TÍN</a></li>
+                <li><a href="#" id="category-trigger">DỊCH VỤ </a></li>
                 <li><a href="faq.html">CÁC CÂU HỎI THƯỜNG GẶP</a></li>
             </ul>
         </nav>
         <div class="mobile-controls">
+            <button class="mobile-search-icon" id="mobile-search-trigger">
+                <animated-icons src="https://animatedicons.co/get-icon?name=search&style=minimalistic&token=12e9ffab-e7da-417f-a9d9-d7f67b64d808" trigger="hover" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1.44,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="30" width="40"></animated-icons>
+            </button>
             <button class="hamburger-btn">☰</button>
         </div>
     </header>
 
     <main class="pricing-page-container">
-        <h1>Bảng Giá Chi Tiết Dịch Vụ</h1>
-        <div class="table-wrapper">
-            <table class="pricing-table">
-                <thead>
-                    <tr>
-                        <th>Dịch vụ</th>
-                        <th>Gói</th>
-                        <th>Giá</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="clickable-row" data-id="chatgpt">
-                        <td rowspan="4" class="service-name chatgpt">ChatGPT Plus</td>
-                        <td>Chung 5 Người Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">60k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="chatgpt">
-                        <td>Chung 3 Người Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">100k/tháng</td>
-                    </tr>
-                     <tr class="clickable-row" data-id="chatgpt">
-                        <td>Chung 2 Người Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">150k/tháng</td>
-                    </tr>
-                     <tr class="clickable-row" data-id="chatgpt">
-                        <td>Cá Nhân Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">250k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="supergrok">
-                        <td rowspan="4" class="service-name supergrok">SuperGrok AI</td>
-                        <td>Chung 5 Người Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">30k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="supergrok">
-                        <td>Chung 3 Người Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">60k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="supergrok">
-                        <td>Chung 2 Người Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">110k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="supergrok">
-                        <td>Cá Nhân Sử Dụng (Cấp Tài Khoản)</td>
-                        <td class="price">200k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="gemini">
-                        <td class="service-name gemini">Google AI Pro (Gemini)</td>
-                        <td>Nâng Cấp Tài Khoản Gmail Chính Chủ (Tặng 2TB Google Drive)</td>
-                        <td class="price">30k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="youtube">
-                        <td rowspan="3" class="service-name youtube">YouTube Premium</td>
-                        <td>Nâng Cấp Tài Khoản Gmail Chính Chủ</td>
-                        <td class="price">40k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="youtube">
-                        <td>Thuê Tài Khoản</td>
-                        <td class="price">35k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="youtube">
-                        <td>Thuê Tài Khoản Riêng Để Xem TV</td>
-                        <td class="price">20k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="spotify">
-                        <td class="service-name spotify">Spotify Premium</td>
-                        <td>Nâng Cấp Tài Khoản Spotify Chính Chủ</td>
-                        <td class="price">25k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="netflix">
-                        <td class="service-name netflix">Netflix Premium</td>
-                        <td>Slot Netflix Premium Chất Lượng 4k</td>
-                        <td class="price">60k/tháng</td>
-                    </tr>
-                     <tr class="clickable-row" data-id="duolingo">
-                        <td rowspan="2" class="service-name duolingo">Duolingo Super</td>
-                        <td>Nâng Cấp Duolingo Super Chính Chủ</td>
-                        <td class="price">20k/tháng</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="duolingo">
-                        <td>Nâng Cấp Duolingo Super Chính Chủ</td>
-                        <td class="price">200k/năm</td>
-                    </tr>
-                    <tr class="clickable-row" data-id="canva">
-                        <td class="service-name canva">Canva Pro</td>
-                        <td>Nâng Cấp Canva Pro Chính Chủ</td>
-                        <td class="price">50k/tháng</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h1 class="page-title">Bảng Giá Dịch Vụ</h1>
+        <p class="page-subtitle">Tổng hợp giá chi tiết cho tất cả các dịch vụ. Nhấp vào một thẻ bất kỳ để xem đầy đủ lợi ích và thông tin chi tiết.</p>
+        
+        <div class="pricing-grid">
+            <div class="price-card chatgpt" data-id="chatgpt">
+                <div class="price-card-header">
+                    <img src="./images/IcoinChatGPT.webp" alt="ChatGPT Icon" class="service-icon">
+                    <h2 class="service-title">ChatGPT Plus</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Nâng Cấp Chính Chủ</span><span class="package-note">Bảo mật, riêng tư tuyệt đối</span></div>
+                        <span class="package-price">350k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Chung 5 Người</span><span class="package-note">Tiết kiệm tối đa</span></div>
+                        <span class="package-price">60k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Chung 3 Người</span><span class="package-note">Trải nghiệm tốt hơn</span></div>
+                        <span class="package-price">100k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Chung 2 Người</span><span class="package-note">Cân bằng chi phí</span></div>
+                        <span class="package-price">150k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Cá Nhân</span><span class="package-note">Shop cấp, dùng riêng</span></div>
+                        <span class="package-price">250k/tháng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-card youtube" data-id="youtube">
+                <div class="price-card-header">
+                    <img src="./images/IcoinYoutube.webp" alt="YouTube Icon" class="service-icon">
+                    <h2 class="service-title">YouTube Premium</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                         <div class="package-info"><span class="package-name">Nâng Cấp Chính Chủ</span><span class="package-note">Dùng Gmail cá nhân</span></div>
+                        <span class="package-price">40k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Thuê Tài Khoản</span><span class="package-note">Shop cấp, giá tốt</span></div>
+                        <span class="package-price">35k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Gói Xem TV</span><span class="package-note">Chuyên dùng cho SmartTV</span></div>
+                        <span class="package-price">20k/tháng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-card netflix" data-id="netflix">
+                <div class="price-card-header">
+                    <img src="./images/IcoinNetflix.webp" alt="Netflix Icon" class="service-icon">
+                    <h2 class="service-title">Netflix Premium</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                         <div class="package-info"><span class="package-name">Gói Premium 4K+HDR</span><span class="package-note">Chất lượng cao nhất</span></div>
+                        <span class="package-price">60k/tháng</span>
+                    </div>
+                </div>
+            </div>
+
+             <div class="price-card spotify" data-id="spotify">
+                <div class="price-card-header">
+                    <img src="./images/IcoinSpotify.webp" alt="Spotify Icon" class="service-icon">
+                    <h2 class="service-title">Spotify Premium</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Nâng Cấp Chính Chủ</span><span class="package-note">Giữ nguyên playlist</span></div>
+                        <span class="package-price">25k/tháng</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="price-card canva" data-id="canva">
+                <div class="price-card-header">
+                    <img src="./images/IcoinCanva.webp" alt="Canva Icon" class="service-icon">
+                    <h2 class="service-title">Canva Pro</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Nâng Cấp Chính Chủ</span><span class="package-note">Mời vào Class/Team</span></div>
+                        <span class="package-price">30k/tháng</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-card duolingo" data-id="duolingo">
+                <div class="price-card-header">
+                    <img src="./images/IcoinDuolingo.webp" alt="Duolingo Icon" class="service-icon">
+                    <h2 class="service-title">Duolingo Super</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Nâng Cấp Tháng</span><span class="package-note">Dùng tài khoản chính chủ</span></div>
+                        <span class="package-price">20k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Nâng Cấp Năm</span><span class="package-note">Tiết kiệm hơn</span></div>
+                        <span class="package-price">200k/năm</span>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="price-card supergrok" data-id="supergrok">
+                <div class="price-card-header">
+                    <img src="./images/IcoinGrok.webp" alt="SuperGrok AI Icon" class="service-icon">
+                    <h2 class="service-title">SuperGrok AI</h2>
+                </div>
+                <div class="packages-list">
+                     <div class="package-item">
+                        <div class="package-info"><span class="package-name">Chung 5 Người</span><span class="package-note">Tiết kiệm tối đa</span></div>
+                        <span class="package-price">30k/tháng</span>
+                    </div>
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Chung 3 Người</span><span class="package-note">Trải nghiệm tốt hơn</span></div>
+                        <span class="package-price">60k/tháng</span>
+                    </div>
+                     <div class="package-item">
+                        <div class="package-info"><span class="package-name">Chung 2 Người</span><span class="package-note">Cân bằng chi phí</span></div>
+                        <span class="package-price">110k/tháng</span>
+                    </div>
+                     <div class="package-item">
+                        <div class="package-info"><span class="package-name">Cá Nhân</span><span class="package-note">Shop cấp, dùng riêng</span></div>
+                        <span class="package-price">200k/tháng</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="price-card gemini" data-id="gemini">
+                <div class="price-card-header">
+                    <img src="./images/IcoinGemini.webp" alt="Google AI Pro Icon" class="service-icon">
+                    <h2 class="service-title">Google AI Pro (Gemini)</h2>
+                </div>
+                <div class="packages-list">
+                    <div class="package-item">
+                        <div class="package-info"><span class="package-name">Nâng Cấp Chính Chủ</span><span class="package-note">Tặng 2TB Google Drive</span></div>
+                        <span class="package-price">30k/tháng</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
     
@@ -220,6 +345,72 @@
         </div>
     </div>
     <div class="modal-overlay"></div>
+
+    <div id="search-overlay" class="search-overlay">
+        <button id="close-search-btn" class="close-search-btn">&times;</button>
+        <div class="search-overlay-content">
+            <input type="text" id="search-overlay-input" placeholder="Tìm kiếm dịch vụ bạn cần..." autocomplete="off">
+            
+            <div id="overlay-search-results" class="overlay-search-results"></div>
+
+            <div class="search-quick-links">
+                <h4>Gợi ý nhanh</h4>
+                <ul>
+                    <li><a href="#" data-id="youtube">Tìm hiểu về YouTube Premium</a></li>
+                    <li><a href="#" data-id="netflix">Các gói Netflix hiện có</a></li>
+                    <li><a href="#" data-id="chatgpt">Nâng cấp ChatGPT Plus</a></li>
+                    <li><a href="#" data-id="canva">Thiết kế không giới hạn với Canva Pro</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-actions" class="floating-actions-container">
+        <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="floating-action-btn btn-messenger" aria-label="Messenger"></a>
+        <a href="https://t.me/TCManhh" target="_blank" class="floating-action-btn btn-telegram" aria-label="Telegram"></a>
+        <a href="https://zalo.me/0978879931" target="_blank" class="floating-action-btn btn-zalo" aria-label="Zalo"></a>
+    </div>
+
+    <div id="category-overlay" class="category-overlay"></div>
+    <div id="category-menu" class="category-menu">
+        <div class="category-columns-container">
+            <div class="category-column">
+                <h4>📺 Giải Trí & Xem Phim</h4>
+                <ul>
+                    <li><a href="#" data-id="youtube"><img src="./images/IcoinYoutube.webp" alt="YouTube"><span>YouTube Premium</span></a></li>
+                    <li><a href="#" data-id="netflix"><img src="./images/IcoinNetflix.webp" alt="Netflix"><span>Netflix</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>🎧 Nghe Nhạc Premium</h4>
+                <ul>
+                    <li><a href="#" data-id="spotify"><img src="./images/IcoinSpotify.webp" alt="Spotify"><span>Spotify</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>📚 Học Online & Ngoại Ngữ</h4>
+                <ul>
+                    <li><a href="#" data-id="duolingo"><img src="./images/IcoinDuolingo.webp" alt="Duolingo"><span>Duolingo</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>💼 Công Cụ Làm Việc</h4>
+                <ul>
+                    <li><a href="#" data-id="canva"><img src="./images/IcoinCanva.webp" alt="Canva"><span>Canva Pro</span></a></li>
+                    <li><a href="#"><img src="./images/IcoinGoogleOne.webp" alt="Google one"><span>Google one</span></a></li>
+                </ul>
+            </div>
+            <div class="category-column">
+                <h4>🤖 Trí Tuệ Nhân Tạo (AI)</h4>
+                <ul>
+                    <li><a href="#" data-id="chatgpt"><img src="./images/IcoinChatGPT.webp"Chat GPT"><span>Chat GPT Plus</span></a></li>
+                    <li><a href="#" data-id="supergrok"><img src="./images/IcoinGrok.webp" alt="SuperGrok"><span>SuperGrok</span></a></li>
+                    <li><a href="#" data-id="gemini"><img src="./images/IcoinGemini.webp" alt="Google AI Pro"><span>Google AI Pro</span></a></li>   
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button id="category-close-btn" class="category-close-btn">&times;</button>
 
     <footer class="site-footer-main">
         <div class="footer-container">
@@ -253,5 +444,6 @@
     </footer>
 
     <script src="script.js" type="module"></script>
+    <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
 </body>
 </html>

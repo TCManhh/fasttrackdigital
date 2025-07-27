@@ -125,8 +125,8 @@
     }
 
     .modal.image-view #modal-image {
-        max-width: 95vw;
-        max-height: 95vh;
+        max-width: 86vw;
+        max-height: 86vh;
         object-fit: contain;
         border-radius: 12px;
         flex: none;
@@ -737,7 +737,7 @@
 /* ======================================= */
 /* === CSS TỔNG HỢP CHO HEADER MOBILE === */
 /* ======================================= */
-@media (max-width: 992px) {
+@media (max-width: 1600px) {
     /* 1. Ẩn các thành phần của desktop */
     .header-search,
     .main-nav {
