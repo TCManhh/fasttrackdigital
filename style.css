@@ -45,13 +45,6 @@ html {
 
 /* === KẾT THÚC: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
 
-/* Hiệu ứng Glass khi cuộn */
-.site-header.scrolled {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
 
 /* === CSS CHO HEADER === */
 .site-header {
@@ -326,43 +319,59 @@ html {
     }
 
     .card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+/* === START: ADVANCED CARD HOVER EFFECT === */
+
+/* Make the card a positioning context */
+.card {
+    position: relative;
 }
 
-/* === BẮT ĐẦU: HIỆU ỨNG SHADOW MÀU THEO DỊCH VỤ KHI HOVER === */
-.card[data-id="youtube"]:hover {
-    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.3); /* Màu đỏ của YouTube */
+/* Ensure the image container handles overflow */
+.card-image-container {
+    overflow: hidden; /* This is crucial for the zoom effect */
 }
 
-.card[data-id="netflix"]:hover {
-    box-shadow: 0 8px 25px rgba(229, 9, 20, 0.35); /* Màu đỏ của Netflix */
+/* Keep the image transition smooth */
+.card-image-container img {
+    transition: transform 0.3s ease;
 }
 
-.card[data-id="spotify"]:hover {
-    box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3); /* Màu xanh của Spotify */
+/* Style for the "View Details" button */
+.card .view-details {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Make it unclickable by default */
 }
 
-.card[data-id="chatgpt"]:hover {
-    box-shadow: 0 8px 25px rgba(16, 163, 127, 0.3); /* Màu xanh của ChatGPT */
+
+/* --- The Hover Effects --- */
+
+/* 1. Zoom the image on hover */
+.card:hover .card-image-container img {
+    transform: scale(1.1); /* Zoom in effect */
 }
 
-.card[data-id="supergrok"]:hover {
-    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.25); /* Màu tím của SuperGrok */
+/* 2. Show the "View Details" button on hover */
+.card:hover .view-details {
+    opacity: 1; /* Fade in the button */
 }
 
-.card[data-id="gemini"]:hover {
-    box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3); /* Màu xanh của Google/Gemini */
-}
+/* === END: ADVANCED CARD HOVER EFFECT === */
 
-.card[data-id="canva"]:hover {
-    box-shadow: 0 8px 25px rgba(131, 56, 236, 0.3); /* Màu tím của Canva */
-}
-
-.card[data-id="duolingo"]:hover {
-    box-shadow: 0 8px 25px rgba(88, 204, 2, 0.35); /* Màu xanh của Duolingo */
-}
-/* === KẾT THÚC: HIỆU ỨNG SHADOW === */
 
 .plus-icon {
     display: none;
@@ -1004,7 +1013,7 @@ input[type="range"].bill-slider {
 /* ======================================= */
 /* === CSS TỔNG HỢP CHO HEADER MOBILE === */
 /* ======================================= */
-@media (max-width: 1600px) {
+@media (max-width: 992px) {
     /* 1. Ẩn các thành phần của desktop */
     .header-search,
     .main-nav {
@@ -1034,35 +1043,36 @@ input[type="range"].bill-slider {
         gap: 12px;
     }
 
-    /* === BẮT ĐẦU CODE ĐÃ SỬA === */
-    .mobile-search-icon,
-    .hamburger-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: #333;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        /* Đồng bộ kích thước */
-        width: 44px;
-        height: 44px;
-        padding: 0;
-    }
+    /* === BẮT ĐẦU CODE THAY THẾ === */
 
-    /* Điều chỉnh kích thước icon kính lúp bên trong nút */
-    .mobile-search-icon animated-icons {
-        width: 24px;
-        height: 24px;
-    }
+.mobile-search-icon,
+.hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Chỉnh sửa để đồng bộ kích thước */
+    width: 44px;  /* Đặt chiều rộng cố định */
+    height: 44px; /* Đặt chiều cao cố định */
+    padding: 0;   /* Bỏ padding để kích thước được chuẩn */
+}
 
-    /* Điều chỉnh kích thước icon 3 gạch bên trong nút */
-    .hamburger-btn {
-        font-size: 1.6rem;
-        line-height: 1; /* Căn giữa tốt hơn */
-    }
-    /* === KẾT THÚC CODE ĐÃ SỬA === */
+/* Điều chỉnh kích thước icon kính lúp bên trong nút */
+.mobile-search-icon animated-icons {
+    width: 24px;
+    height: 24px;
+}
 
+/* Điều chỉnh kích thước icon 3 gạch bên trong nút */
+.hamburger-btn {
+    font-size: 1.6rem; /* Thay đổi cỡ chữ để cân đối */
+    line-height: 1;    /* Giúp căn giữa tốt hơn */
+}
+
+/* === KẾT THÚC CODE THAY THẾ === */
 
     /* 5. Logic khi nhấn nút tìm kiếm */
     .site-header.search-active {
@@ -1108,6 +1118,7 @@ input[type="range"].bill-slider {
         width: 100%;
     }
 }
+
 @media (max-width: 768px) {
     .modal.image-view .modal-close {
         width: 32px;
@@ -1232,3 +1243,11 @@ input[type="range"].bill-slider {
     }
 }
 /* === KẾT THÚC === */
+
+@media (max-width: 992px) {
+    .main-nav.is-open a {
+        padding: 15px;
+        display: block;
+        font-size: 15px !important; /* hoặc chọn kích thước bạn muốn áp dụng chung */
+    }
+}
