@@ -1,6 +1,5 @@
 ﻿// =========================================================================================
 // LOGIC CHÍNH CỦA TRANG WEB
-// Code đã được tối ưu và thêm chức năng tìm kiếm toàn màn hình (Apple Style).
 // =========================================================================================
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -11,11 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCloseBtn = document.querySelector('.modal-close');
     const modalImage = document.getElementById('modal-image');
 
-    // Biến cho tìm kiếm cũ (để xử lý click bên ngoài)
-    const headerSearchContainer = document.querySelector('.header-search');
-    const searchResultsContainer = document.getElementById('search-results');
-    
-    // --- Biến cho TÌM KIẾM MỚI (OVERLAY) ---
+    // Biến cho TÌM KIẾM MỚI (OVERLAY)
     const searchOverlay = document.getElementById('search-overlay');
     const searchInputOverlay = document.getElementById('search-overlay-input');
     const overlaySearchResultsContainer = document.getElementById('overlay-search-results');
@@ -23,8 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const desktopSearchTrigger = document.getElementById('desktop-search-trigger');
     const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
 
+    // === SỬA LỖI: BIẾN CHO POP-UP AVATAR (được chuyển vào đây) ===
+    const avatarImage = document.getElementById('avatar-image');
+    const avatarPopup = document.getElementById('avatar-popup');
+    const avatarPopupImg = document.getElementById('avatar-popup-img');
+    const avatarCloseButton = document.querySelector('.avatar-popup-close');
 
-    // --- HÀM MỞ VÀ ĐÓNG POP-UP (MODAL) ---
+
+    // --- HÀM MỞ VÀ ĐÓNG POP-UP (MODAL DỊCH VỤ) ---
     const openModal = () => {
         if (!modal || !modalOverlayEl) return;
         siteHeader.classList.add('is-hidden');
@@ -42,19 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('modal-open');
         setTimeout(() => {
             modal.classList.remove('image-view');
-            modal.style.transformOrigin = 'center center';
         }, 400);
         document.dispatchEvent(new CustomEvent('modalHasClosed'));
     };
 
-    // --- HÀM HIỂN THỊ CHI TIẾT DỊCH VỤ (TẢI DỮ LIỆU ĐỘNG) ---
+    // --- HÀM HIỂN THỊ CHI TIẾT DỊCH VỤ ---
     async function showServiceModal(serviceId) {
         const { serviceData } = await import('./service-data.js');
         const data = serviceData[serviceId];
-        if (!data) {
-            console.error("No data found for service ID:", serviceId);
-            return;
-        }
+        if (!data) return;
 
         modal.classList.remove('image-view');
         document.getElementById('modal-title').textContent = data.title;
@@ -70,55 +67,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleOverlaySearch = async (event) => {
         const query = event.target.value.toLowerCase().trim();
         overlaySearchResultsContainer.innerHTML = '';
-
         const quickLinks = document.querySelector('.search-quick-links');
         if (quickLinks) {
             quickLinks.style.display = query.length > 0 ? 'none' : 'block';
         }
-
         if (query.length < 2) {
             overlaySearchResultsContainer.style.display = 'none';
             return;
         }
 
-        try {
-            const { serviceData } = await import('./service-data.js');
+        const { serviceData } = await import('./service-data.js');
+        const results = Object.keys(serviceData)
+            .map(key => ({ id: key, ...serviceData[key] }))
+            .filter(service => {
+                const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, '');
+                const title = service.title.toLowerCase();
+                return headline.includes(query) || title.includes(query);
+            });
 
-            const results = Object.keys(serviceData)
-                .map(key => ({ id: key, ...serviceData[key] }))
-                .filter(service => {
-                    const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, '');
-                    const title = service.title.toLowerCase();
-                    return headline.includes(query) || title.includes(query);
+        if (results.length > 0) {
+            overlaySearchResultsContainer.style.display = 'block';
+            results.forEach(result => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'result-item';
+                itemElement.innerHTML = `
+                    <img src="${result.searchImg || './images/logo11.webp'}" alt="${result.title}">
+                    <div class="result-item-info">
+                        <h4>${result.headline.replace(/<[^>]*>?/gm, '')}</h4>
+                        <p>${result.title}</p>
+                    </div>`;
+                itemElement.addEventListener('click', () => {
+                    closeSearch();
+                    setTimeout(() => showServiceModal(result.id), 400);
                 });
-
-            if (results.length > 0) {
-                overlaySearchResultsContainer.style.display = 'block';
-                results.forEach(result => {
-                    const imgSrc = result.searchImg || './images/logo11.webp';
-
-                    const itemElement = document.createElement('div');
-                    itemElement.className = 'result-item';
-                    itemElement.innerHTML = `
-                        <img src="${imgSrc}" alt="${result.title}">
-                        <div class="result-item-info">
-                            <h4>${result.headline.replace(/<[^>]*>?/gm, '')}</h4>
-                            <p>${result.title}</p>
-                        </div>
-                    `;
-
-                    itemElement.addEventListener('click', () => {
-                        closeSearch();
-                        setTimeout(() => showServiceModal(result.id), 400);
-                    });
-
-                    overlaySearchResultsContainer.appendChild(itemElement);
-                });
-            } else {
-                overlaySearchResultsContainer.style.display = 'none';
-            }
-        } catch (error) {
-            console.error("Error loading or searching service data:", error);
+                overlaySearchResultsContainer.appendChild(itemElement);
+            });
+        } else {
             overlaySearchResultsContainer.style.display = 'none';
         }
     };
@@ -140,8 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (quickLinks) quickLinks.style.display = 'block';
     };
 
-
-    // --- HÀM KHỞI TẠO ACCORDION CHO FAQ TRONG MODAL ---
+    // --- HÀM KHỞI TẠO ACCORDION CHO FAQ ---
     function initFaqAccordionInsideModal() {
         const faqContainer = modal.querySelector('.faq-container');
         if (!faqContainer) return;
@@ -151,36 +134,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!questionBtn) return;
             const answer = questionBtn.nextElementSibling;
             const wasActive = questionBtn.classList.contains('active');
-            this.querySelectorAll('.faq-question').forEach(btn => {
-                if (btn !== questionBtn) {
-                    btn.classList.remove('active');
-                    btn.nextElementSibling.style.maxHeight = null;
-                }
-            });
+            this.querySelectorAll('.faq-question').forEach(btn => btn.classList.remove('active'));
+            this.querySelectorAll('.faq-answer').forEach(ans => ans.style.maxHeight = null);
             if (!wasActive) {
                 questionBtn.classList.add('active');
                 answer.style.maxHeight = answer.scrollHeight + "px";
-            } else {
-                questionBtn.classList.remove('active');
-                answer.style.maxHeight = null;
             }
         });
     }
 
-    // --- GÁN CÁC SỰ KIỆN CHUNG CHO TRANG ---
+    // --- GÁN CÁC SỰ KIỆN ---
     function setupGlobalListeners() {
+        // Sự kiện cho modal dịch vụ
         if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
         if (modalOverlayEl) modalOverlayEl.addEventListener('click', closeModal);
-        
         if (modal) {
              modal.addEventListener('click', (e) => {
-                 if (e.target.closest('.modal-content')) {
-                    e.stopPropagation();
-                 }
+                 if (e.target.closest('.modal-content')) e.stopPropagation();
              });
         }
 
-
+        // Sự kiện cho các thẻ dịch vụ
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', () => {
                 const serviceId = card.dataset.id;
@@ -188,29 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // --- GÁN SỰ KIỆN CHO TÌM KIẾM MỚI ---
+        // Sự kiện cho Tìm kiếm
         if (desktopSearchTrigger) desktopSearchTrigger.addEventListener('click', openSearch);
         if (mobileSearchTrigger) mobileSearchTrigger.addEventListener('click', openSearch);
         if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
-        
         if (searchOverlay) {
-            searchOverlay.addEventListener('click', (e) => {
-                if (e.target === searchOverlay) {
-                    closeSearch();
-                }
-            });
+            searchOverlay.addEventListener('click', (e) => { if (e.target === searchOverlay) closeSearch(); });
         }
+        if (searchInputOverlay) searchInputOverlay.addEventListener('input', handleOverlaySearch);
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && searchOverlay.classList.contains('active')) closeSearch(); });
         
-        if (searchInputOverlay) {
-            searchInputOverlay.addEventListener('input', handleOverlaySearch);
-        }
-        
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
-                closeSearch();
-            }
-        });
-        
+        // Sự kiện cho các link gợi ý nhanh trong tìm kiếm
         const quickLinksContainer = document.querySelector('.search-quick-links');
         if (quickLinksContainer) {
             quickLinksContainer.addEventListener('click', (e) => {
@@ -224,6 +186,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // === SỬA LỖI: LOGIC POP-UP AVATAR (được chuyển vào đây) ===
+        if (avatarImage && avatarPopup && avatarPopupImg && avatarCloseButton) {
+            // 1. Khi click vào ảnh avatar
+            avatarImage.addEventListener('click', () => {
+                const imgSrc = avatarImage.getAttribute('src');
+                avatarPopupImg.setAttribute('src', imgSrc);
+                avatarPopup.classList.add('show');
+            });
+            // 2. Khi click vào nút "x" để đóng
+            avatarCloseButton.addEventListener('click', () => {
+                avatarPopup.classList.remove('show');
+            });
+            // 3. Khi click vào nền đen bên ngoài để đóng
+            avatarPopup.addEventListener('click', (event) => {
+                if (event.target.id === 'avatar-popup') {
+                    avatarPopup.classList.remove('show');
+                }
+            });
+        }
+        // === KẾT THÚC SỬA LỖI ===
+
+        // Các sự kiện khác...
         const categoryTrigger = document.getElementById('category-trigger');
         const categoryOverlay = document.getElementById('category-overlay');
         const categoryMenu = document.getElementById('category-menu');
@@ -256,9 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.preventDefault();
                     closeCategoryMenu();
                     setTimeout(() => showServiceModal(serviceId), 50);
-                } else if (link.getAttribute('href') === '#') {
-                    e.preventDefault();
-                    closeCategoryMenu();
                 } else {
                     closeCategoryMenu();
                 }
@@ -273,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.target.closest('a') && mainNav.classList.contains('is-open')) mainNav.classList.remove('is-open');
             });
         }
-
+        
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href').length <= 1) return;
@@ -283,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        const animatedElements = document.querySelectorAll('.card, .section-title');
+        // Hiệu ứng fade-in khi cuộn
+        const animatedElements = document.querySelectorAll('.card, .section-title, .owner-profile');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -293,160 +275,59 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
-        // Hiệu ứng Glass cho header khi cuộn
-window.addEventListener('scroll', () => {
-    const siteHeader = document.querySelector('.site-header');
-    if (window.scrollY > 50) {
-        siteHeader.classList.add('scrolled');
-    } else {
-        siteHeader.classList.remove('scrolled');
-    }
-});
-
     }
 
+    // --- KHỞI CHẠY CÁC HÀM VÀ SỰ KIỆN ---
     setupGlobalListeners();
-
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-      searchInput.addEventListener('click', (event) => {
-        event.preventDefault();
-        openSearch(event);
-      });
-    }
-
-    const filterContainer = document.querySelector('.filter-buttons');
-    const serviceCards = document.querySelectorAll('.services-section .card');
-    if (filterContainer && serviceCards.length > 0) {
-        filterContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
-                filterContainer.querySelector('.active').classList.remove('active');
-                e.target.classList.add('active');
-                const filterValue = e.target.getAttribute('data-filter');
-                serviceCards.forEach(card => {
-                    card.style.display = (filterValue === 'all' || card.dataset.category === filterValue) ? 'flex' : 'none';
-                });
-            }
-        });
-    }
-
+    
+    // Xử lý các chức năng riêng của từng trang
     const billShowcase = document.querySelector('.bill-showcase');
     if (billShowcase) {
-        const carouselObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    initBillCarousel();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        carouselObserver.observe(billShowcase);
+        initBillCarousel();
     }
-    
-    // --- BẮT ĐẦU: CODE MỚI ĐỂ XỬ LÝ CLICK TRÊN TRANG BẢNG GIÁ ---
     const pricingGrid = document.querySelector('.pricing-grid');
     if (pricingGrid) {
         pricingGrid.addEventListener('click', (e) => {
             const card = e.target.closest('.price-card');
             if (card) {
                 const serviceId = card.dataset.id;
-                if (serviceId) {
-                    showServiceModal(serviceId);
-                }
+                if (serviceId) showServiceModal(serviceId);
             }
         });
     }
-    // --- KẾT THÚC CODE MỚI ---
-
-    const pricingTable = document.querySelector('.pricing-table');
-    if (pricingTable) {
-        pricingTable.addEventListener('click', (e) => {
-            const row = e.target.closest('.clickable-row');
-            if (row) {
-                const serviceId = row.dataset.id;
-                if (serviceId) {
-                    showServiceModal(serviceId);
-                }
-            }
-        });
-    }
-
-    // --- BẮT ĐẦU: CODE MỚI CHO TRANG FAQ.HTML ---
     const faqNavContainer = document.querySelector('.faq-nav');
     const faqContentContainer = document.querySelector('.faq-content');
-
     if (faqNavContainer && faqContentContainer) {
-        // Xử lý click vào menu điều hướng của FAQ
-        faqNavContainer.addEventListener('click', function (e) {
+        initFaqPage(faqNavContainer, faqContentContainer);
+    }
+
+    // --- CÁC HÀM CỤ THỂ ---
+    function initFaqPage(nav, content) {
+        nav.addEventListener('click', function (e) {
             e.preventDefault();
             const clickedLink = e.target.closest('.faq-nav-link');
             if (!clickedLink || clickedLink.classList.contains('active')) return;
-
             const targetId = clickedLink.getAttribute('href');
             const targetArticle = document.querySelector(targetId);
-
             if (targetArticle) {
-                // Cập nhật trạng thái active cho menu và nội dung
-                faqNavContainer.querySelector('.active')?.classList.remove('active');
+                nav.querySelector('.active')?.classList.remove('active');
                 clickedLink.classList.add('active');
-                faqContentContainer.querySelector('.active')?.classList.remove('active');
+                content.querySelector('.active')?.classList.remove('active');
                 targetArticle.classList.add('active');
-
-                // Tự động cuộn đến nội dung trên mobile
-                if (window.innerWidth <= 768) {
-                    targetArticle.scrollIntoView({ behavior: 'smooth' });
-                }
+                if (window.innerWidth <= 768) targetArticle.scrollIntoView({ behavior: 'smooth' });
             }
         });
-
-        // Xử lý click để phóng to ảnh trong bài viết FAQ
-        faqContentContainer.addEventListener('click', (e) => {
+        content.addEventListener('click', (e) => {
             if (e.target.tagName === 'IMG' && e.target.closest('.faq-article')) {
                 e.stopPropagation();
                 if (modal && modalImage) {
                     modal.classList.add('image-view');
                     modalImage.src = e.target.src;
-                    openModal(); // Dùng hàm openModal toàn cục
+                    openModal();
                 }
             }
         });
     }
-    // --- KẾT THÚC CODE CHO TRANG FAQ.HTML ---
-
-    // --- BẮT ĐẦU: HIỆU ỨNG CHUYỂN TRANG ---
-    const transitionOverlay = document.getElementById('page-transition-overlay');
-
-    // Lấy tất cả các thẻ <a> trên trang
-    document.querySelectorAll('a').forEach(link => {
-        const href = link.getAttribute('href');
-        const target = link.getAttribute('target');
-
-        // Chỉ áp dụng hiệu ứng cho các liên kết nội bộ (internal links)
-        // Bỏ qua:
-        // - Các liên kết ngoài (bắt đầu bằng http)
-        // - Các liên kết anchor (bắt đầu bằng #)
-        // - Các liên kết mở tab mới (target="_blank")
-        // - Các liên kết gọi điện, gửi mail
-        if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:') && target !== '_blank') {
-            link.addEventListener('click', function(e) {
-                // Kiểm tra xem có phải là trang web của bạn không
-                const linkUrl = new URL(href, window.location.origin);
-                if (linkUrl.origin !== window.location.origin) {
-                    return; // Nếu là link ngoài, không làm gì cả
-                }
-
-                e.preventDefault(); // Ngăn trình duyệt chuyển trang ngay
-
-                // Hiệu ứng chuyển trang
-                transitionOverlay.classList.add('active');
-
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 300); // Thay đổi thời gian trễ nếu cần
-            });
-        }
-    });
-    // --- KẾT THÚC: HIỆU ỨNG CHUYỂN TRANG ---
 
     function initBillCarousel() {
         const billTrack = document.querySelector('.bill-carousel-track');
@@ -455,145 +336,110 @@ window.addEventListener('scroll', () => {
         const billCounter = document.querySelector('.bill-counter');
 
         const allBillImages = [
-            { src: "./images_bill_thanh_toan/0313YTCAZL.webp", alt: "Bill 30" },
-            { src: "./images_bill_thanh_toan/0311YTVBZL.webp", alt: "Bill 29" },
-            { src: "./images_bill_thanh_toan/0311YTTVFB.webp", alt: "Bill 28" },
-            { src: "./images_bill_thanh_toan/0311YTNHZL.webp", alt: "Bill 27" },
-            { src: "./images_bill_thanh_toan/0311YTDMZL.webp", alt: "Bill 26" },
-            { src: "./images_bill_thanh_toan/0310YTTNFB.webp", alt: "Bill 25" },
-            { src: "./images_bill_thanh_toan/0310DSDAFB.webp", alt: "Bill 24" },
-            { src: "./images_bill_thanh_toan/0309YTQHFB.webp", alt: "Bill 23" },
-            { src: "./images_bill_thanh_toan/0308YTTAFB.webp", alt: "Bill 22" },
-            { src: "./images_bill_thanh_toan/0308YTMTFB.webp", alt: "Bill 21" },
-            { src: "./images_bill_thanh_toan/0308YTDVFB.webp", alt: "Bill 20" },
-            { src: "./images_bill_thanh_toan/0308DSMTZL.webp", alt: "Bill 19" },
-            { src: "./images_bill_thanh_toan/0306YTVPFB.webp", alt: "Bill 18" },
-            { src: "./images_bill_thanh_toan/0305YTNLFB.webp", alt: "Bill 17" },
-            { src: "./images_bill_thanh_toan/0305YTAVFB.webp", alt: "Bill 16" },
-            { src: "./images_bill_thanh_toan/0305DSĐHFB.webp", alt: "Bill 15" },
-            { src: "./images_bill_thanh_toan/0302YTVHZL.webp", alt: "Bill 14" },
-            { src: "./images_bill_thanh_toan/0302DSATFB.webp", alt: "Bill 13" },
-            { src: "./images_bill_thanh_toan/0227YTTFB.webp", alt: "Bill 12" },
-            { src: "./images_bill_thanh_toan/0223YTTLFB.webp", alt: "Bill 11" },
-            { src: "./images_bill_thanh_toan/0222YTATZL.webp", alt: "Bill 10" },
-            { src: "./images_bill_thanh_toan/0219YTNTFB.webp", alt: "Bill 9" },
-            { src: "./images_bill_thanh_toan/0218YTNCFB.webp", alt: "Bill 8" },
-            { src: "./images_bill_thanh_toan/0216YTNTFB.webp", alt: "Bill 7" },
-            { src: "./images_bill_thanh_toan/0215YTTHFB.webp", alt: "Bill 6" },
-            { src: "./images_bill_thanh_toan/0215YTTNZL.webp", alt: "Bill 5" },
-            { src: "./images_bill_thanh_toan/0204DSLHZL.webp", alt: "Bill 4" },
-            { src: "./images_bill_thanh_toan/0203YTQPZL.webp", alt: "Bill 3" },
-            { src: "./images_bill_thanh_toan/0202DSĐHFB.webp", alt: "Bill 2" },
-            { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" }
+            { src: "./images_bill_thanh_toan/0313YTCAZL.webp", alt: "Bill 30" }, { src: "./images_bill_thanh_toan/0311YTVBZL.webp", alt: "Bill 29" },
+            { src: "./images_bill_thanh_toan/0311YTTVFB.webp", alt: "Bill 28" }, { src: "./images_bill_thanh_toan/0311YTNHZL.webp", alt: "Bill 27" },
+            { src: "./images_bill_thanh_toan/0311YTDMZL.webp", alt: "Bill 26" }, { src: "./images_bill_thanh_toan/0310YTTNFB.webp", alt: "Bill 25" },
+            { src: "./images_bill_thanh_toan/0310DSDAFB.webp", alt: "Bill 24" }, { src: "./images_bill_thanh_toan/0309YTQHFB.webp", alt: "Bill 23" },
+            { src: "./images_bill_thanh_toan/0308YTTAFB.webp", alt: "Bill 22" }, { src: "./images_bill_thanh_toan/0308YTMTFB.webp", alt: "Bill 21" },
+            { src: "./images_bill_thanh_toan/0308YTDVFB.webp", alt: "Bill 20" }, { src: "./images_bill_thanh_toan/0308DSMTZL.webp", alt: "Bill 19" },
+            { src: "./images_bill_thanh_toan/0306YTVPFB.webp", alt: "Bill 18" }, { src: "./images_bill_thanh_toan/0305YTNLFB.webp", alt: "Bill 17" },
+            { src: "./images_bill_thanh_toan/0305YTAVFB.webp", alt: "Bill 16" }, { src: "./images_bill_thanh_toan/0305DSĐHFB.webp", alt: "Bill 15" },
+            { src: "./images_bill_thanh_toan/0302YTVHZL.webp", alt: "Bill 14" }, { src: "./images_bill_thanh_toan/0302DSATFB.webp", alt: "Bill 13" },
+            { src: "./images_bill_thanh_toan/0227YTTFB.webp", alt: "Bill 12" }, { src: "./images_bill_thanh_toan/0223YTTLFB.webp", alt: "Bill 11" },
+            { src: "./images_bill_thanh_toan/0222YTATZL.webp", alt: "Bill 10" }, { src: "./images_bill_thanh_toan/0219YTNTFB.webp", alt: "Bill 9" },
+            { src: "./images_bill_thanh_toan/0218YTNCFB.webp", alt: "Bill 8" }, { src: "./images_bill_thanh_toan/0216YTNTFB.webp", alt: "Bill 7" },
+            { src: "./images_bill_thanh_toan/0215YTTHFB.webp", alt: "Bill 6" }, { src: "./images_bill_thanh_toan/0215YTTNZL.webp", alt: "Bill 5" },
+            { src: "./images_bill_thanh_toan/0204DSLHZL.webp", alt: "Bill 4" }, { src: "./images_bill_thanh_toan/0203YTQPZL.webp", alt: "Bill 3" },
+            { src: "./images_bill_thanh_toan/0202DSĐHFB.webp", alt: "Bill 2" }, { src: "./images_bill_thanh_toan/0128YTVHZL.webp", alt: "Bill 1" }
         ];
 
-        const initialLoadCount = 10;
         let items = [];
+        let currentIndex = 0;
+        let autoSlideTimer;
 
-        function addImageToCarousel(index) {
-            if (index >= allBillImages.length || billTrack.children[index]) return;
-
-            const imgData = allBillImages[index];
+        allBillImages.slice(0, 10).forEach(imgData => {
             const item = document.createElement('div');
             item.className = 'bill-carousel-item';
             const img = document.createElement('img');
             img.src = imgData.src;
             img.alt = imgData.alt;
             img.loading = 'lazy';
-            img.onerror = () => item.style.display = 'none';
             item.appendChild(img);
             billTrack.appendChild(item);
-        }
-
-        for (let i = 0; i < initialLoadCount && i < allBillImages.length; i++) {
-            addImageToCarousel(i);
-        }
+        });
         
         items = Array.from(billTrack.children);
         if (items.length <= 1) return;
 
-        let currentIndex = 0;
-        let autoSlideTimer;
-        let isModalOpen = false;
-        const autoSlideInterval = 2000;
-
-        function updateActiveState(centerIndex) {
-            if (centerIndex === -1 || centerIndex === currentIndex) return;
-            currentIndex = centerIndex;
-            items.forEach((item, index) => item.classList.toggle('active', index === currentIndex));
-            
+        function updateSliderAndCounter(index) {
             if (billSlider) {
-                billSlider.value = currentIndex;
-                const progressPercent = (allBillImages.length > 1) ? (currentIndex / (allBillImages.length - 1)) * 100 : 0;
+                billSlider.value = index;
+                const progressPercent = (allBillImages.length > 1) ? (index / (allBillImages.length - 1)) * 100 : 0;
                 billSlider.style.setProperty('--progress', `${progressPercent}%`);
             }
-            if (billCounter) billCounter.textContent = `${currentIndex + 1} / ${allBillImages.length}`;
+            if (billCounter) billCounter.textContent = `${index + 1} / ${allBillImages.length}`;
         }
 
-        function getCenterIndex() {
-            const trackRect = billTrack.getBoundingClientRect();
-            const trackCenter = trackRect.left + trackRect.width / 2;
-            let closestIndex = -1;
-            let minDiff = Infinity;
-            items.forEach((item, index) => {
-                const itemRect = item.getBoundingClientRect();
-                const itemCenter = itemRect.left + itemRect.width / 2;
-                const diff = Math.abs(itemCenter - trackCenter);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    closestIndex = index;
-                }
-            });
-            return closestIndex;
-        }
-        
         function moveToSlide(index) {
-            if (index >= items.length && index < allBillImages.length) {
-                addImageToCarousel(index);
+            if (index < 0 || index >= allBillImages.length) return;
+            if (index >= items.length) {
+                for (let i = items.length; i <= index; i++) {
+                     const imgData = allBillImages[i];
+                     const item = document.createElement('div');
+                     item.className = 'bill-carousel-item';
+                     const img = document.createElement('img');
+                     img.src = imgData.src;
+                     img.alt = imgData.alt;
+                     img.loading = 'lazy';
+                     item.appendChild(img);
+                     billTrack.appendChild(item);
+                }
                 items = Array.from(billTrack.children);
             }
-
-            const preloadIndex = index + 9;
-            if (preloadIndex < allBillImages.length && !billTrack.children[preloadIndex]) {
-                addImageToCarousel(preloadIndex);
-                items = Array.from(billTrack.children);
-            }
-
-            if (index < 0 || index >= items.length) return;
-            
             const targetItem = items[index];
             if (targetItem) {
                 const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
                 const scrollAmount = targetItem.offsetLeft - padding;
                 billTrack.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-                updateActiveState(index);
+                currentIndex = index;
+                updateSliderAndCounter(index);
+                items.forEach((item, idx) => item.classList.toggle('active', idx === index));
             }
         }
 
         function startAutoSlide() {
-            if (isModalOpen) return;
-            clearInterval(autoSlideTimer);
+            stopAutoSlide();
             autoSlideTimer = setInterval(() => {
                 let nextIndex = (currentIndex + 1) % allBillImages.length;
                 moveToSlide(nextIndex);
-            }, autoSlideInterval);
+            }, 2000);
         }
-
-        function stopAutoSlide() {
-            clearInterval(autoSlideTimer);
-        }
-
+        function stopAutoSlide() { clearInterval(autoSlideTimer); }
+        
         let isScrolling;
         billTrack.addEventListener('scroll', () => {
-            stopAutoSlide();
-            window.clearTimeout(isScrolling);
-            isScrolling = setTimeout(() => {
-                updateActiveState(getCenterIndex());
+             stopAutoSlide();
+             window.clearTimeout(isScrolling);
+             isScrolling = setTimeout(() => {
+                const trackRect = billTrack.getBoundingClientRect();
+                const trackCenter = trackRect.left + trackRect.width / 2;
+                let closestIndex = -1, minDiff = Infinity;
+                items.forEach((item, index) => {
+                    const itemRect = item.getBoundingClientRect();
+                    const itemCenter = itemRect.left + itemRect.width / 2;
+                    const diff = Math.abs(itemCenter - trackCenter);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        closestIndex = index;
+                    }
+                });
+                if (closestIndex !== -1 && currentIndex !== closestIndex) moveToSlide(closestIndex);
                 startAutoSlide();
-            }, 150);
+             }, 150);
         });
 
         if (billSlider) {
+            billSlider.max = allBillImages.length - 1;
             billSlider.addEventListener('input', () => {
                 stopAutoSlide();
                 moveToSlide(parseInt(billSlider.value, 10));
@@ -609,24 +455,17 @@ window.addEventListener('scroll', () => {
                 openModal();
             }
         });
-
-        document.addEventListener('modalHasOpened', () => { isModalOpen = true; stopAutoSlide(); });
-        document.addEventListener('modalHasClosed', () => { isModalOpen = false; startAutoSlide(); });
-
+        
+        document.addEventListener('modalHasOpened', stopAutoSlide);
+        document.addEventListener('modalHasClosed', startAutoSlide);
+        
         const firstItem = items[0];
         if (firstItem) {
             const padding = (billTrack.clientWidth - firstItem.clientWidth) / 2;
             billTrack.style.paddingLeft = `${padding}px`;
             billTrack.style.paddingRight = `${padding}px`;
-            firstItem.classList.add('active');
         }
-        
-        if (billSlider) billSlider.max = allBillImages.length - 1;
-        if (billCounter) billCounter.textContent = `1 / ${allBillImages.length}`;
 
-        setTimeout(() => {
-            moveToSlide(0);
-            startAutoSlide();
-        }, 100);
+        setTimeout(() => { moveToSlide(0); startAutoSlide(); }, 100);
     }
 });

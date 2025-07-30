@@ -1298,3 +1298,246 @@ input[type="range"].bill-slider {
     pointer-events: auto; /* Chặn click khi đang hoạt động */
 }
 /* === KẾT THÚC: HIỆU ỨNG CHUYỂN TRANG === */
+
+/* === START: OWNER PROFILE SECTION CSS === */
+/*
+ * HIỆU ỨNG 1: SLIDE-UP & FADE-IN KHI CUỘN
+ * Thêm .owner-profile vào nhóm các phần tử có hiệu ứng xuất hiện.
+ */
+.owner-profile {
+	padding: 50px 20px;
+	background-color: #f9fafb;
+	border-top: 1px solid #e5e7eb;
+	/* Thuộc tính ban đầu cho hiệu ứng */
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Khi có class .is-visible (thêm bởi JS), phần tử sẽ hiện ra */
+.owner-profile.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.profile-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+	max-width: 800px;
+	margin: 0 auto;
+	background: #ffffff;
+	padding: 30px;
+	border-radius: 20px;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+	text-align: center;
+}
+
+.profile-avatar {
+	width: 140px;
+	height: 140px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 5px solid #c00;
+	box-shadow: 0 0 0 5px #fff;
+	flex-shrink: 0;
+}
+
+.profile-info {
+	width: 100%;
+}
+
+.profile-name {
+	font-size: 2rem;
+	font-weight: 700;
+	color: #1d1d1f;
+	margin: 0;
+}
+
+/*
+ * HIỆU ỨNG 2: HUY HIỆU XÁC THỰC NHẤP NHÁY
+ * Tạo hiệu ứng "pulse" nhẹ nhàng để thu hút sự chú ý.
+ */
+@keyframes pulse-badge {
+	0% {
+		transform: scale(1);
+		text-shadow: 0 0 4px rgba(29, 161, 242, 0.3);
+	}
+	50% {
+		transform: scale(1.2);
+		text-shadow: 0 0 12px rgba(29, 161, 242, 0.8);
+	}
+	100% {
+		transform: scale(1);
+		text-shadow: 0 0 4px rgba(29, 161, 242, 0.3);
+	}
+}
+
+.verified-badge {
+	color: #1da1f2;
+	font-size: 1.5rem;
+	vertical-align: middle;
+	/* Áp dụng animation */
+	animation: pulse-badge 2.5s infinite ease-in-out;
+}
+
+.profile-subtitle {
+	font-size: 1.1rem;
+	color: #6e6e73;
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+
+.profile-rating {
+	font-size: 1rem;
+	color: #333;
+	margin-bottom: 20px;
+}
+
+.profile-rating span {
+	color: #ffc107;
+	font-size: 1.3rem;
+}
+
+.profile-details {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 25px 0;
+	display: inline-block;
+}
+
+.profile-details li {
+	margin-bottom: 8px;
+	font-size: 1.05rem;
+	color: #333;
+}
+
+.profile-details a {
+	color: #c00;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.profile-details a:hover {
+	text-decoration: underline;
+}
+
+.profile-social {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.social-btn {
+	display: inline-block;
+	padding: 12px 25px;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 600;
+	border: none;
+	color: #fff;
+	/* Thêm 'filter' và 'box-shadow' vào transition để hiệu ứng mượt hơn */
+	transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+/*
+ * HIỆU ỨNG 3: HOVER NÚT LIÊN HỆ
+ * Nâng cấp hiệu ứng khi di chuột vào.
+ */
+.social-btn:hover {
+	transform: translateY(-4px); /* Nhô cao hơn một chút */
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng rõ hơn */
+	filter: brightness(1.15); /* Tăng độ sáng để tạo cảm giác "nổi bật" */
+}
+
+.zalo-btn {
+	background-color: #0068ff;
+}
+.telegram-btn {
+	background-color: #27a7e7;
+}
+.messenger-btn {
+	background-color: #0084ff;
+}
+
+/* Responsive adjustments for the profile card */
+@media (min-width: 768px) {
+	.profile-card {
+		flex-direction: row;
+		text-align: left;
+	}
+
+	.profile-info {
+		text-align: left;
+	}
+
+	.profile-details {
+		display: block;
+		text-align: left;
+	}
+
+	.profile-social {
+		justify-content: flex-start;
+	}
+}
+
+
+/* === CSS CHO POP-UP AVATAR === */
+
+/* Lớp nền đen mờ bao trùm toàn màn hình */
+.avatar-popup {
+  display: none; /* Mặc định ẩn đi */
+  position: fixed; /* Luôn hiển thị trên cùng, dù cuộn trang */
+  z-index: 1001; /* Đảm bảo nó nằm trên tất cả các phần tử khác */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Nền đen mờ */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Class này sẽ được thêm bằng JavaScript để hiện pop-up */
+.avatar-popup.show {
+    display: flex; /* Hiện pop-up lên */
+}
+
+/* Bức ảnh lớn bên trong pop-up */
+.avatar-popup-content {
+  display: block;
+  max-width: 90%; /* Chiều rộng tối đa là 90% màn hình */
+  max-height: 90%; /* Chiều cao tối đa là 90% màn hình */
+  object-fit: contain; /* Đảm bảo ảnh luôn vừa vặn, không bị méo */
+  animation: zoomIn 0.3s ease; /* Hiệu ứng phóng to khi hiện ra */
+}
+
+/* Nút "x" để đóng pop-up */
+.avatar-popup-close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.avatar-popup-close:hover {
+  color: #ccc; /* Đổi màu khi di chuột vào */
+}
+
+/* Hiệu ứng phóng to cho ảnh */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
