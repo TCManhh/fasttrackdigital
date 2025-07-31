@@ -736,6 +736,9 @@
 
 
 @media (max-width: 768px) {
+    .category-menu {
+        padding-bottom: 120px; /* Thêm vùng đệm dưới cùng cho menu dịch vụ */
+    }
     .modal.image-view .modal-close {
         width: 32px;
         height: 32px;
