@@ -1329,21 +1329,15 @@ input[type="range"].bill-slider {
 /* === KẾT THÚC: HIỆU ỨNG CHUYỂN TRANG === */
 
 /* === START: OWNER PROFILE SECTION CSS === */
-/*
- * HIỆU ỨNG 1: SLIDE-UP & FADE-IN KHI CUỘN
- * Thêm .owner-profile vào nhóm các phần tử có hiệu ứng xuất hiện.
- */
 .owner-profile {
 	padding: 50px 20px;
 	background-color: #f9fafb;
 	border-top: 1px solid #e5e7eb;
-	/* Thuộc tính ban đầu cho hiệu ứng */
 	opacity: 0;
 	transform: translateY(30px);
 	transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-/* Khi có class .is-visible (thêm bởi JS), phần tử sẽ hiện ra */
 .owner-profile.is-visible {
 	opacity: 1;
 	transform: translateY(0);
@@ -1363,18 +1357,17 @@ input[type="range"].bill-slider {
 	text-align: center;
 }
 
-.profile-avatar {
-	width: 140px;
-	height: 140px;
-	border-radius: 50%;
-	object-fit: cover;
-	border: 5px solid #c00;
-	box-shadow: 0 0 0 5px #fff;
-	flex-shrink: 0;
+.profile-info {
+    flex: 1; /* Sửa từ width: 100% */
+    z-index: 2; 
+    position: relative;
 }
 
-.profile-info {
-	width: 100%;
+
+/* HIỆU ỨNG TEXT TỎA SÁNG (SHIMMER EFFECT) */
+@keyframes shimmer {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(200%) skewX(-15deg); }
 }
 
 .profile-name {
@@ -1382,34 +1375,47 @@ input[type="range"].bill-slider {
 	font-weight: 700;
 	color: #1d1d1f;
 	margin: 0;
+    position: relative; 
+    overflow: hidden;   
 }
 
-/*
- * HIỆU ỨNG 2: HUY HIỆU XÁC THỰC NHẤP NHÁY
- * Tạo hiệu ứng "pulse" nhẹ nhàng để thu hút sự chú ý.
- */
-@keyframes pulse-badge {
-	0% {
-		transform: scale(1);
-		text-shadow: 0 0 4px rgba(29, 161, 242, 0.3);
-	}
-	50% {
-		transform: scale(1.2);
-		text-shadow: 0 0 12px rgba(29, 161, 242, 0.8);
-	}
-	100% {
-		transform: scale(1);
-		text-shadow: 0 0 4px rgba(29, 161, 242, 0.3);
-	}
+.profile-name::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%; 
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 4s infinite;
+    animation-delay: 2s; 
 }
 
+
+/* === START: CSS HUY HIỆU XÁC THỰC (FACEBOOK STYLE) === */
 .verified-badge {
-	color: #1da1f2;
-	font-size: 1.5rem;
-	vertical-align: middle;
-	/* Áp dụng animation */
-	animation: pulse-badge 2.5s infinite ease-in-out;
+    display: inline-flex; /* Giúp căn chỉnh SVG dễ dàng */
+    align-items: center;
+    justify-content: center;
+    width: 0.95em; /* Kích thước tương đối theo cỡ chữ */
+    height: 0.95em;
+    margin-left: -1px; /* Khoảng cách với tên */
+    vertical-align: -0.15em; /* Căn chỉnh lại chiều dọc cho đẹp hơn */
+    color: #1877F2; /* Màu xanh của Facebook */
 }
+
+.verified-badge svg {
+    width: 100%;
+    height: 100%;
+    /* Thuộc tính fill="currentColor" trong SVG sẽ kế thừa màu từ thẻ span cha */
+}
+/* === END: CSS HUY HIỆU XÁC THỰC === */
+
 
 .profile-subtitle {
 	font-size: 1.1rem;
@@ -1467,18 +1473,13 @@ input[type="range"].bill-slider {
 	font-weight: 600;
 	border: none;
 	color: #fff;
-	/* Thêm 'filter' và 'box-shadow' vào transition để hiệu ứng mượt hơn */
 	transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
-/*
- * HIỆU ỨNG 3: HOVER NÚT LIÊN HỆ
- * Nâng cấp hiệu ứng khi di chuột vào.
- */
 .social-btn:hover {
-	transform: translateY(-4px); /* Nhô cao hơn một chút */
-	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Đổ bóng rõ hơn */
-	filter: brightness(1.15); /* Tăng độ sáng để tạo cảm giác "nổi bật" */
+	transform: translateY(-4px); 
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); 
+	filter: brightness(1.15); 
 }
 
 .zalo-btn {
@@ -1514,36 +1515,31 @@ input[type="range"].bill-slider {
 
 
 /* === CSS CHO POP-UP AVATAR === */
-
-/* Lớp nền đen mờ bao trùm toàn màn hình */
 .avatar-popup {
-  display: none; /* Mặc định ẩn đi */
-  position: fixed; /* Luôn hiển thị trên cùng, dù cuộn trang */
-  z-index: 1001; /* Đảm bảo nó nằm trên tất cả các phần tử khác */
+  display: none; 
+  position: fixed; 
+  z-index: 1001; 
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.85); /* Nền đen mờ */
-  justify-content: center; /* Căn giữa theo chiều ngang */
-  align-items: center; /* Căn giữa theo chiều dọc */
+  background-color: rgba(0, 0, 0, 0.85); 
+  justify-content: center; 
+  align-items: center;
 }
 
-/* Class này sẽ được thêm bằng JavaScript để hiện pop-up */
 .avatar-popup.show {
-    display: flex; /* Hiện pop-up lên */
+    display: flex;
 }
 
-/* Bức ảnh lớn bên trong pop-up */
 .avatar-popup-content {
   display: block;
-  max-width: 90%; /* Chiều rộng tối đa là 90% màn hình */
-  max-height: 90%; /* Chiều cao tối đa là 90% màn hình */
-  object-fit: contain; /* Đảm bảo ảnh luôn vừa vặn, không bị méo */
-  animation: zoomIn 0.3s ease; /* Hiệu ứng phóng to khi hiện ra */
+  max-width: 90%; 
+  max-height: 90%;
+  object-fit: contain;
+  animation: zoomIn 0.3s ease;
 }
 
-/* Nút "x" để đóng pop-up */
 .avatar-popup-close {
   position: absolute;
   top: 20px;
@@ -1556,10 +1552,9 @@ input[type="range"].bill-slider {
 }
 
 .avatar-popup-close:hover {
-  color: #ccc; /* Đổi màu khi di chuột vào */
+  color: #ccc;
 }
 
-/* Hiệu ứng phóng to cho ảnh */
 @keyframes zoomIn {
   from {
     transform: scale(0.8);
@@ -1596,4 +1591,32 @@ input[type="range"].bill-slider {
     .profile-rating { font-size: 0.8rem; }
     .profile-details li { font-size: 1.1rem; }
     .profile-social a { font-size: 1rem; padding: 6px 8px; }
+}
+.profile-avatar-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    padding: 3px;
+    border-radius: 50%;
+    background: #1877F2; /* Đổi sang màu xanh của Facebook */
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+    border: 4px solid white;
+}
+
+.active-status-dot {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 28px;
+    height: 28px;
+    background-color: #31A24C; /* Green color */
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }

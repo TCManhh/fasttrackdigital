@@ -12,15 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Biến cho TÌM KIẾM MỚI (OVERLAY)
     const searchOverlay = document.getElementById('search-overlay');
-    // ✅ SỬA LỖI: Thêm biến cho thanh tìm kiếm ở header
-    const searchInput = document.getElementById('search-input'); 
+    const searchInput = document.getElementById('search-input');
     const searchInputOverlay = document.getElementById('search-overlay-input');
     const overlaySearchResultsContainer = document.getElementById('overlay-search-results');
     const closeSearchBtn = document.getElementById('close-search-btn');
     const desktopSearchTrigger = document.getElementById('desktop-search-trigger');
     const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
 
-    // === SỬA LỖI: BIẾN CHO POP-UP AVATAR (được chuyển vào đây) ===
+    // Biến cho POP-UP AVATAR
     const avatarImage = document.getElementById('avatar-image');
     const avatarPopup = document.getElementById('avatar-popup');
     const avatarPopupImg = document.getElementById('avatar-popup-img');
@@ -164,10 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // ✅ SỬA LỖI: Thêm sự kiện click cho thanh tìm kiếm
+        // Sự kiện click cho thanh tìm kiếm
         if (desktopSearchTrigger) desktopSearchTrigger.addEventListener('click', openSearch);
         if (mobileSearchTrigger) mobileSearchTrigger.addEventListener('click', openSearch);
-        if (searchInput) searchInput.addEventListener('click', openSearch); // Dòng này đã được thêm vào
+        if (searchInput) searchInput.addEventListener('click', openSearch);
 
         if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
         if (searchOverlay) {
@@ -190,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // === SỬA LỖI: LOGIC POP-UP AVATAR (được chuyển vào đây) ===
+        // === LOGIC POP-UP AVATAR ===
         if (avatarImage && avatarPopup && avatarPopupImg && avatarCloseButton) {
             // 1. Khi click vào ảnh avatar
             avatarImage.addEventListener('click', () => {
@@ -209,8 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        // === KẾT THÚC SỬA LỖI ===
-
+        
         // Các sự kiện khác...
         const categoryTrigger = document.getElementById('category-trigger');
         const categoryOverlay = document.getElementById('category-overlay');
@@ -250,23 +248,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Đoạn code mới để dán vào
-// Đoạn code mới chính xác
-const hamburgerBtn = document.querySelector('.hamburger-btn');
-const mainNav = document.querySelector('.main-nav');
+        const hamburgerBtn = document.querySelector('.hamburger-btn');
+        const mainNav = document.querySelector('.main-nav');
 
-if (hamburgerBtn && mainNav) {
-    hamburgerBtn.addEventListener('click', () => {
-        mainNav.classList.toggle('is-open');
-    });
+        if (hamburgerBtn && mainNav) {
+            hamburgerBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('is-open');
+            });
 
-    // Đóng menu khi nhấn vào một link bất kỳ bên trong
-    mainNav.addEventListener('click', (e) => {
-        if (e.target.closest('a')) {
-            mainNav.classList.remove('is-open');
+            // Đóng menu khi nhấn vào một link bất kỳ bên trong
+            mainNav.addEventListener('click', (e) => {
+                if (e.target.closest('a')) {
+                    mainNav.classList.remove('is-open');
+                }
+            });
         }
-    });
-}
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href').length <= 1) return;
@@ -360,12 +356,8 @@ if (hamburgerBtn && mainNav) {
         items = Array.from(billTrack.children);
         if (items.length <= 1) return;
         
-        // **BẮT ĐẦU LOGIC MỚI**
-        // Hàm trợ giúp để kiểm tra và tải ảnh nếu cần
         function ensureImageIsLoaded(imageIndex) {
-            // Chỉ thực hiện nếu index hợp lệ và ảnh chưa được tải
             if (imageIndex < allBillImages.length && imageIndex >= items.length) {
-                // Tải tất cả các ảnh từ ảnh cuối cùng đã tải cho đến ảnh mục tiêu
                 for (let i = items.length; i <= imageIndex; i++) {
                     if (!allBillImages[i]) continue;
                     const imgData = allBillImages[i];
@@ -378,11 +370,9 @@ if (hamburgerBtn && mainNav) {
                     item.appendChild(img);
                     billTrack.appendChild(item);
                 }
-                // Cập nhật lại danh sách các item đã có trong DOM
                 items = Array.from(billTrack.children);
             }
         }
-        // **KẾT THÚC LOGIC MỚI**
 
         function updateSliderAndCounter(index) {
             if (billSlider) {
@@ -395,10 +385,7 @@ if (hamburgerBtn && mainNav) {
 
         function moveToSlide(index) {
             if (index < 0 || index >= allBillImages.length) return;
-            
-            // 1. Đảm bảo ảnh đang cần xem đã được tải
             ensureImageIsLoaded(index);
-            
             const targetItem = items[index];
             if (targetItem) {
                 const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
@@ -408,9 +395,6 @@ if (hamburgerBtn && mainNav) {
                 updateSliderAndCounter(index);
                 items.forEach((item, idx) => item.classList.toggle('active', idx === index));
             }
-
-            // 2. **LOGIC CHÍNH**: Tải trước ảnh tiếp theo một cách chủ động
-            // Khi xem ảnh `index`, ta sẽ tải ảnh `index + 5`
             const preloadIndex = index + 5;
             ensureImageIsLoaded(preloadIndex);
         }
@@ -477,16 +461,10 @@ if (hamburgerBtn && mainNav) {
         setTimeout(() => { moveToSlide(0); startAutoSlide(); }, 100);
     }
     
-    // --- BẮT ĐẦU: HÀM MỚI CHO HIỆU ỨNG HEADER KHI CUỘN ---
     function setupHeaderScrollEffects() {
         if (!siteHeader) return;
-    
-        // Logic này chỉ thêm/bỏ lớp .scrolled để co lại/làm mờ header
-        // Logic ẩn/hiện đã được loại bỏ để header luôn được ghim
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-            // Thêm/xóa lớp .scrolled để co lại và làm mờ header
             if (scrollTop > 20) {
                 siteHeader.classList.add('scrolled');
             } else {
@@ -494,9 +472,7 @@ if (hamburgerBtn && mainNav) {
             }
         });
     }
-    // --- KẾT THÚC: HÀM MỚI CHO HIỆU ỨNG HEADER ---
 
-    // --- BẮT ĐẦU: HÀM MỚI CHO TÍNH NĂNG SCROLLSPY ---
     function initScrollSpy() {
         const navLinks = document.querySelectorAll('.main-nav a[href*="#"]');
         const homeLink = document.querySelector('.main-nav a[href="index.html"]');
@@ -504,9 +480,9 @@ if (hamburgerBtn && mainNav) {
         const sections = Array.from(navLinks).map(link => {
             const id = link.getAttribute('href').split('#')[1];
             if (id) return document.getElementById(id);
-        }).filter(Boolean); // Lọc bỏ những giá trị null
+        }).filter(Boolean);
     
-        if (sections.length === 0) return; // Thoát nếu không có section nào trên trang
+        if (sections.length === 0) return;
     
         const observerOptions = {
             rootMargin: '-150px 0px -50% 0px',
@@ -519,11 +495,7 @@ if (hamburgerBtn && mainNav) {
                 if (entry.isIntersecting) {
                     isAnySectionActive = true;
                     const id = entry.target.getAttribute('id');
-                    
-                    // Bỏ active tất cả các link
                     document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active-page'));
-                    
-                    // Active link tương ứng
                     const activeLink = document.querySelector(`.main-nav a[href*="#${id}"]`);
                     if (activeLink) {
                         activeLink.classList.add('active-page');
@@ -531,7 +503,6 @@ if (hamburgerBtn && mainNav) {
                 }
             });
     
-            // Nếu không có section nào active và đang ở đầu trang, active link TRANG CHỦ
             if (!isAnySectionActive && window.scrollY < sections[0].offsetTop - 150) {
                  document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active-page'));
                  if(homeLink) homeLink.classList.add('active-page');
@@ -541,12 +512,11 @@ if (hamburgerBtn && mainNav) {
     
         sections.forEach(section => observer.observe(section));
     }
-    // --- KẾT THÚC: HÀM MỚI CHO TÍNH NĂNG SCROLLSPY ---
     
     // --- KHỞI CHẠY CÁC HÀM VÀ SỰ KIỆN ---
     setupGlobalListeners();
     setupHeaderScrollEffects();
-    initScrollSpy(); // Chạy hàm ScrollSpy mới
+    initScrollSpy();
     
     // Xử lý các chức năng riêng của từng trang
     const billShowcase = document.querySelector('.bill-showcase');
@@ -568,5 +538,4 @@ if (hamburgerBtn && mainNav) {
     if (faqNavContainer && faqContentContainer) {
         initFaqPage(faqNavContainer, faqContentContainer);
     }
-
 });
