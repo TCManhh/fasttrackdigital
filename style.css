@@ -1596,8 +1596,8 @@ input[type="range"].bill-slider {
 /* Màn hình nhỏ hơn 480px (mobile nhỏ) */
 @media (max-width: 480px) {
     .profile-name { font-size: 1.7rem; }
-    .profile-subtitle { font-size: 1.1rem; }
-    .profile-rating { font-size: 0.9rem; }
-    .profile-details li { font-size: 1.2rem; }
-    .profile-social a { font-size: 1.1rem; padding: 6px 8px; }
+    .profile-subtitle { font-size: 1rem; }
+    .profile-rating { font-size: 0.8rem; }
+    .profile-details li { font-size: 1.1rem; }
+    .profile-social a { font-size: 1rem; padding: 6px 8px; }
 }
