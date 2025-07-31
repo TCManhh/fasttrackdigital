@@ -1121,10 +1121,6 @@ input[type="range"].bill-slider {
         position: relative;
     }
     
-    .hamburger-btn {
-        font-size: 1.8rem;
-    }
-    
     /* === 3. CSS CHO MENU XỔ XUỐNG MỚI === */
     .main-nav {
         display: block; /* Chuyển về display: block */

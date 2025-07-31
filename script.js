@@ -345,7 +345,8 @@ if (hamburgerBtn && mainNav) {
         let currentIndex = 0;
         let autoSlideTimer;
 
-        allBillImages.slice(0, 10).forEach(imgData => {
+        // Load 5 ảnh đầu tiên
+        allBillImages.slice(0, 5).forEach(imgData => {
             const item = document.createElement('div');
             item.className = 'bill-carousel-item';
             const img = document.createElement('img');
@@ -358,6 +359,30 @@ if (hamburgerBtn && mainNav) {
         
         items = Array.from(billTrack.children);
         if (items.length <= 1) return;
+        
+        // **BẮT ĐẦU LOGIC MỚI**
+        // Hàm trợ giúp để kiểm tra và tải ảnh nếu cần
+        function ensureImageIsLoaded(imageIndex) {
+            // Chỉ thực hiện nếu index hợp lệ và ảnh chưa được tải
+            if (imageIndex < allBillImages.length && imageIndex >= items.length) {
+                // Tải tất cả các ảnh từ ảnh cuối cùng đã tải cho đến ảnh mục tiêu
+                for (let i = items.length; i <= imageIndex; i++) {
+                    if (!allBillImages[i]) continue;
+                    const imgData = allBillImages[i];
+                    const item = document.createElement('div');
+                    item.className = 'bill-carousel-item';
+                    const img = document.createElement('img');
+                    img.src = imgData.src;
+                    img.alt = imgData.alt;
+                    img.loading = 'lazy';
+                    item.appendChild(img);
+                    billTrack.appendChild(item);
+                }
+                // Cập nhật lại danh sách các item đã có trong DOM
+                items = Array.from(billTrack.children);
+            }
+        }
+        // **KẾT THÚC LOGIC MỚI**
 
         function updateSliderAndCounter(index) {
             if (billSlider) {
@@ -370,20 +395,10 @@ if (hamburgerBtn && mainNav) {
 
         function moveToSlide(index) {
             if (index < 0 || index >= allBillImages.length) return;
-            if (index >= items.length) {
-                for (let i = items.length; i <= index; i++) {
-                     const imgData = allBillImages[i];
-                     const item = document.createElement('div');
-                     item.className = 'bill-carousel-item';
-                     const img = document.createElement('img');
-                     img.src = imgData.src;
-                     img.alt = imgData.alt;
-                     img.loading = 'lazy';
-                     item.appendChild(img);
-                     billTrack.appendChild(item);
-                }
-                items = Array.from(billTrack.children);
-            }
+            
+            // 1. Đảm bảo ảnh đang cần xem đã được tải
+            ensureImageIsLoaded(index);
+            
             const targetItem = items[index];
             if (targetItem) {
                 const padding = (billTrack.clientWidth - targetItem.clientWidth) / 2;
@@ -393,6 +408,11 @@ if (hamburgerBtn && mainNav) {
                 updateSliderAndCounter(index);
                 items.forEach((item, idx) => item.classList.toggle('active', idx === index));
             }
+
+            // 2. **LOGIC CHÍNH**: Tải trước ảnh tiếp theo một cách chủ động
+            // Khi xem ảnh `index`, ta sẽ tải ảnh `index + 5`
+            const preloadIndex = index + 5;
+            ensureImageIsLoaded(preloadIndex);
         }
 
         function startAutoSlide() {
@@ -550,4 +570,3 @@ if (hamburgerBtn && mainNav) {
     }
 
 });
-
