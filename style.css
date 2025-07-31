@@ -6,6 +6,7 @@
 
 :root {
     --card-gap: 15px;
+    --primary-red: #c00;
 }
 
 html {
@@ -16,6 +17,7 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #ffffff;
     color: #1d1d1f;
+    padding-top: 75px; /* THAY ĐỔI: Giảm padding để khớp với header mới */
 }
 
     body.modal-open {
@@ -46,20 +48,34 @@ html {
 /* === KẾT THÚC: CODE TỐI ƯU PHÔNG CHỮ CHO TỪNG THIẾT BỊ === */
 
 
-/* === CSS CHO HEADER === */
+/* === CSS CHO HEADER (ĐÃ NÂNG CẤP) === */
 .site-header {
     background-color: #fff;
-    padding: 15px 40px; /* Tăng khoảng đệm trên/dưới từ 10px lên 15px */
+    padding: 15px 40px;
     border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    position: relative;
+    position: fixed; /* Chuyển thành fixed để luôn ở trên cùng */
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1001;
-    transition: transform 0.4s ease;
-    height: 85px; /* Tăng chiều cao từ 71px lên 85px */
+    height: 75px; /* THAY ĐỔI: Giảm chiều cao mặc định */
+    /* Cập nhật transition để thêm hiệu ứng cho height, padding, background-color */
+    transition: transform 0.4s ease, height 0.3s ease, background-color 0.3s ease, padding 0.3s ease, backdrop-filter 0.3s ease;
 }
+
+    /* Lớp mới cho header khi cuộn trang */
+    .site-header.scrolled {
+        height: 65px; /* THAY ĐỔI: Giảm chiều cao khi cuộn */
+        background-color: rgba(255, 255, 255, 0.7); /* Nền trong suốt với hiệu ứng mờ */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Thêm bóng đổ để nổi bật */
+        border-bottom: none; /* Bỏ border khi đã có shadow */
+    }
 
     .site-header.is-hidden {
         transform: translateY(-100%);
@@ -70,6 +86,12 @@ html {
     width: auto;
     display: block;
     flex-shrink: 0;
+    transition: height 0.3s ease; /* Thêm transition cho logo */
+}
+
+/* THÊM MỚI: Thu nhỏ logo khi cuộn */
+.site-header.scrolled .header-logo img {
+    height: 40px;
 }
 
 .header-search {
@@ -78,35 +100,42 @@ html {
     position: relative;
 }
 
-    .header-search input {
-        width: 100%;
-        background-color: #f5f5f5;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 12px 45px 12px 20px;
-        color: #333;
-        font-size: 1rem;
-    }
+/* === CSS nâng cấp hiệu ứng hover cho thanh tìm kiếm và icon === */
+.header-search input {
+    width: 100%;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 45px 12px 20px;
+    color: #333;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.header-search input:hover,
+.header-search input:focus {
+    outline: none;
+    border-color: #aaa;
+    box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.1);
+}
 
-        .header-search input:focus {
-            outline: none;
-            border-color: #ccc;
-        }
-
-    .header-search .search-icon {
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #777;
-        cursor: pointer;
-    }
-
-        .header-search .search-icon svg {
-            width: 15px;
-            height: 15px;
-            display: block;
-        }
+.header-search .search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #25b2f2;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+}
+.header-search .search-icon:hover {
+    color: #c00;
+    transform: translateY(-50%) scale(1.1);
+}
+.header-search .search-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
 
 #search-results {
     position: absolute;
@@ -168,23 +197,54 @@ html {
     align-items: center;
 }
 
-/* === BẮT ĐẦU SỬA LỖI FONT === */
+/* === BẮT ĐẦU: NÂNG CẤP HIỆU ỨNG MENU === */
 .main-nav a {
     color: #555;
     text-decoration: none;
     font-weight: 600;
-    font-size: 20px !important; /* Kích thước là 16px */
+    font-size: 20px !important;
     white-space: nowrap;
+    position: relative; /* Thêm để tạo hiệu ứng gạch chân */
+    padding: 5px 0;
+    transition: color 0.2s ease, font-size 0.3s ease; /* Thêm transition cho font-size */
 }
-    /* === KẾT THÚC SỬA LỖI FONT === */
+
+/* THÊM MỚI: Thu nhỏ chữ menu khi cuộn */
+.site-header.scrolled .main-nav a {
+    font-size: 18px !important;
+}
+
+/* Hiệu ứng gạch chân chuyển động */
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-red);
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0); /* Ban đầu ẩn đi */
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.main-nav a:hover {
+    color: var(--primary-red);
+}
+
+.main-nav a:hover::after,
+.main-nav a.active-page::after {
+    transform: scaleX(1); /* Hiện ra khi hover hoặc active */
+}
 
 .main-nav a.active-page {
-    color: #c00;
+    color: var(--primary-red);
     font-weight: 700;
 }
+/* === KẾT THÚC: NÂNG CẤP HIỆU ỨNG MENU === */
 
 .mobile-controls {
-    display: none; /* Sửa ở dòng này */
+    display: none;
     align-items: center;
     gap: 15px;
 }
@@ -239,7 +299,7 @@ html {
 }
 /* === KẾT THÚC === */
 #dich-vu, #check-uy-tin {
-    scroll-margin-top: 30px;
+    scroll-margin-top: 100px; /* Tăng khoảng đệm khi scroll tới */
 }
 
 .services-section {
@@ -793,13 +853,6 @@ input[type="range"].bill-slider {
         padding-top: 0;
     }
 }
-/* Điều chỉnh kích thước icon kính lúp bên trong nút */
-.mobile-search-icon animated-icons {
-    width: 24px;
-    height: 24px;
-    position: relative; /* Thêm dòng này */
-    top: -6px;          /* Thêm dòng này để đẩy icon lên 2px */
-}
 
 /* === CSS CHO GỢI Ý NHANH TRONG LỚP PHỦ TÌM KIẾM === */
 
@@ -886,9 +939,9 @@ input[type="range"].bill-slider {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.1); /* Nền trắng trong suốt */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.65); /* Nền trắng đục hơn */
+    backdrop-filter: blur(15px); /* Có thể giảm nhẹ độ blur để cân bằng */
+    -webkit-backdrop-filter: blur(15px);
     z-index: 1050; /* Cao hơn header */
     opacity: 0;
     visibility: hidden;
@@ -1037,115 +1090,103 @@ input[type="range"].bill-slider {
 
 
 /* ======================================= */
-/* === CSS TỔNG HỢP CHO HEADER MOBILE === */
+/* === CSS CHO MENU XỔ XUỐNG (DROPDOWN) === */
 /* ======================================= */
-@media (max-width: 992px) {
+@media (max-width: 1600px) {
     /* 1. Ẩn các thành phần của desktop */
     .header-search,
     .main-nav {
         display: none;
     }
 
-    /* 2. Tùy chỉnh chung cho Header */
-    .site-header {
-        padding: 10px 15px;
-        height: 68px;
-        flex-wrap: nowrap;
-    }
-    
-    .header-container {
-        position: relative;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-
-    /* 3. Hiển thị và tùy chỉnh các nút mobile */
+    /* 2. Hiển thị các nút mobile */
     .mobile-controls {
         display: flex;
         align-items: center;
         gap: 12px;
     }
 
-    /* === BẮT ĐẦU CODE THAY THẾ === */
-
-.mobile-search-icon,
-.hamburger-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Chỉnh sửa để đồng bộ kích thước */
-    width: 44px;  /* Đặt chiều rộng cố định */
-    height: 44px; /* Đặt chiều cao cố định */
-    padding: 0;   /* Bỏ padding để kích thước được chuẩn */
-}
-
-/* Điều chỉnh kích thước icon kính lúp bên trong nút */
-.mobile-search-icon animated-icons {
-    width: 24px;
-    height: 24px;
-}
-
-/* Điều chỉnh kích thước icon 3 gạch bên trong nút */
-.hamburger-btn {
-    font-size: 1.6rem; /* Thay đổi cỡ chữ để cân đối */
-    line-height: 1;    /* Giúp căn giữa tốt hơn */
-}
-
-/* === KẾT THÚC CODE THAY THẾ === */
-
-    /* 5. Logic khi nhấn nút tìm kiếm */
-    .site-header.search-active {
-        padding-bottom: 65px;
-        flex-wrap: wrap;
+    .mobile-search-icon,
+    .hamburger-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        color: #25b2f2;
+        z-index: 1002; /* Đảm bảo nút luôn ở trên */
+        position: relative;
     }
-
-    .site-header.search-active .header-search {
-        display: block;
+    
+    .hamburger-btn {
+        font-size: 1.8rem;
+    }
+    
+    /* === 3. CSS CHO MENU XỔ XUỐNG MỚI === */
+    .main-nav {
+        display: block; /* Chuyển về display: block */
         position: absolute;
-        top: 70px;
+        top: 100%; /* Nằm ngay dưới header */
         left: 0;
         width: 100%;
-        padding: 0 15px;
+        background-color: #ffffff;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        z-index: 1000;
+
+        /* Hiệu ứng trượt xuống */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out;
     }
 
-    /* 6. Logic khi nhấn nút menu (hamburger) */
     .main-nav.is-open {
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: #fff;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        max-height: 500px; /* Một giá trị đủ lớn để chứa hết menu */
     }
 
-    .main-nav.is-open ul {
+    /* Định dạng lại danh sách menu */
+    .main-nav ul {
         flex-direction: column;
-        gap: 0;
+        gap: 0; /* Bỏ khoảng cách */
         width: 100%;
+        list-style: none;
+        padding: 0;
     }
 
-    .main-nav.is-open li {
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid #eee;
+    .main-nav li {
+        border-bottom: 1px solid #f0f0f0; /* Thêm đường kẻ ngăn cách */
+    }
+    .main-nav li:last-child {
+        border-bottom: none;
     }
 
-    .main-nav.is-open a {
-        padding: 15px;
+    .main-nav a {
         display: block;
-        width: 100%;
+        padding: 18px 25px; /* Điều chỉnh padding cho phù hợp */
+        font-size: 1.1rem !important; /* Cỡ chữ vừa phải */
+        font-weight: 600 !important;
+        color: #333;
+        text-align: center; /* ĐỔI THÀNH CĂN GIỮA */
+    }
+
+    /* Bỏ hiệu ứng gạch chân không cần thiết cho kiểu menu này */
+    .main-nav a::after {
+        display: none;
+    }
+
+    .main-nav a.active-page,
+    .main-nav a:hover {
+        background-color: #f5f5f5;
+        color: var(--primary-red);
     }
 }
 
 @media (max-width: 768px) {
+    body {
+        padding-top: 68px; /* Điều chỉnh padding cho header mobile */
+    }
     .modal.image-view .modal-close {
         width: 32px;
         height: 32px;
@@ -1269,14 +1310,6 @@ input[type="range"].bill-slider {
     }
 }
 /* === KẾT THÚC === */
-
-@media (max-width: 992px) {
-    .main-nav.is-open a {
-        padding: 15px;
-        display: block;
-        font-size: 15px !important; /* hoặc chọn kích thước bạn muốn áp dụng chung */
-    }
-}
 
 /* === BẮT ĐẦU: HIỆU ỨNG CHUYỂN TRANG === */
 #page-transition-overlay {
@@ -1540,4 +1573,31 @@ input[type="range"].bill-slider {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* Màn hình nhỏ hơn 1024px */
+@media (max-width: 1024px) {
+    .profile-name { font-size: 2.3rem; }
+    .profile-subtitle { font-size: 1.4rem; }
+    .profile-rating { font-size: 1.1rem; }
+    .profile-details li { font-size: 1rem; }
+    .profile-social a { font-size: 1.1rem; }
+}
+
+/* Màn hình nhỏ hơn 768px (tablet, mobile) */
+@media (max-width: 768px) {
+    .profile-name { font-size: 2.3rem; }
+    .profile-subtitle { font-size: 1.3rem; }
+    .profile-rating { font-size: 1.2rem; }
+    .profile-details li { font-size: 1.4rem; }
+    .profile-social a { font-size: 1.4rem; padding: 8px 10px; }
+}
+
+/* Màn hình nhỏ hơn 480px (mobile nhỏ) */
+@media (max-width: 480px) {
+    .profile-name { font-size: 1.7rem; }
+    .profile-subtitle { font-size: 1.1rem; }
+    .profile-rating { font-size: 0.9rem; }
+    .profile-details li { font-size: 1.2rem; }
+    .profile-social a { font-size: 1.1rem; padding: 6px 8px; }
 }

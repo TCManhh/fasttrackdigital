@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Biến cho TÌM KIẾM MỚI (OVERLAY)
     const searchOverlay = document.getElementById('search-overlay');
+    // ✅ SỬA LỖI: Thêm biến cho thanh tìm kiếm ở header
+    const searchInput = document.getElementById('search-input'); 
     const searchInputOverlay = document.getElementById('search-overlay-input');
     const overlaySearchResultsContainer = document.getElementById('overlay-search-results');
     const closeSearchBtn = document.getElementById('close-search-btn');
@@ -162,9 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Sự kiện cho Tìm kiếm
+        // ✅ SỬA LỖI: Thêm sự kiện click cho thanh tìm kiếm
         if (desktopSearchTrigger) desktopSearchTrigger.addEventListener('click', openSearch);
         if (mobileSearchTrigger) mobileSearchTrigger.addEventListener('click', openSearch);
+        if (searchInput) searchInput.addEventListener('click', openSearch); // Dòng này đã được thêm vào
+
         if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
         if (searchOverlay) {
             searchOverlay.addEventListener('click', (e) => { if (e.target === searchOverlay) closeSearch(); });
@@ -246,15 +250,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const hamburgerBtn = document.querySelector('.hamburger-btn');
-        const mainNav = document.querySelector('.main-nav');
-        if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => mainNav.classList.toggle('is-open'));
-        if (mainNav) {
-            mainNav.addEventListener('click', (e) => {
-                if (e.target.closest('a') && mainNav.classList.contains('is-open')) mainNav.classList.remove('is-open');
-            });
+        // Đoạn code mới để dán vào
+// Đoạn code mới chính xác
+const hamburgerBtn = document.querySelector('.hamburger-btn');
+const mainNav = document.querySelector('.main-nav');
+
+if (hamburgerBtn && mainNav) {
+    hamburgerBtn.addEventListener('click', () => {
+        mainNav.classList.toggle('is-open');
+    });
+
+    // Đóng menu khi nhấn vào một link bất kỳ bên trong
+    mainNav.addEventListener('click', (e) => {
+        if (e.target.closest('a')) {
+            mainNav.classList.remove('is-open');
         }
-        
+    });
+}
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href').length <= 1) return;
@@ -275,30 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
-    }
-
-    // --- KHỞI CHẠY CÁC HÀM VÀ SỰ KIỆN ---
-    setupGlobalListeners();
-    
-    // Xử lý các chức năng riêng của từng trang
-    const billShowcase = document.querySelector('.bill-showcase');
-    if (billShowcase) {
-        initBillCarousel();
-    }
-    const pricingGrid = document.querySelector('.pricing-grid');
-    if (pricingGrid) {
-        pricingGrid.addEventListener('click', (e) => {
-            const card = e.target.closest('.price-card');
-            if (card) {
-                const serviceId = card.dataset.id;
-                if (serviceId) showServiceModal(serviceId);
-            }
-        });
-    }
-    const faqNavContainer = document.querySelector('.faq-nav');
-    const faqContentContainer = document.querySelector('.faq-content');
-    if (faqNavContainer && faqContentContainer) {
-        initFaqPage(faqNavContainer, faqContentContainer);
     }
 
     // --- CÁC HÀM CỤ THỂ ---
@@ -468,4 +456,98 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => { moveToSlide(0); startAutoSlide(); }, 100);
     }
+    
+    // --- BẮT ĐẦU: HÀM MỚI CHO HIỆU ỨNG HEADER KHI CUỘN ---
+    function setupHeaderScrollEffects() {
+        if (!siteHeader) return;
+    
+        // Logic này chỉ thêm/bỏ lớp .scrolled để co lại/làm mờ header
+        // Logic ẩn/hiện đã được loại bỏ để header luôn được ghim
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+            // Thêm/xóa lớp .scrolled để co lại và làm mờ header
+            if (scrollTop > 20) {
+                siteHeader.classList.add('scrolled');
+            } else {
+                siteHeader.classList.remove('scrolled');
+            }
+        });
+    }
+    // --- KẾT THÚC: HÀM MỚI CHO HIỆU ỨNG HEADER ---
+
+    // --- BẮT ĐẦU: HÀM MỚI CHO TÍNH NĂNG SCROLLSPY ---
+    function initScrollSpy() {
+        const navLinks = document.querySelectorAll('.main-nav a[href*="#"]');
+        const homeLink = document.querySelector('.main-nav a[href="index.html"]');
+    
+        const sections = Array.from(navLinks).map(link => {
+            const id = link.getAttribute('href').split('#')[1];
+            if (id) return document.getElementById(id);
+        }).filter(Boolean); // Lọc bỏ những giá trị null
+    
+        if (sections.length === 0) return; // Thoát nếu không có section nào trên trang
+    
+        const observerOptions = {
+            rootMargin: '-150px 0px -50% 0px',
+        };
+    
+        const observer = new IntersectionObserver((entries) => {
+            let isAnySectionActive = false;
+    
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    isAnySectionActive = true;
+                    const id = entry.target.getAttribute('id');
+                    
+                    // Bỏ active tất cả các link
+                    document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active-page'));
+                    
+                    // Active link tương ứng
+                    const activeLink = document.querySelector(`.main-nav a[href*="#${id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active-page');
+                    }
+                }
+            });
+    
+            // Nếu không có section nào active và đang ở đầu trang, active link TRANG CHỦ
+            if (!isAnySectionActive && window.scrollY < sections[0].offsetTop - 150) {
+                 document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active-page'));
+                 if(homeLink) homeLink.classList.add('active-page');
+            }
+    
+        }, observerOptions);
+    
+        sections.forEach(section => observer.observe(section));
+    }
+    // --- KẾT THÚC: HÀM MỚI CHO TÍNH NĂNG SCROLLSPY ---
+    
+    // --- KHỞI CHẠY CÁC HÀM VÀ SỰ KIỆN ---
+    setupGlobalListeners();
+    setupHeaderScrollEffects();
+    initScrollSpy(); // Chạy hàm ScrollSpy mới
+    
+    // Xử lý các chức năng riêng của từng trang
+    const billShowcase = document.querySelector('.bill-showcase');
+    if (billShowcase) {
+        initBillCarousel();
+    }
+    const pricingGrid = document.querySelector('.pricing-grid');
+    if (pricingGrid) {
+        pricingGrid.addEventListener('click', (e) => {
+            const card = e.target.closest('.price-card');
+            if (card) {
+                const serviceId = card.dataset.id;
+                if (serviceId) showServiceModal(serviceId);
+            }
+        });
+    }
+    const faqNavContainer = document.querySelector('.faq-nav');
+    const faqContentContainer = document.querySelector('.faq-content');
+    if (faqNavContainer && faqContentContainer) {
+        initFaqPage(faqNavContainer, faqContentContainer);
+    }
+
 });
+
