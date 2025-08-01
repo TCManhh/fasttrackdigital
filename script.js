@@ -512,8 +512,38 @@ document.addEventListener('DOMContentLoaded', () => {
     
         sections.forEach(section => observer.observe(section));
     }
+
+    // --- HÀM LỌC SẢN PHẨM ---
+    function initServiceFilter() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.card');
+
+        if (!filterButtons.length || !cards.length) return;
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 1. Cập nhật trạng thái 'active' cho nút
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                button.classList.add('active');
+
+                // 2. Lấy giá trị filter
+                const filter = button.dataset.filter;
+
+                // 3. Lọc các thẻ dịch vụ
+                cards.forEach(card => {
+                    const category = card.dataset.category;
+                    if (filter === 'all' || filter === category) {
+                        card.classList.remove('hide');
+                    } else {
+                        card.classList.add('hide');
+                    }
+                });
+            });
+        });
+    }
     
     // --- KHỞI CHẠY CÁC HÀM VÀ SỰ KIỆN ---
+    initServiceFilter();
     setupGlobalListeners();
     setupHeaderScrollEffects();
     initScrollSpy();
