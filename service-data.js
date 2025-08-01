@@ -11,7 +11,121 @@ const serviceData = {
         img: "",
         searchImg: "./images/IcoinYoutube.webp",
         headline: "Nâng Cấp <span style='color: #FF0000;'>YouTube Premium</span> - Tặng Kèm <span style='color: #FF0000;'>YouTube Music Premium</span>",
-        text: `<div class='packages-container youtube-packages'> <div class='package-option recommended'> <div class='package-header'> <h3 class='package-title'>Gói Nâng Cấp Chính Chủ</h3> <p class='package-price'>40.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Sử dụng Gmail cá nhân của bạn, ổn định và an toàn. Chỉ cần cung cấp email, không mật khẩu.</p> <ul class='package-features'> <li>Bảo mật 100%</li> <li>Không giới hạn thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói Thuê Tài Khoản</h3> <p class='package-price'>35.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Shop sẽ cấp tài khoản có sẵn Premium. Tiết kiệm chi phí, sử dụng đầy đủ tính năng.</p> <ul class='package-features'> <li>Giới hạn 3 thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói YouTube TV</h3> <p class='package-price'>20.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Tài khoản do shop cấp, chuyên dùng cho Smart TV và TV Box, tối ưu chi phí.</p> <ul class='package-features'> <li>Giới hạn đăng nhập trên 5 TV</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> </div> <div class='purchase-section'> <p class='purchase-note'>💡 <strong>Lưu ý:</strong> Giá trên là đơn giá theo tháng. Mua nhiều tháng chỉ cần nhân đơn giá với số tháng mong muốn.</p> <a href='https://zalo.me/0978879931' class='btn-contact-buy'>Liên hệ để mua ngay</a> </div> <div class='modal-full-width-wrapper'> <div class='modal-benefits-section'> <h3>🔥 Lợi ích khi sử dụng <span style='color: #FF0000;'>YouTube Premium</span></h3> <ul style='list-style: none; padding: 0; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> <div class='modal-faq-section'> <h3>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3> <div class='faq-container'> <div class='faq-item'> <button class='faq-question'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> bạn dùng tài khoản Gmail của mình. Shop chỉ gửi link mời vào Family.<br>→ <strong>Gói thuê:</strong> Shop cấp tài khoản riêng biệt.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>2. Sau khi thanh toán, tôi cần làm gì?</button> <div class='faq-answer'> <p>→ Shop sẽ gửi link mời vào Family qua Gmail. Bạn chỉ cần bấm vào link và đồng ý tham gia là dùng được ngay.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>3. Có thể gia hạn gói dịch vụ không?</button> <div class='faq-answer'> <p>→ Có. Shop sẽ nhắc bạn trước khi hết hạn qua email hoặc Zalo. Hoặc bạn có thể chủ động liên hệ để gia hạn.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>4. Nếu tôi vào nhầm tài khoản Google thì sao?</button> <div class='faq-answer'> <p>→ Liên hệ shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa dùng.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>5. Một tài khoản sử dụng được bao nhiêu thiết bị?</button> <div class='faq-answer'> <p>→ <strong>Gói chính chủ:</strong> Có thể đăng nhập và sử dụng trên mọi thiết bị. Không giới hạn số lượng thiết bị đăng nhập cũng như không giới hạn số lượng thiết bị sử dụng cùng lúc.<br>→ <strong>Gói thuê tài khoản:</strong> Có thể đăng nhập trên mọi thiết bị. Giới hạn tối đa 3 thiết bị được đăng nhập và 3 thiết bị sử dụng đồng thời.<br>→ <strong>Gói YouTube TV:</strong> Chỉ sử dụng được trên TV (Smart TV). Giới hạn đăng nhập trên 5 thiết bị TV và 3 thiết bị sử dụng đồng thời.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>6. Thông tin cá nhân có bị lộ khi vào Family không?</button> <div class='faq-answer'> <p>→ Tuyệt đối không. Các thành viên Family không thể nhìn thấy thông tin của nhau. Theo chuẩn điều khoản của Google.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>7. Tài khoản ở nước ngoài có tham gia được không?</button> <div class='faq-answer'> <p>→ Có thể, nhưng bạn cần liên hệ để shop hỗ trợ chuyển vùng phù hợp.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>8. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</button> <div class='faq-answer'> <p>→ Không. Hãy sử dụng Gmail cá nhân – G-suite thường bị hạn chế không tham gia được Family.</p> </div> </div> <div class='faq-item'> <button class='faq-question'>9. Thời gian tính dịch vụ được bắt đầu khi nào?</button> <div class='faq-answer'> <p>→ Bắt đầu tính từ thời điểm bạn tham gia Family, không phải lúc thanh toán.</p> </div> </div> </div> </div> </div>`
+        text: `<div class='packages-container youtube-packages'> <div class='package-option recommended'> <div class='package-header'> <h3 class='package-title'>Gói Năm Chính Chủ</h3> <p class='package-price'>300.000đ<span class='price-unit'> / năm</span></p> </div> <p class='package-description'>Thanh toán một lần, sử dụng trọn vẹn 12 tháng. Siêu tiết kiệm và tiện lợi nhất.</p> <ul class='package-features'> <li>Tiết kiệm đến 38%</li> <li>Bảo mật 100%</li> <li>Không giới hạn thiết bị</li> </ul> </div> <div class='package-option'> <div class='package-header'> <h3 class='package-title'>Gói Tháng Chính Chủ</h3> <p class='package-price'>30.000đ<span class='price-unit'> / tháng</span></p> </div> <p class='package-description'>Sử dụng Gmail cá nhân của bạn, ổn định và an toàn. Phù hợp cho nhu cầu ngắn hạn.</p> <ul class='package-features'> <li>Bảo mật 100%</li> <li>Không giới hạn thiết bị</li> <li>Hỗ trợ gia hạn hàng tháng</li> </ul> </div> </div> <div class='purchase-section'> <p class='purchase-note'>💡 <strong>Lưu ý:</strong> Gói năm tiết kiệm hơn đáng kể so với gói tháng. Vui lòng chọn gói phù hợp với nhu cầu của bạn.</p> <a href='https://zalo.me/0978879931' class='btn-contact-buy'>Liên hệ để mua ngay</a> </div> <div class='modal-full-width-wrapper'> <div class='modal-benefits-section'> <h3>🔥 Lợi ích khi sử dụng <span style='color: #FF0000;'>YouTube Premium</span></h3> <ul style='list-style: none; padding: 0; line-height: 1.7;'> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem video không quảng cáo:</strong> Tận hưởng trải nghiệm xem video mượt mà, không bị gián đoạn bởi bất kỳ quảng cáo nào – kể cả quảng cáo trước, giữa video, hay lớp phủ.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Phát nền khi tắt màn hình:</strong> Xem video, nghe nhạc, podcast khi tắt màn hình hoặc đang sử dụng ứng dụng khác – cực kỳ tiện lợi.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Tải video xem offline:</strong> Bạn có thể tải video, danh sách phát hoặc bài hát yêu thích để xem lại mọi lúc, mọi nơi – kể cả khi không có mạng.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>YouTube Music Premium MIỄN PHÍ:</strong> Truy cập kho nhạc khổng lồ chất lượng cao không quảng cáo. Tải nhạc offline, nghe nền và chuyển đổi giữa video/audio linh hoạt.</div></li> <li style='margin-bottom: 12px; display: flex; align-items: flex-start;'><span style='margin-right: 10px; font-size: 18px;'>✅</span><div><strong>Xem miễn phí YouTube Originals:</strong> Thưởng thức các bộ phim, chương trình độc quyền từ những nhà sáng tạo hàng đầu trên YouTube.</div></li> </ul> </div> 
+        <div class='modal-faq-section'>
+  <h3>❓ CÂU HỎI THƯỜNG GẶP (FAQ)</h3>
+  <div class='faq-container'>
+
+  <div class='faq-item'>
+    <button class='faq-question'>1. Tôi sẽ sử dụng tài khoản của mình hay của shop?</button>
+    <div class='faq-answer'>
+      <p>
+        → Bạn sẽ sử dụng chính <strong>tài khoản Gmail cá nhân</strong> của mình. Shop chỉ gửi link mời tham gia <strong>nhóm gia đình (Family)</strong> để nâng cấp, 
+        <strong>không bao giờ yêu cầu mật khẩu</strong>, đảm bảo <strong>bảo mật tuyệt đối</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>2. Sau khi thanh toán, tôi cần làm gì?</button>
+    <div class='faq-answer'>
+      <p>
+        → Shop sẽ gửi link mời tham gia nhóm gia đình (Family) qua Gmail của bạn. Bạn chỉ cần nhấn vào link và <strong>đồng ý tham gia</strong>, 
+        tài khoản sẽ được nâng cấp <strong>ngay lập tức</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>3. Có thể gia hạn gói dịch vụ không?</button>
+    <div class='faq-answer'>
+      <p>
+        → <strong>Có.</strong> Khi gần hết hạn, <strong>Shop sẽ nhắc bạn</strong> để gia hạn.<br>
+        <span style="display:inline-block;padding-left:0px;">
+          <strong>Lưu ý:</strong> Hiện tại <strong>YouTube chưa hỗ trợ gói trả phí theo năm ở Việt Nam</strong>. 
+          Vì vậy, để bạn vẫn được hưởng mức giá tiết kiệm của gói năm, Shop sẽ <strong>gia hạn hàng tháng cho đủ 12 tháng</strong>.
+        </span><br>
+        <span style="display:inline-block;padding-left:0px;">
+          Bạn <strong>không phải trả thêm bất kỳ chi phí nào</strong> ngoài số tiền gói năm đã thanh toán ban đầu. 
+          Cách này giúp bạn <strong>tiết kiệm chi phí và sử dụng ổn định lâu dài</strong>.
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ✅ Câu hỏi mới được thêm vào đây -->
+  <div class='faq-item'>
+    <button class='faq-question'>4. Shop có bảo hành trong suốt thời gian sử dụng không?</button>
+    <div class='faq-answer'>
+      <p>
+        → <strong>Có.</strong> Shop cam kết <strong>bảo hành toàn bộ thời gian gói dịch vụ</strong>. Nếu có sự cố, Shop sẽ 
+        <strong>hỗ trợ xử lý ngay</strong> hoặc <strong>cấp lại quyền truy cập</strong> để bạn không bị gián đoạn trải nghiệm.
+      </p>
+    </div>
+  </div>
+  <!-- ✅ Kết thúc câu hỏi mới -->
+
+  <div class='faq-item'>
+    <button class='faq-question'>5. Nếu tôi vào nhầm tài khoản Google thì sao?</button>
+    <div class='faq-answer'>
+      <p>
+        → Liên hệ Shop ngay để được hỗ trợ đổi lại tài khoản nếu link chưa được sử dụng.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>6. Một tài khoản sử dụng được bao nhiêu thiết bị?</button>
+    <div class='faq-answer'>
+      <p>
+        → Với gói nâng cấp chính chủ, bạn có thể đăng nhập và sử dụng trên <strong>mọi thiết bị</strong>. 
+        Không giới hạn số lượng đăng nhập hoặc thiết bị sử dụng cùng lúc.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>7. Thông tin cá nhân có bị lộ khi vào Family không?</button>
+    <div class='faq-answer'>
+      <p>
+        → Tuyệt đối <strong>không</strong>. Các thành viên trong nhóm gia đình <strong>không thể nhìn thấy thông tin của nhau</strong>, 
+        tuân thủ đúng <strong>chính sách bảo mật của Google</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>8. Tài khoản ở nước ngoài có tham gia được không?</button>
+    <div class='faq-answer'>
+      <p>
+        → Có thể, nhưng bạn cần liên hệ Shop để được hỗ trợ <strong>chuyển vùng</strong> phù hợp.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>9. Tôi có thể dùng email công ty, trường học (G-suite) để tham gia không?</button>
+    <div class='faq-answer'>
+      <p>
+        → Không. Hãy sử dụng <strong>Gmail cá nhân</strong>, vì tài khoản G-suite thường bị hạn chế không thể tham gia nhóm gia đình.
+      </p>
+    </div>
+  </div>
+
+  <div class='faq-item'>
+    <button class='faq-question'>10. Thời gian tính dịch vụ được bắt đầu khi nào?</button>
+    <div class='faq-answer'>
+      <p>
+        → Thời gian sử dụng được tính từ <strong>khi Shop gửi lời mời tham gia nhóm gia đình</strong>, 
+        <strong>không tính từ lúc thanh toán</strong>.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+</div>
+ </div>`
     },
     "netflix": {
         title: "Fast Track - Dịch Vụ Premium Giá Rẻ",

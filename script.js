@@ -263,14 +263,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if (this.getAttribute('href').length <= 1) return;
-                e.preventDefault();
-                const targetElement = document.querySelector(this.getAttribute('href'));
-                if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
+        // Thêm ':not(.faq-nav-link)' để loại trừ các liên kết trong menu FAQ
+document.querySelectorAll('a[href^="#"]:not(.faq-nav-link)').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        if (this.getAttribute('href').length <= 1) return;
+        e.preventDefault();
+        const targetElement = document.querySelector(this.getAttribute('href'));
+        if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
 
         // Hiệu ứng fade-in khi cuộn
         const animatedElements = document.querySelectorAll('.card, .section-title, .owner-profile');
@@ -298,7 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 clickedLink.classList.add('active');
                 content.querySelector('.active')?.classList.remove('active');
                 targetArticle.classList.add('active');
-                if (window.innerWidth <= 768) targetArticle.scrollIntoView({ behavior: 'smooth' });
+                // LUÔN LUÔN cuộn tới câu trả lời, bất kể kích thước màn hình
+    targetArticle.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
             }
         });
         content.addEventListener('click', (e) => {

@@ -1160,8 +1160,8 @@ input[type="range"].bill-slider {
 
     .main-nav a {
         display: block;
-        padding: 18px 25px; /* Điều chỉnh padding cho phù hợp */
-        font-size: 1.1rem !important; /* Cỡ chữ vừa phải */
+        padding: 13.5px 18.75px; /* Điều chỉnh padding cho phù hợp */
+        font-size: 1rem !important; /* Cỡ chữ vừa phải */
         font-weight: 600 !important;
         color: #333;
         text-align: center; /* ĐỔI THÀNH CĂN GIỮA */
@@ -1180,6 +1180,14 @@ input[type="range"].bill-slider {
 }
 
 @media (max-width: 768px) {
+    /* Thêm đoạn mã này vào BÊN TRONG @media (max-width: 768px) */
+.site-header.scrolled {
+    height: 45px; /* Đặt chiều cao mong muốn cho ĐIỆN THOẠI ở đây */
+}
+
+.site-header.scrolled .header-logo img {
+    height: 35px; /* Điều chỉnh chiều cao logo cho cân đối */
+}
     body {
         padding-top: 68px; /* Điều chỉnh padding cho header mobile */
     }
