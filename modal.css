@@ -852,6 +852,15 @@
     .package-features li {
         font-size: 0.85rem;
     }
+
+    /* === BẮT ĐẦU: CẢI THIỆN RESPONSIVE CHO CARD DỊCH VỤ === */
+    .card-content h4 {
+        font-size: 1.1rem; /* Tăng cỡ chữ tiêu đề trên mobile */
+    }
+    .card-content p {
+        font-size: 1rem; /* Tăng cỡ chữ giá tiền trên mobile */
+    }
+    /* === KẾT THÚC === */
 }
 
 /* === BẮT ĐẦU: TĂNG CỠ CHỮ LỢI ÍCH DỊCH VỤ TRÊN MÁY TÍNH === */
