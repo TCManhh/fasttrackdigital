@@ -1363,7 +1363,9 @@ input[type="range"].bill-slider {
 	border-radius: 20px;
 	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 	text-align: center;
+    position: relative; /* Added for glowing border effect */
 }
+
 
 .profile-info {
     flex: 1; /* Sửa từ width: 100% */
@@ -1499,6 +1501,44 @@ input[type="range"].bill-slider {
 .messenger-btn {
 	background-color: #0084ff;
 }
+
+/* === START: GLOWING BORDER EFFECT FOR PROFILE CARD === */
+.profile-card::before,
+.profile-card::after {
+  --size: 5px;
+  content: "";
+  position: absolute;
+  border-radius: inherit; /* Inherit border-radius from parent */
+  top: calc(var(--size) / -2);
+  left: calc(var(--size) / -2);
+  width: calc(100% + var(--size));
+  height: calc(100% + var(--size));
+  background: radial-gradient(circle at 0 0, hsl(27deg 93% 60%), transparent),
+    radial-gradient(circle at 100% 0, #00a6ff, transparent),
+    radial-gradient(circle at 0 100%, #ff0056, transparent),
+    radial-gradient(circle at 100% 100%, #6500ff, transparent);
+}
+
+.profile-card::after {
+  --size: 2px;
+  z-index: -1;
+}
+
+.profile-card::before {
+  --size: -30px;
+  z-index: -2;
+  filter: blur(1vmin);
+  animation: blur-animation 1.5s ease-in-out alternate infinite;
+}
+
+@keyframes blur-animation {
+  to {
+    filter: blur(3vmin);
+    transform: scale(1.05);
+  }
+}
+/* === END: GLOWING BORDER EFFECT FOR PROFILE CARD === */
+
 
 /* Responsive adjustments for the profile card */
 @media (min-width: 768px) {
