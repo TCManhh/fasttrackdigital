@@ -194,7 +194,7 @@
 
 /* Gói YouTube */
 .youtube-packages {
-    grid-template-columns: repeat(auto-fit, minmax(10px, 300px));
+    grid-template-columns: repeat(auto-fit, minmax(10px, 301px));
 }
 
 /* Gói Netflix */
