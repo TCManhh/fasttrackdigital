@@ -64,58 +64,66 @@ document.addEventListener('DOMContentLoaded', () => {
         initFaqAccordionInsideModal();
     }
 
-    // --- HÀM TÌM KIẾM CHO LỚP PHỦ OVERLAY (PHIÊN BẢN ĐÃ SỬA LỖI) ---
-    const handleOverlaySearch = async (event) => {
-        // 1. Lấy và chuẩn hóa query MỘT LẦN DUY NHẤT ở đây.
-        const query = event.target.value.toLowerCase().trim();
-        const quickLinks = document.querySelector('.search-quick-links');
+    // --- HÀM TÌM KIẾM CHO LỚP PHỦ OVERLAY (ĐÃ FIX LỖI) ---
+const handleOverlaySearch = async (event) => {
+    const query = event.target.value.toLowerCase().trim();
+    const quickLinks = document.querySelector('.search-quick-links');
 
-        overlaySearchResultsContainer.innerHTML = '';
+    // Xóa kết quả cũ mỗi lần gọi hàm
+    overlaySearchResultsContainer.innerHTML = '';
 
-        if (quickLinks) {
-            quickLinks.style.display = query.length > 0 ? 'none' : 'block';
-        }
+    if (quickLinks) {
+        quickLinks.style.display = query.length > 0 ? 'none' : 'block';
+    }
 
-        if (query.length < 2) {
-            overlaySearchResultsContainer.style.display = 'none';
-            return;
-        }
+    if (query.length < 2) {
+        overlaySearchResultsContainer.style.display = 'none';
+        return;
+    }
 
-        const { serviceData } = await import('./service-data.js');
+    const { serviceData } = await import('./service-data.js');
 
-        const results = Object.keys(serviceData)
-            .map(key => ({ id: key, ...serviceData[key] }))
-            .filter(service => {
-                // 2. Lọc dữ liệu dựa trên 'query' đã được định nghĩa ở bên ngoài.
-                // KHÔNG cần định nghĩa lại query ở đây nữa.
-                const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, '');
-                const textContent = service.text.toLowerCase().replace(/<[^>]*>?/gm, '');
-                
-                return headline.includes(query) || textContent.includes(query);
+    const results = Object.keys(serviceData)
+        .map(key => ({ id: key, ...serviceData[key] }))
+        .filter(service => {
+            const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, '');
+            const textContent = service.text.toLowerCase().replace(/<[^>]*>?/gm, '');
+            return headline.includes(query) || textContent.includes(query);
+        });
+
+    if (results.length > 0) {
+        overlaySearchResultsContainer.style.display = 'block';
+        results.forEach(result => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'result-item';
+            itemElement.innerHTML = `
+                <img src="${result.searchImg || './images/logo11.webp'}" alt="${result.title}">
+                <div class="result-item-info">
+                    <h4>${result.headline.replace(/<[^>]*>?/gm, '')}</h4>
+                    <p>${result.title}</p>
+                </div>`;
+            itemElement.addEventListener('click', () => {
+                closeSearch();
+                setTimeout(() => showServiceModal(result.id), 400);
             });
+            overlaySearchResultsContainer.appendChild(itemElement);
+        });
+    } else {
+        overlaySearchResultsContainer.style.display = 'none';
+    }
+};
 
-        if (results.length > 0) {
-            overlaySearchResultsContainer.style.display = 'block';
-            results.forEach(result => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'result-item';
-                itemElement.innerHTML = `
-                    <img src="${result.searchImg || './images/logo11.webp'}" alt="${result.title}">
-                    <div class="result-item-info">
-                        <h4>${result.headline.replace(/<[^>]*>?/gm, '')}</h4>
-                        <p>${result.title}</p>
-                    </div>`;
-                itemElement.addEventListener('click', () => {
-                    closeSearch();
-                    setTimeout(() => showServiceModal(result.id), 400);
-                });
-                overlaySearchResultsContainer.appendChild(itemElement);
-            });
-        } else {
-            overlaySearchResultsContainer.style.display = 'none';
-        }
-    };
-    
+// --- GÁN SỰ KIỆN VỚI DEBOUNCE ĐỂ NGĂN LẶP ---
+let debounceTimer;
+if (searchInputOverlay) {
+    searchInputOverlay.addEventListener('input', (event) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            handleOverlaySearch(event);
+        }, 300); // 300ms debounce
+    });
+}
+
     // --- LOGIC MỞ/ĐÓNG LỚP PHỦ TÌM KIẾM ---
     const openSearch = (e) => {
         if(e) e.preventDefault();
@@ -180,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchOverlay) {
             searchOverlay.addEventListener('click', (e) => { if (e.target === searchOverlay) closeSearch(); });
         }
-        if (searchInputOverlay) searchInputOverlay.addEventListener('input', handleOverlaySearch);
         window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && searchOverlay.classList.contains('active')) closeSearch(); });
         
         // Sự kiện cho các link gợi ý nhanh trong tìm kiếm
