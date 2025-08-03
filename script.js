@@ -64,26 +64,34 @@ document.addEventListener('DOMContentLoaded', () => {
         initFaqAccordionInsideModal();
     }
 
-    // --- HÀM TÌM KIẾM CHO LỚP PHỦ OVERLAY ---
+    // --- HÀM TÌM KIẾM CHO LỚP PHỦ OVERLAY (PHIÊN BẢN ĐÃ SỬA LỖI) ---
     const handleOverlaySearch = async (event) => {
+        // 1. Lấy và chuẩn hóa query MỘT LẦN DUY NHẤT ở đây.
         const query = event.target.value.toLowerCase().trim();
-        overlaySearchResultsContainer.innerHTML = '';
         const quickLinks = document.querySelector('.search-quick-links');
+
+        overlaySearchResultsContainer.innerHTML = '';
+
         if (quickLinks) {
             quickLinks.style.display = query.length > 0 ? 'none' : 'block';
         }
+
         if (query.length < 2) {
             overlaySearchResultsContainer.style.display = 'none';
             return;
         }
 
         const { serviceData } = await import('./service-data.js');
+
         const results = Object.keys(serviceData)
             .map(key => ({ id: key, ...serviceData[key] }))
             .filter(service => {
+                // 2. Lọc dữ liệu dựa trên 'query' đã được định nghĩa ở bên ngoài.
+                // KHÔNG cần định nghĩa lại query ở đây nữa.
                 const headline = service.headline.toLowerCase().replace(/<[^>]*>?/gm, '');
-                const title = service.title.toLowerCase();
-                return headline.includes(query) || title.includes(query);
+                const textContent = service.text.toLowerCase().replace(/<[^>]*>?/gm, '');
+                
+                return headline.includes(query) || textContent.includes(query);
             });
 
         if (results.length > 0) {
@@ -264,14 +272,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         // Thêm ':not(.faq-nav-link)' để loại trừ các liên kết trong menu FAQ
-document.querySelectorAll('a[href^="#"]:not(.faq-nav-link)').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        if (this.getAttribute('href').length <= 1) return;
-        e.preventDefault();
-        const targetElement = document.querySelector(this.getAttribute('href'));
-        if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-});
+        document.querySelectorAll('a[href^="#"]:not(.faq-nav-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href').length <= 1) return;
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
 
         // Hiệu ứng fade-in khi cuộn
         const animatedElements = document.querySelectorAll('.card, .section-title, .owner-profile');
@@ -300,10 +308,10 @@ document.querySelectorAll('a[href^="#"]:not(.faq-nav-link)').forEach(anchor => {
                 content.querySelector('.active')?.classList.remove('active');
                 targetArticle.classList.add('active');
                 // LUÔN LUÔN cuộn tới câu trả lời, bất kể kích thước màn hình
-    targetArticle.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
+                targetArticle.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
         content.addEventListener('click', (e) => {
@@ -341,8 +349,6 @@ document.querySelectorAll('a[href^="#"]:not(.faq-nav-link)').forEach(anchor => {
             { src: "./images_bill_thanh_toan/0316YTBĐFB.webp", alt: "Bill 33" },
             { src: "./images_bill_thanh_toan/0315YTTHFB.webp", alt: "Bill 32" },
             { src: "./images_bill_thanh_toan/0315YTNTFB.webp", alt: "Bill 31" },
-
-            // Các bill cũ bên dưới (giữ nguyên thứ tự cũ)
             { src: "./images_bill_thanh_toan/0313YTCAZL.webp", alt: "Bill 30" },
             { src: "./images_bill_thanh_toan/0311YTVBZL.webp", alt: "Bill 29" },
             { src: "./images_bill_thanh_toan/0311YTTVFB.webp", alt: "Bill 28" },
@@ -582,7 +588,7 @@ document.querySelectorAll('a[href^="#"]:not(.faq-nav-link)').forEach(anchor => {
     
     // --- KHỞI CHẠY CÁC HÀM VÀ SỰ KIỆN ---
     initServiceFilter();
-    setupGlobalListeners();
+    setupGlobalListeners(); // <-- ĐÂY LÀ LẦN GỌI ĐÚNG VÀ DUY NHẤT
     setupHeaderScrollEffects();
     initScrollSpy();
     
