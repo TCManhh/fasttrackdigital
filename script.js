@@ -120,7 +120,7 @@ if (searchInputOverlay) {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
             handleOverlaySearch(event);
-        }, 300); // 300ms debounce
+        }, 150); // 300ms debounce
     });
 }
 
