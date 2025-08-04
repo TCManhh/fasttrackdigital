@@ -97,7 +97,7 @@ const handleOverlaySearch = async (event) => {
             const itemElement = document.createElement('div');
             itemElement.className = 'result-item';
             itemElement.innerHTML = `
-                <img src="${result.searchImg || './images/logo11.webp'}" alt="${result.title}">
+                <img src="${result.searchImg || './images/logo11.png'}" alt="${result.title}">
                 <div class="result-item-info">
                     <h4>${result.headline.replace(/<[^>]*>?/gm, '')}</h4>
                     <p>${result.title}</p>
