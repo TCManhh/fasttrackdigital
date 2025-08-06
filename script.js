@@ -300,27 +300,90 @@ if (searchInputOverlay) {
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
     }
+    
+    // --- HÀM SAO CHÉP LIÊN KẾT FAQ ---
+    function initFaqCopyLinkFeature() {
+        const copyButtons = document.querySelectorAll('.copy-faq-btn');
 
-    // --- CÁC HÀM CỤ THỂ ---
-    function initFaqPage(nav, content) {
-        nav.addEventListener('click', function (e) {
-            e.preventDefault();
-            const clickedLink = e.target.closest('.faq-nav-link');
-            if (!clickedLink || clickedLink.classList.contains('active')) return;
-            const targetId = clickedLink.getAttribute('href');
-            const targetArticle = document.querySelector(targetId);
-            if (targetArticle) {
-                nav.querySelector('.active')?.classList.remove('active');
-                clickedLink.classList.add('active');
-                content.querySelector('.active')?.classList.remove('active');
-                targetArticle.classList.add('active');
-                // LUÔN LUÔN cuộn tới câu trả lời, bất kể kích thước màn hình
+        copyButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation(); // Ngăn sự kiện lan ra các phần tử cha
+                const targetId = button.dataset.targetId; // Lấy ID, ví dụ: "q1"
+
+                // Xây dựng đường dẫn đầy đủ
+                const baseUrl = window.location.origin + window.location.pathname;
+                const linkToCopy = `${baseUrl}#${targetId}`;
+
+                // Sử dụng Clipboard API để sao chép
+                navigator.clipboard.writeText(linkToCopy).then(() => {
+                    // Phản hồi cho người dùng
+                    const originalText = button.innerText;
+                    button.innerText = 'Đã chép link!';
+                    button.classList.add('copied');
+
+                    // Trả lại văn bản gốc sau 2.5 giây
+                    setTimeout(() => {
+                        button.innerText = originalText;
+                        button.classList.remove('copied');
+                    }, 2500);
+                }).catch(err => {
+                    console.error('Lỗi sao chép link: ', err);
+                    alert('Không thể sao chép liên kết. Vui lòng thử lại.');
+                });
+            });
+        });
+    }
+
+    // --- HÀM XỬ LÝ TRANG FAQ (ĐÃ CẬP NHẬT) ---
+    function showFaqArticle(articleId) {
+        if (!articleId || articleId.length <= 1) return; // Bỏ qua nếu hash rỗng
+
+        const nav = document.querySelector('.faq-nav');
+        const content = document.querySelector('.faq-content');
+        if (!nav || !content) return;
+
+        const targetArticle = content.querySelector(articleId);
+        const targetLink = nav.querySelector(`.faq-nav-link[href="${articleId}"]`);
+
+        if (targetArticle && targetLink) {
+            // Hủy kích hoạt mục đang active
+            nav.querySelector('.active')?.classList.remove('active');
+            content.querySelector('.active')?.classList.remove('active');
+
+            // Kích hoạt mục mới
+            targetLink.classList.add('active');
+            targetArticle.classList.add('active');
+
+            // Cuộn đến mục đó
+            setTimeout(() => {
                 targetArticle.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
+            }, 100); // Thêm một độ trễ nhỏ để đảm bảo hiển thị mượt mà
+        }
+    }
+    
+    function initFaqPage(nav, content) {
+        // 1. Xử lý khi nhấn vào menu điều hướng
+        nav.addEventListener('click', function (e) {
+            const clickedLink = e.target.closest('.faq-nav-link');
+            if (!clickedLink) return;
+
+            e.preventDefault(); // Ngăn hành vi nhảy trang mặc định để kiểm soát cuộn trang
+            const targetId = clickedLink.getAttribute('href');
+            
+            // Cập nhật URL trên thanh địa chỉ mà không tải lại trang
+            if (window.history.pushState) {
+                window.history.pushState(null, null, targetId);
+            } else {
+                window.location.hash = targetId;
             }
+
+            showFaqArticle(targetId);
         });
+
+        // 2. Xử lý khi nhấn vào ảnh (giữ nguyên)
         content.addEventListener('click', (e) => {
             if (e.target.tagName === 'IMG' && e.target.closest('.faq-article')) {
                 e.stopPropagation();
@@ -329,6 +392,21 @@ if (searchInputOverlay) {
                     modalImage.src = e.target.src;
                     openModal();
                 }
+            }
+        });
+        
+        // 3. Khởi tạo tính năng sao chép liên kết
+        initFaqCopyLinkFeature();
+
+        // 4. Kiểm tra URL khi tải trang để hiển thị đúng câu hỏi
+        if (window.location.hash) {
+            showFaqArticle(window.location.hash);
+        }
+        
+        // 5. Xử lý khi người dùng nhấn nút back/forward của trình duyệt
+        window.addEventListener('popstate', () => {
+             if (window.location.pathname.includes('faq.html') && window.location.hash) {
+                showFaqArticle(window.location.hash);
             }
         });
     }
