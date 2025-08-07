@@ -693,7 +693,7 @@ input[type="range"].bill-slider {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
     .modal-overlay.active {
@@ -710,7 +710,7 @@ input[type="range"].bill-slider {
     z-index: 1001;
     opacity: 0;
     visibility: hidden;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out, visibility 0s linear 0.4s;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in-out, visibility 0s linear 0.3s;
 }
 
     .modal.active {
