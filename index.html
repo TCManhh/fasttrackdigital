@@ -43,10 +43,10 @@
 
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" href="images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" fetchpriority="high" as="image" href="./images/banner.webp" type="image/webp">
     <link rel="preload" as="image" href="./images/logo.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="modal.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="style.css">
@@ -218,9 +218,15 @@
                 <li><strong>🔗 Facebook:</strong> <a href="https://www.facebook.com/TCManhh" target="_blank">Trương Công Mạnh</a></li>
             </ul>
             <div class="profile-social">
-                <a href="https://zalo.me/0978879931" target="_blank" class="social-btn zalo-btn">Liên hệ Zalo</a>
-                <a href="https://t.me/TCManhh" target="_blank" class="social-btn telegram-btn">Chat Telegram</a>
-                <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="social-btn messenger-btn">Gửi Messenger</a>
+                <a href="https://zalo.me/0978879931" target="_blank" class="social-btn" aria-label="Liên hệ Zalo">
+                    <img src="./images/IcoinZalo.webp" alt="Zalo" loading="lazy">
+                </a>
+                <a href="https://t.me/TCManhh" target="_blank" class="social-btn" aria-label="Chat Telegram">
+                    <img src="./images/IcoinTele.webp" alt="Telegram" loading="lazy">
+                </a>
+                <a href="https://www.messenger.com/t/100082075575045" target="_blank" class="social-btn" aria-label="Gửi Messenger">
+                    <img src="./images/IcoinMessTachNen.webp" alt="Messenger" loading="lazy">
+                </a>
             </div>
         </div>
     </div>
@@ -239,7 +245,7 @@
     <div class="modal-overlay"></div>
     <div id="avatar-popup" class="avatar-popup">
     <span class="avatar-popup-close">&times;</span>
-    <img class="avatar-popup-content" id="avatar-popup-img">
+    <img class="avatar-popup-content" id="avatar-popup-img" loading="lazy">
 </div>
     
 
